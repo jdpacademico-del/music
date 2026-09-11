@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MoisesMusic — Panel de Control</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0D0E11;
+  --bg-alt:#15171B;
+  --bg-alt-2:#1B1D22;
+  --line:#2A2C31;
+  --ink:#F3EFE6;
+  --muted:#9B968C;
+  --gold:#E3B23C;
+  --gold-dim:#8A6E2B;
+  --rust:#9A3324;
+  --ok:#48bb78;
+  --err:#f56565;
+  --radius:4px;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Inter',sans-serif;
+  font-size:15px;
+  line-height:1.6;
+}
+a{color:inherit; text-decoration:none;}
+button{font-family:inherit; cursor:pointer;}
+input, textarea, select{
+  width:100%;
+  background:var(--bg-alt-2);
+  border:1px solid var(--line);
+  color:var(--ink);
+  padding:12px 14px;
+  border-radius:var(--radius);
+  font-family:inherit;
+  font-size:14.5px;
+  transition:border-color .2s;
+}
+input:focus, textarea:focus, select:focus{
+  border-color:var(--gold);
+  outline:none;
+}
+label{
+  display:block;
+  font-size:12.5px;
+  font-weight:600;
+  color:var(--muted);
+  margin-bottom:6px;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+}
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding:11px 20px; border-radius:var(--radius);
+  font-family:'Syne',sans-serif; font-size:12px; font-weight:700;
+  letter-spacing:.08em; text-transform:uppercase;
+  border:1px solid var(--line); background:transparent; color:var(--ink);
+  transition:all .2s; cursor:pointer;
+}
+.btn:hover{border-color:var(--gold); color:var(--gold);}
+.btn-solid{background:var(--gold); border-color:var(--gold); color:#1a1305;}
+.btn-solid:hover{background:#f0c25a; color:#1a1305;}
+.btn-danger{border-color:var(--err); color:var(--err);}
+.btn-danger:hover{background:var(--err); color:#fff;}
+.btn-sm{padding:7px 14px; font-size:11px;}
+
+/* Navbar */
+header.admin-nav{
+  background:var(--bg-alt);
+  border-bottom:1px solid var(--line);
+  padding:16px 28px;
+  display:flex; justify-content:space-between; align-items:center;
+  position:sticky; top:0; z-index:50;
+}
+.brand{font-family:'Fraunces',serif; font-size:20px; font-weight:700;}
+.brand span{color:var(--gold);}
+.nav-actions{display:flex; align-items:center; gap:14px;}
+.badge{
+  font-size:11.5px; padding:4px 10px; border-radius:20px;
+  border:1px solid var(--line); font-weight:600;
+}
+.badge.connected{background:rgba(72,187,120,.15); color:var(--ok); border-color:rgba(72,187,120,.4);}
+.badge.disconnected{background:rgba(245,101,101,.15); color:var(--err); border-color:rgba(245,101,101,.4);}
+
+/* Layout */
+.container{max-width:1100px; margin:36px auto; padding:0 24px;}
+.tabs{
+  display:flex; gap:6px; border-bottom:1px solid var(--line);
+  margin-bottom:32px; overflow-x:auto; padding-bottom:2px;
+}
+.tab-btn{
+  background:none; border:none; color:var(--muted);
+  font-family:'Syne',sans-serif; font-size:12px; font-weight:700;
+  letter-spacing:.08em; text-transform:uppercase; padding:12px 18px;
+  border-bottom:2px solid transparent; transition:all .2s;
+  white-space:nowrap;
+}
+.tab-btn:hover{color:var(--ink);}
+.tab-btn.active{color:var(--gold); border-bottom-color:var(--gold);}
+
+/* Panels */
+.tab-panel{display:none;}
+.tab-panel.active{display:block; animation:fadeIn .3s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);}}
+
+.card{
+  background:var(--bg-alt);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:26px;
+  margin-bottom:24px;
+}
+.card h2{
+  font-family:'Fraunces',serif; font-size:22px; margin-bottom:6px;
+}
+.card p.sub{color:var(--muted); font-size:13.5px; margin-bottom:22px;}
+.form-grid{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+.form-group{margin-bottom:18px;}
+.full{grid-column:1 / -1;}
+
+/* Tables / Items list */
+.items-list{display:flex; flex-direction:column; gap:12px; margin-top:20px;}
+.item-row{
+  display:flex; justify-content:space-between; align-items:center;
+  background:var(--bg-alt-2); border:1px solid var(--line);
+  padding:16px 20px; border-radius:var(--radius); gap:16px;
+}
+.item-info .title{font-weight:600; font-size:16px;}
+.item-info .meta{color:var(--muted); font-size:13px; margin-top:2px;}
+.item-actions{display:flex; gap:8px;}
+
+/* Alert / Notification */
+.alert{
+  padding:14px 18px; border-radius:var(--radius);
+  font-size:14px; margin-bottom:20px; display:none;
+}
+.alert.show{display:block;}
+.alert.ok{background:rgba(72,187,120,.15); color:var(--ok); border:1px solid rgba(72,187,120,.4);}
+.alert.err{background:rgba(245,101,101,.15); color:var(--err); border:1px solid rgba(245,101,101,.4);}
+
+/* Auth Screen */
+#authScreen{max-width:440px; margin:80px auto; padding:0 20px;}
+</style>
+</head>
+<body>
+
+<header class="admin-nav">
+  <div class="brand">Moises<span>Music</span> &mdash; Admin</div>
+  <div class="nav-actions">
+    <span class="badge disconnected" id="dbStatusBadge">Sin configurar</span>
+    <a class="btn btn-sm" href="index.html" target="_blank" rel="noopener">Ver Sitio Web ↗</a>
+    <button class="btn btn-sm btn-danger" id="btnLogout" style="display:none;">Salir</button>
+  </div>
+</header>
+
+<div class="container">
+  <!-- Mensajes de Estado Global -->
+  <div class="alert" id="globalAlert"></div>
+
+  <!-- PANTALLA 1: INICIO DE SESIÓN -->
+  <div id="authScreen">
+    <div class="card">
+      <h2>Iniciar Sesión</h2>
+      <p class="sub">Accede con tu usuario administrador para actualizar tu página web.</p>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="loginEmail">Correo Electrónico</label>
+          <input type="email" id="loginEmail" required placeholder="admin@moisesmusic.com">
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Contraseña</label>
+          <input type="password" id="loginPassword" required placeholder="••••••••">
+        </div>
+        <button class="btn btn-solid" style="width:100%;" type="submit">Entrar al Administrador</button>
+      </form>
+
+      <div style="margin-top:22px; border-top:1px solid var(--line); padding-top:16px;">
+        <button class="btn btn-sm" style="width:100%;" id="btnShowSetupFromAuth">⚙️ Configurar claves de Supabase</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANTALLA 2: PANEL DE ADMINISTRACIÓN (TABS) -->
+  <div id="dashboardScreen" style="display:none;">
+    <nav class="tabs">
+      <button class="tab-btn active" data-tab="tab-eventos">🎟️ Eventos y Tour</button>
+      <button class="tab-btn" data-tab="tab-textos">✏️ Textos y Títulos</button>
+      <button class="tab-btn" data-tab="tab-musica">🎵 Discografía</button>
+      <button class="tab-btn" data-tab="tab-redes">📱 Redes y Contacto</button>
+      <button class="tab-btn" data-tab="tab-config">⚙️ Supabase Config</button>
+    </nav>
+
+    <!-- TAB 1: EVENTOS / TOUR -->
+    <section class="tab-panel active" id="tab-eventos">
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+          <div>
+            <h2>Fechas de Tour / Conciertos</h2>
+            <p class="sub" style="margin-bottom:0;">Gestiona tus próximas presentaciones en vivo.</p>
+          </div>
+          <button class="btn btn-solid btn-sm" id="btnNewEvent">+ Agregar Fecha</button>
+        </div>
+
+        <!-- Formulario para crear / editar evento -->
+        <div id="eventFormContainer" style="display:none; background:var(--bg-alt-2); padding:20px; border-radius:var(--radius); border:1px solid var(--line); margin-bottom:24px;">
+          <h3 style="font-size:18px; margin-bottom:16px;" id="eventFormTitle">Nueva Fecha de Concierto</h3>
+          <form id="eventForm">
+            <input type="hidden" id="ev-id">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="ev-day">Día (Número)</label>
+                <input type="text" id="ev-day" placeholder="14" required>
+              </div>
+              <div class="form-group">
+                <label for="ev-month">Mes y Año</label>
+                <input type="text" id="ev-month" placeholder="NOV 2026" required>
+              </div>
+              <div class="form-group">
+                <label for="ev-city">Ciudad y País</label>
+                <input type="text" id="ev-city" placeholder="Bogotá, Colombia" required>
+              </div>
+              <div class="form-group">
+                <label for="ev-venue">Teatro / Recinto</label>
+                <input type="text" id="ev-venue" placeholder="Teatro Principal" required>
+              </div>
+              <div class="form-group">
+                <label for="ev-tag">Etiqueta de Boletos (Opcional)</label>
+                <input type="text" id="ev-tag" placeholder="POCOS BOLETOS">
+              </div>
+              <div class="form-group">
+                <label for="ev-btn-text">Texto del Botón</label>
+                <input type="text" id="ev-btn-text" value="BOLETOS" required>
+              </div>
+              <div class="form-group full">
+                <label for="ev-url">Enlace de Venta de Boletos</label>
+                <input type="text" id="ev-url" placeholder="https://tuboleta.com/..." required>
+              </div>
+            </div>
+            <div style="display:flex; gap:10px; margin-top:8px;">
+              <button class="btn btn-solid" type="submit">Guardar Evento</button>
+              <button class="btn" type="button" id="btnCancelEvent">Cancelar</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Lista de Eventos -->
+        <div class="items-list" id="eventsList">
+          <div style="color:var(--muted); text-align:center; padding:30px;">Cargando eventos...</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: TEXTOS Y TÍTULOS -->
+    <section class="tab-panel" id="tab-textos">
+      <div class="card">
+        <h2>Títulos y Textos Principales</h2>
+        <p class="sub">Actualiza los textos destacados que se muestran en el sitio web.</p>
+
+        <form id="textsForm">
+          <div class="form-group">
+            <label for="txt-topbar">Barra de Aviso Superior (#NuevaMúsica)</label>
+            <input type="text" id="txt-topbar" placeholder="#NuevaMúsica — escucha el último sencillo...">
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="txt-hero-tag">Etiqueta del Hero</label>
+              <input type="text" id="txt-hero-tag" placeholder="#NuevaMúsica">
+            </div>
+            <div class="form-group">
+              <label for="txt-next-event-title">Ticker: Título Próximo Evento</label>
+              <input type="text" id="txt-next-event-title" placeholder="14 Noviembre — Bogotá">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="txt-hero-title">Título Principal (Hero en Inicio)</label>
+            <textarea id="txt-hero-title" rows="2" placeholder="MÚSICA QUE <em>HABLA</em><br>DE LO QUE VIVIMOS"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="txt-hero-sub">Subtítulo del Hero</label>
+            <textarea id="txt-hero-sub" rows="2"></textarea>
+          </div>
+
+          <hr style="border:none; border-top:1px solid var(--line); margin:28px 0;">
+
+          <h3 style="font-size:18px; margin-bottom:16px;">Sección Biografía</h3>
+          <div class="form-group">
+            <label for="txt-bio-title">Título de la Biografía</label>
+            <input type="text" id="txt-bio-title">
+          </div>
+          <div class="form-group">
+            <label for="txt-bio-text">Texto de Biografía</label>
+            <textarea id="txt-bio-text" rows="4"></textarea>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="txt-stat-years">Años de Carrera</label>
+              <input type="text" id="txt-stat-years" placeholder="10+">
+            </div>
+            <div class="form-group">
+              <label for="txt-stat-concerts">Conciertos Realizados</label>
+              <input type="text" id="txt-stat-concerts" placeholder="50+">
+            </div>
+            <div class="form-group">
+              <label for="txt-stat-projects">Proyectos Lanzados</label>
+              <input type="text" id="txt-stat-projects" placeholder="3">
+            </div>
+          </div>
+
+          <button class="btn btn-solid" style="margin-top:12px;" type="submit">Guardar Todos los Textos</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- TAB 3: DISCOGRAFÍA -->
+    <section class="tab-panel" id="tab-musica">
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+          <div>
+            <h2>Discografía y Música</h2>
+            <p class="sub" style="margin-bottom:0;">Administra tus sencillos, EPs y álbumes.</p>
+          </div>
+          <button class="btn btn-solid btn-sm" id="btnNewMusic">+ Agregar Canción / Álbum</button>
+        </div>
+
+        <div id="musicFormContainer" style="display:none; background:var(--bg-alt-2); padding:20px; border-radius:var(--radius); border:1px solid var(--line); margin-bottom:24px;">
+          <h3 style="font-size:18px; margin-bottom:16px;" id="musicFormTitle">Nuevo Lanzamiento</h3>
+          <form id="musicForm">
+            <input type="hidden" id="mu-id">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="mu-title">Título del Lanzamiento</label>
+                <input type="text" id="mu-title" placeholder="Nombre de la canción o EP" required>
+              </div>
+              <div class="form-group">
+                <label for="mu-category">Categoría</label>
+                <select id="mu-category" required>
+                  <option value="SENCILLO">SENCILLO</option>
+                  <option value="EP">EP</option>
+                  <option value="ÁLBUM">ÁLBUM</option>
+                  <option value="COLABORACIÓN">COLABORACIÓN</option>
+                </select>
+              </div>
+              <div class="form-group full">
+                <label for="mu-url">Enlace a Spotify / Plataforma</label>
+                <input type="text" id="mu-url" placeholder="https://open.spotify.com/track/..." required>
+              </div>
+            </div>
+            <div style="display:flex; gap:10px; margin-top:8px;">
+              <button class="btn btn-solid" type="submit">Guardar Lanzamiento</button>
+              <button class="btn" type="button" id="btnCancelMusic">Cancelar</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="items-list" id="musicList">
+          <div style="color:var(--muted); text-align:center; padding:30px;">Cargando música...</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: REDES Y CONTACTO -->
+    <section class="tab-panel" id="tab-redes">
+      <div class="card">
+        <h2>Enlaces de Contacto y Redes Sociales</h2>
+        <p class="sub">Actualiza los números y perfiles para que tus seguidores y contratistas te contacten.</p>
+
+        <form id="socialForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="cnt-email">Email de Contacto General</label>
+              <input type="email" id="cnt-email" placeholder="contacto@moisesmusic.com">
+            </div>
+            <div class="form-group">
+              <label for="cnt-booking">Email de Booking / Prensa</label>
+              <input type="email" id="cnt-booking" placeholder="booking@moisesmusic.com">
+            </div>
+            <div class="form-group">
+              <label for="cnt-wa">Enlace o Número de WhatsApp</label>
+              <input type="text" id="cnt-wa" placeholder="https://wa.me/573001234567">
+            </div>
+            <div class="form-group">
+              <label for="cnt-ig">Perfil de Instagram</label>
+              <input type="text" id="cnt-ig" placeholder="https://instagram.com/moisesmusic">
+            </div>
+            <div class="form-group">
+              <label for="cnt-fb">Página de Facebook</label>
+              <input type="text" id="cnt-fb" placeholder="https://facebook.com/moisesmusic">
+            </div>
+            <div class="form-group">
+              <label for="cnt-tw">Perfil de X (Twitter)</label>
+              <input type="text" id="cnt-tw" placeholder="https://x.com/moisesmusic">
+            </div>
+            <div class="form-group full">
+              <label for="cnt-yt">Canal de YouTube</label>
+              <input type="text" id="cnt-yt" placeholder="https://www.youtube.com/@moisesmusic">
+            </div>
+          </div>
+          <button class="btn btn-solid" style="margin-top:12px;" type="submit">Guardar Redes y Contacto</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- TAB 5: CONFIGURACIÓN SUPABASE -->
+    <section class="tab-panel" id="tab-config">
+      <div class="card">
+        <h2>Conexión con Supabase</h2>
+        <p class="sub">Ingresa las credenciales API gratuitas de tu proyecto Supabase (disponibles en Project Settings > API).</p>
+
+        <form id="configForm">
+          <div class="form-group">
+            <label for="cfg-url">Project URL (Supabase URL)</label>
+            <input type="text" id="cfg-url" placeholder="https://xyzcompany.supabase.co" required>
+          </div>
+          <div class="form-group">
+            <label for="cfg-key">Project Anon Key (Public Key)</label>
+            <input type="password" id="cfg-key" placeholder="eyJhbGciOiJIUzI1NiIsIn..." required>
+          </div>
+          <div style="display:flex; gap:10px; margin-top:16px;">
+            <button class="btn btn-solid" type="submit">Guardar Claves y Probar Conexión</button>
+            <button class="btn btn-danger" type="button" id="btnClearConfig">Borrar Claves</button>
+          </div>
+        </form>
+
+        <div style="margin-top:30px; border-top:1px solid var(--line); padding-top:20px;">
+          <h4 style="font-size:15px; margin-bottom:8px;">¿Aún no has creado las tablas en Supabase?</h4>
+          <p style="color:var(--muted); font-size:13.5px; margin-bottom:12px;">
+            En tu panel de Supabase ve a <strong>SQL Editor</strong> y pega el contenido del archivo <code>supabase-schema.sql</code> incluido en el proyecto.
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- SDK de Supabase (CDN Oficial) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- Cliente Supabase de MoisesMusic -->
+<script src="supabase-client.js"></script>
+
+<script>
+(function(){
+  // Elementos DOM
+  var authScreen = document.getElementById('authScreen');
+  var dashboardScreen = document.getElementById('dashboardScreen');
+  var dbStatusBadge = document.getElementById('dbStatusBadge');
+  var btnLogout = document.getElementById('btnLogout');
+  var globalAlert = document.getElementById('globalAlert');
+
+  function showAlert(msg, isOk){
+    globalAlert.textContent = msg;
+    globalAlert.className = 'alert show ' + (isOk ? 'ok' : 'err');
+    setTimeout(function(){ globalAlert.className = 'alert'; }, 5000);
+  }
+
+  function updateBadge(){
+    if(window.MM_DB && window.MM_DB.isConfigured()){
+      dbStatusBadge.textContent = 'Supabase Conectado';
+      dbStatusBadge.className = 'badge connected';
+    } else {
+      dbStatusBadge.textContent = 'Sin configurar';
+      dbStatusBadge.className = 'badge disconnected';
+    }
+  }
+
+  // Comprobar estado de autenticación inicial
+  async function checkAuth(){
+    updateBadge();
+    var cfg = window.MM_DB.getConfig();
+    if(cfg.url) document.getElementById('cfg-url').value = cfg.url;
+    if(cfg.anonKey) document.getElementById('cfg-key').value = cfg.anonKey;
+
+    if(!window.MM_DB.isConfigured()){
+      authScreen.style.display = 'block';
+      dashboardScreen.style.display = 'none';
+      btnLogout.style.display = 'none';
+      return;
+    }
+
+    try {
+      var user = await window.MM_DB.auth.getUser();
+      if(user){
+        authScreen.style.display = 'none';
+        dashboardScreen.style.display = 'block';
+        btnLogout.style.display = 'inline-flex';
+        loadDashboardData();
+      } else {
+        authScreen.style.display = 'block';
+        dashboardScreen.style.display = 'none';
+        btnLogout.style.display = 'none';
+      }
+    } catch(e){
+      authScreen.style.display = 'block';
+      dashboardScreen.style.display = 'none';
+      btnLogout.style.display = 'none';
+    }
+  }
+
+  // Navegación de pestañas
+  var tabButtons = document.querySelectorAll('.tab-btn');
+  var tabPanels = document.querySelectorAll('.tab-panel');
+  tabButtons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      tabButtons.forEach(function(b){ b.classList.remove('active'); });
+      tabPanels.forEach(function(p){ p.classList.remove('active'); });
+      btn.classList.add('active');
+      var targetId = btn.getAttribute('data-tab');
+      var panel = document.getElementById(targetId);
+      if(panel) panel.classList.add('active');
+    });
+  });
+
+  // Login Form
+  document.getElementById('loginForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+    var email = document.getElementById('loginEmail').value.trim();
+    var password = document.getElementById('loginPassword').value;
+    try {
+      await window.MM_DB.auth.login(email, password);
+      showAlert('¡Bienvenido! Sesión iniciada correctamente.', true);
+      checkAuth();
+    } catch(err){
+      showAlert('Error al iniciar sesión: ' + (err.message || err.error_description || 'Verifica tus credenciales'), false);
+    }
+  });
+
+  // Logout
+  btnLogout.addEventListener('click', async function(){
+    await window.MM_DB.auth.logout();
+    showAlert('Sesión cerrada.', true);
+    checkAuth();
+  });
+
+  // Acceso a config desde pantalla de login
+  document.getElementById('btnShowSetupFromAuth').addEventListener('click', function(){
+    authScreen.style.display = 'none';
+    dashboardScreen.style.display = 'block';
+    var configTab = document.querySelector('[data-tab="tab-config"]');
+    if(configTab) configTab.click();
+  });
+
+  // Config Form (Supabase URL y Key)
+  document.getElementById('configForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var url = document.getElementById('cfg-url').value;
+    var key = document.getElementById('cfg-key').value;
+    window.MM_DB.saveConfig(url, key);
+    updateBadge();
+    showAlert('Claves de Supabase guardadas correctamente.', true);
+    checkAuth();
+  });
+
+  document.getElementById('btnClearConfig').addEventListener('click', function(){
+    if(confirm('¿Seguro que deseas eliminar las claves configuradas?')){
+      window.MM_DB.clearConfig();
+      document.getElementById('cfg-url').value = '';
+      document.getElementById('cfg-key').value = '';
+      updateBadge();
+      showAlert('Configuración eliminada.', true);
+      checkAuth();
+    }
+  });
+
+  // ============================================================
+  // GESTIÓN DE EVENTOS
+  // ============================================================
+  var eventFormContainer = document.getElementById('eventFormContainer');
+  var eventForm = document.getElementById('eventForm');
+  var eventsList = document.getElementById('eventsList');
+  var btnNewEvent = document.getElementById('btnNewEvent');
+  var btnCancelEvent = document.getElementById('btnCancelEvent');
+
+  btnNewEvent.addEventListener('click', function(){
+    eventForm.reset();
+    document.getElementById('ev-id').value = '';
+    document.getElementById('eventFormTitle').textContent = 'Nueva Fecha de Concierto';
+    eventFormContainer.style.display = 'block';
+  });
+
+  btnCancelEvent.addEventListener('click', function(){
+    eventFormContainer.style.display = 'none';
+  });
+
+  async function loadEvents(){
+    eventsList.innerHTML = '<div style="color:var(--muted); text-align:center; padding:20px;">Cargando...</div>';
+    var events = await window.MM_DB.events.getAll();
+    if(!events || events.length === 0){
+      eventsList.innerHTML = '<div style="color:var(--muted); text-align:center; padding:20px;">No hay eventos registrados. Haz clic en "+ Agregar Fecha".</div>';
+      return;
+    }
+    var html = '';
+    events.forEach(function(ev){
+      var tagBadge = ev.tag ? ' <span class="badge" style="color:var(--gold); border-color:var(--gold);">' + ev.tag + '</span>' : '';
+      html += '<div class="item-row" data-id="' + ev.id + '">' +
+        '<div class="item-info">' +
+          '<div class="title">' + ev.day_str + ' ' + ev.month_year_str + ' — ' + ev.city + tagBadge + '</div>' +
+          '<div class="meta">Lugar: ' + ev.venue + ' | Botón: ' + ev.button_text + ' (' + ev.ticket_url + ')</div>' +
+        '</div>' +
+        '<div class="item-actions">' +
+          '<button class="btn btn-sm btn-edit-ev">Editar</button>' +
+          '<button class="btn btn-sm btn-danger btn-del-ev">Eliminar</button>' +
+        '</div>' +
+      '</div>';
+    });
+    eventsList.innerHTML = html;
+
+    // Asignar listeners de edición y borrado
+    document.querySelectorAll('.btn-edit-ev').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var row = btn.closest('.item-row');
+        var id = row.getAttribute('data-id');
+        var ev = events.find(function(x){ return x.id === id; });
+        if(!ev) return;
+        document.getElementById('ev-id').value = ev.id;
+        document.getElementById('ev-day').value = ev.day_str;
+        document.getElementById('ev-month').value = ev.month_year_str;
+        document.getElementById('ev-city').value = ev.city;
+        document.getElementById('ev-venue').value = ev.venue;
+        document.getElementById('ev-tag').value = ev.tag || '';
+        document.getElementById('ev-btn-text').value = ev.button_text || 'BOLETOS';
+        document.getElementById('ev-url').value = ev.ticket_url || '#';
+        document.getElementById('eventFormTitle').textContent = 'Editar Concierto';
+        eventFormContainer.style.display = 'block';
+        eventFormContainer.scrollIntoView({ behavior:'smooth' });
+      });
+    });
+
+    document.querySelectorAll('.btn-del-ev').forEach(function(btn){
+      btn.addEventListener('click', async function(){
+        if(confirm('¿Eliminar este concierto del sitio web?')){
+          var id = btn.closest('.item-row').getAttribute('data-id');
+          try {
+            await window.MM_DB.events.delete(id);
+            showAlert('Concierto eliminado.', true);
+            loadEvents();
+          } catch(err){
+            showAlert('Error al eliminar: ' + err.message, false);
+          }
+        }
+      });
+    });
+  }
+
+  eventForm.addEventListener('submit', async function(e){
+    e.preventDefault();
+    var payload = {
+      day_str: document.getElementById('ev-day').value.trim(),
+      month_year_str: document.getElementById('ev-month').value.trim(),
+      city: document.getElementById('ev-city').value.trim(),
+      venue: document.getElementById('ev-venue').value.trim(),
+      tag: document.getElementById('ev-tag').value.trim() || null,
+      button_text: document.getElementById('ev-btn-text').value.trim(),
+      ticket_url: document.getElementById('ev-url').value.trim()
+    };
+    var id = document.getElementById('ev-id').value;
+    if(id) payload.id = id;
+
+    try {
+      await window.MM_DB.events.save(payload);
+      showAlert('¡Concierto guardado con éxito!', true);
+      eventFormContainer.style.display = 'none';
+      loadEvents();
+    } catch(err){
+      showAlert('Error al guardar: ' + err.message, false);
+    }
+  });
+
+  // ============================================================
+  // GESTIÓN DE TEXTOS Y TÍTULOS
+  // ============================================================
+  var textsForm = document.getElementById('textsForm');
+  async function loadTexts(){
+    var content = await window.MM_DB.content.getAll();
+    if(!content) return;
+    if(content.topbar_text) document.getElementById('txt-topbar').value = content.topbar_text;
+    if(content.hero_tag) document.getElementById('txt-hero-tag').value = content.hero_tag;
+    if(content.hero_title) document.getElementById('txt-hero-title').value = content.hero_title;
+    if(content.hero_subtitle) document.getElementById('txt-hero-sub').value = content.hero_subtitle;
+    if(content.next_event_title) document.getElementById('txt-next-event-title').value = content.next_event_title;
+    if(content.bio_title) document.getElementById('txt-bio-title').value = content.bio_title;
+    if(content.bio_text) document.getElementById('txt-bio-text').value = content.bio_text;
+    if(content.stat_years) document.getElementById('txt-stat-years').value = content.stat_years;
+    if(content.stat_concerts) document.getElementById('txt-stat-concerts').value = content.stat_concerts;
+    if(content.stat_projects) document.getElementById('txt-stat-projects').value = content.stat_projects;
+  }
+
+  textsForm.addEventListener('submit', async function(e){
+    e.preventDefault();
+    var payload = {
+      topbar_text: document.getElementById('txt-topbar').value,
+      hero_tag: document.getElementById('txt-hero-tag').value,
+      hero_title: document.getElementById('txt-hero-title').value,
+      hero_subtitle: document.getElementById('txt-hero-sub').value,
+      next_event_title: document.getElementById('txt-next-event-title').value,
+      bio_title: document.getElementById('txt-bio-title').value,
+      bio_text: document.getElementById('txt-bio-text').value,
+      stat_years: document.getElementById('txt-stat-years').value,
+      stat_concerts: document.getElementById('txt-stat-concerts').value,
+      stat_projects: document.getElementById('txt-stat-projects').value
+    };
+    try {
+      await window.MM_DB.content.bulkSave(payload);
+      showAlert('¡Textos y títulos actualizados en el sitio web!', true);
+    } catch(err){
+      showAlert('Error al guardar textos: ' + err.message, false);
+    }
+  });
+
+  // ============================================================
+  // GESTIÓN DE DISCOGRAFÍA / MÚSICA
+  // ============================================================
+  var musicFormContainer = document.getElementById('musicFormContainer');
+  var musicForm = document.getElementById('musicForm');
+  var musicList = document.getElementById('musicList');
+  var btnNewMusic = document.getElementById('btnNewMusic');
+  var btnCancelMusic = document.getElementById('btnCancelMusic');
+
+  btnNewMusic.addEventListener('click', function(){
+    musicForm.reset();
+    document.getElementById('mu-id').value = '';
+    document.getElementById('musicFormTitle').textContent = 'Nuevo Lanzamiento';
+    musicFormContainer.style.display = 'block';
+  });
+
+  btnCancelMusic.addEventListener('click', function(){
+    musicFormContainer.style.display = 'none';
+  });
+
+  async function loadMusic(){
+    musicList.innerHTML = '<div style="color:var(--muted); text-align:center; padding:20px;">Cargando...</div>';
+    var list = await window.MM_DB.music.getAll();
+    if(!list || list.length === 0){
+      musicList.innerHTML = '<div style="color:var(--muted); text-align:center; padding:20px;">No hay música registrada.</div>';
+      return;
+    }
+    var html = '';
+    list.forEach(function(m){
+      html += '<div class="item-row" data-id="' + m.id + '">' +
+        '<div class="item-info">' +
+          '<div class="title">' + m.title + ' <span class="badge" style="color:var(--gold); border-color:var(--gold);">' + m.category + '</span></div>' +
+          '<div class="meta">Enlace: ' + m.stream_url + '</div>' +
+        '</div>' +
+        '<div class="item-actions">' +
+          '<button class="btn btn-sm btn-edit-mu">Editar</button>' +
+          '<button class="btn btn-sm btn-danger btn-del-mu">Eliminar</button>' +
+        '</div>' +
+      '</div>';
+    });
+    musicList.innerHTML = html;
+
+    document.querySelectorAll('.btn-edit-mu').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var id = btn.closest('.item-row').getAttribute('data-id');
+        var m = list.find(function(x){ return x.id === id; });
+        if(!m) return;
+        document.getElementById('mu-id').value = m.id;
+        document.getElementById('mu-title').value = m.title;
+        document.getElementById('mu-category').value = m.category;
+        document.getElementById('mu-url').value = m.stream_url;
+        document.getElementById('musicFormTitle').textContent = 'Editar Lanzamiento';
+        musicFormContainer.style.display = 'block';
+        musicFormContainer.scrollIntoView({ behavior:'smooth' });
+      });
+    });
+
+    document.querySelectorAll('.btn-del-mu').forEach(function(btn){
+      btn.addEventListener('click', async function(){
+        if(confirm('¿Eliminar este lanzamiento musical?')){
+          var id = btn.closest('.item-row').getAttribute('data-id');
+          try {
+            await window.MM_DB.music.delete(id);
+            showAlert('Lanzamiento eliminado.', true);
+            loadMusic();
+          } catch(err){
+            showAlert('Error al eliminar: ' + err.message, false);
+          }
+        }
+      });
+    });
+  }
+
+  musicForm.addEventListener('submit', async function(e){
+    e.preventDefault();
+    var payload = {
+      title: document.getElementById('mu-title').value.trim(),
+      category: document.getElementById('mu-category').value,
+      stream_url: document.getElementById('mu-url').value.trim()
+    };
+    var id = document.getElementById('mu-id').value;
+    if(id) payload.id = id;
+
+    try {
+      await window.MM_DB.music.save(payload);
+      showAlert('¡Lanzamiento guardado!', true);
+      musicFormContainer.style.display = 'none';
+      loadMusic();
+    } catch(err){
+      showAlert('Error al guardar: ' + err.message, false);
+    }
+  });
+
+  // ============================================================
+  // GESTIÓN DE CONTACTO Y REDES
+  // ============================================================
+  var socialForm = document.getElementById('socialForm');
+  async function loadSocial(){
+    var content = await window.MM_DB.content.getAll();
+    if(!content) return;
+    if(content.contact_email) document.getElementById('cnt-email').value = content.contact_email;
+    if(content.booking_email) document.getElementById('cnt-booking').value = content.booking_email;
+    if(content.whatsapp_url) document.getElementById('cnt-wa').value = content.whatsapp_url;
+    if(content.instagram_url) document.getElementById('cnt-ig').value = content.instagram_url;
+    if(content.facebook_url) document.getElementById('cnt-fb').value = content.facebook_url;
+    if(content.twitter_url) document.getElementById('cnt-tw').value = content.twitter_url;
+    if(content.youtube_url) document.getElementById('cnt-yt').value = content.youtube_url;
+  }
+
+  socialForm.addEventListener('submit', async function(e){
+    e.preventDefault();
+    var payload = {
+      contact_email: document.getElementById('cnt-email').value.trim(),
+      booking_email: document.getElementById('cnt-booking').value.trim(),
+      whatsapp_url: document.getElementById('cnt-wa').value.trim(),
+      instagram_url: document.getElementById('cnt-ig').value.trim(),
+      facebook_url: document.getElementById('cnt-fb').value.trim(),
+      twitter_url: document.getElementById('cnt-tw').value.trim(),
+      youtube_url: document.getElementById('cnt-yt').value.trim()
+    };
+    try {
+      await window.MM_DB.content.bulkSave(payload);
+      showAlert('¡Redes y contactos actualizados!', true);
+    } catch(err){
+      showAlert('Error al guardar: ' + err.message, false);
+    }
+  });
+
+  function loadDashboardData(){
+    loadEvents();
+    loadTexts();
+    loadMusic();
+    loadSocial();
+  }
+
+  checkAuth();
+})();
+</script>
+</body>
+</html>

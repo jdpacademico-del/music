@@ -10,7 +10,36 @@ Sitio web oficial de **MoisesMusic** desarrollado en HTML5 semántico, CSS moder
 - **Tipografías premium**: Fraunces (editorial/titular), Inter (lectura UI) y Syne (botones y pestañas modernas en mayúsculas).
 - **Iconos vectoriales limpios (SVG)** para redes sociales: X, Facebook, Instagram, YouTube, WhatsApp y Correo.
 - **Botón volver arriba ("^")** tanto al final de cada vista como en botón flotante con detección de scroll.
+- **Gestor de contenidos dinámico (CMS)** integrado con **Supabase (Plan Gratis)**: edita eventos del tour, títulos, textos, discografía y redes sociales desde un panel de control con formularios y autenticación segura (`/admin`).
 - **Preparado para producción** con encabezados de seguridad HTTP y caché optimizado para Vercel.
+
+---
+
+## ⚡ Conexión con Supabase (Plan 100% Gratuito)
+
+Para que el administrador pueda editar eventos, títulos y canciones desde `/admin` sin tocar código:
+
+### 1. Crear proyecto en Supabase
+1. Ingresa a [supabase.com](https://supabase.com) y crea una cuenta gratuita (o inicia sesión con GitHub).
+2. Haz clic en **"New Project"** y asígnale un nombre (ej. `moisesmusic-db`), una contraseña segura y elige la región más cercana.
+
+### 2. Crear las tablas de la Base de Datos
+1. En tu panel de Supabase, en el menú lateral izquierdo ve a **"SQL Editor"**.
+2. Abre el archivo [`supabase-schema.sql`](supabase-schema.sql) de este repositorio, copia todo su contenido, pégalo en el editor SQL de Supabase y haz clic en **"Run"**.
+3. Esto creará automáticamente las tablas (`events`, `site_content`, `music`, `gallery`, `blog_posts`), los datos semilla iniciales y la seguridad **RLS (Row Level Security)**.
+
+### 3. Crear tu Usuario Administrador
+1. En el panel de Supabase, ve a **"Authentication"** > **"Users"**.
+2. Haz clic en **"Add User"** > **"Create User"**.
+3. Ingresa tu correo y una contraseña segura para administrar la página.
+
+### 4. Conectar el Panel `/admin`
+1. En Supabase ve a **"Project Settings"** (el engranaje abajo a la izquierda) > **"API"**.
+2. Copia:
+   - **Project URL**
+   - **Project API Keys (`anon` / `public`)**
+3. Abre tu sitio web en `/admin` (o abre `admin.html`), ve a la pestaña **"⚙️ Supabase Config"**, pega la URL y la Anon Key, y haz clic en **Guardar**.
+4. ¡Inicia sesión con tu correo y contraseña! Desde ese momento, cualquier cambio que guardes en los formularios actualizará automáticamente tu página en vivo.
 
 ---
 

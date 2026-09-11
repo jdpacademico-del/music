@@ -916,7 +916,7 @@ footer{
 
       <div class="foot-bottom">
         <div>Todos los derechos reservados © 2026 MoisesMusic</div>
-        <div>Sitio web oficial</div>
+        <div>Sitio web oficial &middot; <a href="admin.html" style="color:var(--gold); opacity:0.85;">Admin</a></div>
       </div>
     </div>
   </div>
@@ -1050,5 +1050,17 @@ footer{
     <polyline points="18 15 12 9 6 15"></polyline>
   </svg>
 </button>
+
+<!-- SDK Supabase (CDN Oficial) y Cliente MoisesMusic -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-client.js"></script>
+<script>
+  // Hidratar el sitio con datos de Supabase si está configurado
+  document.addEventListener('DOMContentLoaded', function(){
+    if (window.MM_DB) {
+      window.MM_DB.hydratePublicSite();
+    }
+  });
+</script>
 </body>
 </html>
