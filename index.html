@@ -829,24 +829,22 @@ footer{
 .btn-back-top{
   display:inline-flex;
   align-items:center;
-  gap:8px;
+  justify-content:center;
+  width:46px;
+  height:46px;
   background:var(--bg-alt-2);
   color:var(--ink);
   border:1px solid var(--line);
-  border-radius:24px;
-  padding:10px 20px;
-  font-family:'Syne','Outfit',sans-serif;
-  font-size:12px;
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:.1em;
+  border-radius:50%;
+  padding:0;
   cursor:pointer;
   transition:all .2s var(--ease);
 }
 .btn-back-top:hover{
   border-color:var(--gold);
   color:var(--gold);
-  transform:translateY(-2px);
+  transform:translateY(-3px);
+  box-shadow:0 6px 20px rgba(227, 178, 60, 0.2);
 }
 .btn-back-top svg{
   transition:transform .2s var(--ease);
@@ -1604,10 +1602,9 @@ footer{
     <div class="foot-content">
       <div class="foot-back-top">
         <button type="button" class="btn-back-top" id="btnBackToTop" aria-label="Volver arriba" title="Volver al principio de la página">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="18 15 12 9 6 15"></polyline>
           </svg>
-          <span>VOLVER ARRIBA</span>
         </button>
       </div>
 
