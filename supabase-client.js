@@ -10,10 +10,16 @@
   var STORAGE_URL_KEY = 'mm_supabase_url';
   var STORAGE_ANON_KEY = 'mm_supabase_anon_key';
 
-  // Configuración por defecto (puede ser predefinida aquí o configurada en /admin)
+  // ─── Credenciales del proyecto Supabase ───────────────────────────────────
+  // El anon key es seguro de exponer (solo permite operaciones permitidas por RLS).
+  var SUPABASE_PROJECT_URL = 'https://ewjcksbboehhixbwifbv.supabase.co';
+  var SUPABASE_ANON_PUBLIC  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV3amNrc2Jib2VoaGl4YndpZmJ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkxNTQzMDAsImV4cCI6MjEwNDczMDMwMH0.YlBe_ryk1HfU4qtFeM7xTgIr38flr-R655Oi8bMBU7g';
+  // ──────────────────────────────────────────────────────────────────────────
+
+  // Configuración por defecto — las claves del proyecto tienen prioridad máxima
   var defaultConfig = {
-    url: window.SUPABASE_URL || localStorage.getItem(STORAGE_URL_KEY) || '',
-    anonKey: window.SUPABASE_ANON_KEY || localStorage.getItem(STORAGE_ANON_KEY) || ''
+    url: SUPABASE_PROJECT_URL || window.SUPABASE_URL || localStorage.getItem(STORAGE_URL_KEY) || '',
+    anonKey: SUPABASE_ANON_PUBLIC || window.SUPABASE_ANON_KEY || localStorage.getItem(STORAGE_ANON_KEY) || ''
   };
 
   var client = null;
