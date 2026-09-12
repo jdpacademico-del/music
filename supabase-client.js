@@ -310,6 +310,10 @@
             var el = document.querySelector('#view-bio .section-desc');
             if (el) el.textContent = content.bio_text;
           }
+          if (content.bio_image) {
+            var bioImg = document.getElementById('bioImage');
+            if (bioImg) bioImg.src = content.bio_image;
+          }
           if (content.stat_years) {
             var el = document.querySelector('#view-bio .stat-row .stat:nth-child(1) .num');
             if (el) el.textContent = content.stat_years;

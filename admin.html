@@ -319,6 +319,11 @@ header.admin-nav{
             <label for="txt-bio-text">Texto de Biografía</label>
             <textarea id="txt-bio-text" rows="4"></textarea>
           </div>
+          <div class="form-group">
+            <label for="txt-bio-image">Foto de Biografía (URL o ruta local)</label>
+            <input type="text" id="txt-bio-image" placeholder="img/imagen biografia.png o URL">
+            <small style="display:block; color:var(--muted); margin-top:4px;">Por defecto: <code>img/imagen biografia.png</code>. Puedes escribir otra ruta local o pegar una URL de imagen externa.</small>
+          </div>
 
           <div class="form-grid">
             <div class="form-group">
@@ -727,6 +732,7 @@ header.admin-nav{
     if(content.next_event_bg_image) document.getElementById('txt-next-event-bg').value = content.next_event_bg_image;
     if(content.bio_title) document.getElementById('txt-bio-title').value = content.bio_title;
     if(content.bio_text) document.getElementById('txt-bio-text').value = content.bio_text;
+    if(content.bio_image) document.getElementById('txt-bio-image').value = content.bio_image;
     if(content.stat_years) document.getElementById('txt-stat-years').value = content.stat_years;
     if(content.stat_concerts) document.getElementById('txt-stat-concerts').value = content.stat_concerts;
     if(content.stat_projects) document.getElementById('txt-stat-projects').value = content.stat_projects;
@@ -745,6 +751,7 @@ header.admin-nav{
       next_event_bg_image: document.getElementById('txt-next-event-bg').value.trim(),
       bio_title: document.getElementById('txt-bio-title').value,
       bio_text: document.getElementById('txt-bio-text').value,
+      bio_image: document.getElementById('txt-bio-image').value.trim(),
       stat_years: document.getElementById('txt-stat-years').value,
       stat_concerts: document.getElementById('txt-stat-concerts').value,
       stat_projects: document.getElementById('txt-stat-projects').value
