@@ -338,6 +338,66 @@ header.admin-nav{
               <label for="txt-stat-projects">Proyectos Lanzados</label>
               <input type="text" id="txt-stat-projects" placeholder="3">
             </div>
+          <hr style="border:none; border-top:1px solid var(--line); margin:28px 0;">
+
+          <h3 style="font-size:18px; margin-bottom:8px;">Sección Blog / Últimas Noticias</h3>
+          <p class="sub" style="margin-bottom:16px;">Personaliza las imágenes y textos de las 3 entradas mostradas en la pestaña Blog.</p>
+
+          <div style="background:var(--bg-alt-2); padding:16px; border-radius:var(--radius); border:1px solid var(--line); margin-bottom:16px;">
+            <h4 style="font-size:14px; color:var(--gold); margin-bottom:10px;">Entrada Blog #1</h4>
+            <div class="form-group">
+              <label for="txt-blog1-img">Imagen (URL o ruta local)</label>
+              <input type="text" id="txt-blog1-img" placeholder="img/blog1.png">
+              <small style="display:block; color:var(--muted); margin-top:4px;">Por defecto: <code>img/blog1.png</code></small>
+            </div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="txt-blog1-date">Fecha</label>
+                <input type="text" id="txt-blog1-date" placeholder="5 SEP 2026">
+              </div>
+              <div class="form-group">
+                <label for="txt-blog1-title">Título</label>
+                <input type="text" id="txt-blog1-title" placeholder="Título de la primera entrada del blog">
+              </div>
+            </div>
+          </div>
+
+          <div style="background:var(--bg-alt-2); padding:16px; border-radius:var(--radius); border:1px solid var(--line); margin-bottom:16px;">
+            <h4 style="font-size:14px; color:var(--gold); margin-bottom:10px;">Entrada Blog #2</h4>
+            <div class="form-group">
+              <label for="txt-blog2-img">Imagen (URL o ruta local)</label>
+              <input type="text" id="txt-blog2-img" placeholder="img/blog2.png">
+              <small style="display:block; color:var(--muted); margin-top:4px;">Por defecto: <code>img/blog2.png</code></small>
+            </div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="txt-blog2-date">Fecha</label>
+                <input type="text" id="txt-blog2-date" placeholder="22 AGO 2026">
+              </div>
+              <div class="form-group">
+                <label for="txt-blog2-title">Título</label>
+                <input type="text" id="txt-blog2-title" placeholder="La historia detrás de la nueva canción">
+              </div>
+            </div>
+          </div>
+
+          <div style="background:var(--bg-alt-2); padding:16px; border-radius:var(--radius); border:1px solid var(--line); margin-bottom:16px;">
+            <h4 style="font-size:14px; color:var(--gold); margin-bottom:10px;">Entrada Blog #3</h4>
+            <div class="form-group">
+              <label for="txt-blog3-img">Imagen (URL o ruta local)</label>
+              <input type="text" id="txt-blog3-img" placeholder="img/blog3.png">
+              <small style="display:block; color:var(--muted); margin-top:4px;">Por defecto: <code>img/blog3.png</code></small>
+            </div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="txt-blog3-date">Fecha</label>
+                <input type="text" id="txt-blog3-date" placeholder="30 JUL 2026">
+              </div>
+              <div class="form-group">
+                <label for="txt-blog3-title">Título</label>
+                <input type="text" id="txt-blog3-title" placeholder="Recap de la última gira">
+              </div>
+            </div>
           </div>
 
           <button class="btn btn-solid" style="margin-top:12px;" type="submit">Guardar Todos los Textos</button>
@@ -736,6 +796,15 @@ header.admin-nav{
     if(content.stat_years) document.getElementById('txt-stat-years').value = content.stat_years;
     if(content.stat_concerts) document.getElementById('txt-stat-concerts').value = content.stat_concerts;
     if(content.stat_projects) document.getElementById('txt-stat-projects').value = content.stat_projects;
+    if(content.blog1_image) document.getElementById('txt-blog1-img').value = content.blog1_image;
+    if(content.blog1_date) document.getElementById('txt-blog1-date').value = content.blog1_date;
+    if(content.blog1_title) document.getElementById('txt-blog1-title').value = content.blog1_title;
+    if(content.blog2_image) document.getElementById('txt-blog2-img').value = content.blog2_image;
+    if(content.blog2_date) document.getElementById('txt-blog2-date').value = content.blog2_date;
+    if(content.blog2_title) document.getElementById('txt-blog2-title').value = content.blog2_title;
+    if(content.blog3_image) document.getElementById('txt-blog3-img').value = content.blog3_image;
+    if(content.blog3_date) document.getElementById('txt-blog3-date').value = content.blog3_date;
+    if(content.blog3_title) document.getElementById('txt-blog3-title').value = content.blog3_title;
   }
 
   textsForm.addEventListener('submit', async function(e){
@@ -754,7 +823,16 @@ header.admin-nav{
       bio_image: document.getElementById('txt-bio-image').value.trim(),
       stat_years: document.getElementById('txt-stat-years').value,
       stat_concerts: document.getElementById('txt-stat-concerts').value,
-      stat_projects: document.getElementById('txt-stat-projects').value
+      stat_projects: document.getElementById('txt-stat-projects').value,
+      blog1_image: document.getElementById('txt-blog1-img').value.trim(),
+      blog1_date: document.getElementById('txt-blog1-date').value.trim(),
+      blog1_title: document.getElementById('txt-blog1-title').value.trim(),
+      blog2_image: document.getElementById('txt-blog2-img').value.trim(),
+      blog2_date: document.getElementById('txt-blog2-date').value.trim(),
+      blog2_title: document.getElementById('txt-blog2-title').value.trim(),
+      blog3_image: document.getElementById('txt-blog3-img').value.trim(),
+      blog3_date: document.getElementById('txt-blog3-date').value.trim(),
+      blog3_title: document.getElementById('txt-blog3-title').value.trim()
     };
     try {
       await window.MM_DB.content.bulkSave(payload);

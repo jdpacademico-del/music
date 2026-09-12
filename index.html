@@ -394,6 +394,16 @@ hr.rule{border:none; border-top:1px solid var(--line); margin:0;}
 .card:hover .card-media img{
   transform:scale(1.04);
 }
+.card-media-wide{
+  aspect-ratio:16/10; position:relative; overflow:hidden; background:#14161a;
+}
+.card-media-wide img{
+  width:100%; height:100%; object-fit:cover; display:block;
+  transition:transform .35s var(--ease);
+}
+.card:hover .card-media-wide img{
+  transform:scale(1.04);
+}
 .ph{
   aspect-ratio:1/1; position:relative; overflow:hidden;
   display:flex; align-items:center; justify-content:center;
@@ -1067,28 +1077,28 @@ footer{
 
       <div class="grid-3" style="margin-top:44px;">
         <article class="card">
-          <div class="ph ph-2 ph-wide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19V5a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M14 3v5h5"/></svg></div>
+          <div class="card-media-wide"><img id="blogImg1" src="img/blog1.png" alt="Título de la primera entrada del blog" loading="lazy"></div>
           <div class="card-body">
-            <div class="card-kicker">5 SEP 2026</div>
-            <div class="card-title">Título de la primera entrada del blog</div>
+            <div class="card-kicker" id="blogDate1">5 SEP 2026</div>
+            <div class="card-title" id="blogTitle1">Título de la primera entrada del blog</div>
             <div class="card-meta">Breve resumen del artículo, para dar contexto antes de leer completo.</div>
             <a class="card-cta" href="#" onclick="return false;">Leer más →</a>
           </div>
         </article>
         <article class="card">
-          <div class="ph ph-3 ph-wide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19V5a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M14 3v5h5"/></svg></div>
+          <div class="card-media-wide"><img id="blogImg2" src="img/blog2.png" alt="La historia detrás de la nueva canción" loading="lazy"></div>
           <div class="card-body">
-            <div class="card-kicker">22 AGO 2026</div>
-            <div class="card-title">La historia detrás de la nueva canción</div>
+            <div class="card-kicker" id="blogDate2">22 AGO 2026</div>
+            <div class="card-title" id="blogTitle2">La historia detrás de la nueva canción</div>
             <div class="card-meta">Espacio para contar el proceso creativo de un lanzamiento reciente.</div>
             <a class="card-cta" href="#" onclick="return false;">Leer más →</a>
           </div>
         </article>
         <article class="card">
-          <div class="ph ph-1 ph-wide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19V5a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M14 3v5h5"/></svg></div>
+          <div class="card-media-wide"><img id="blogImg3" src="img/blog3.png" alt="Recap de la última gira" loading="lazy"></div>
           <div class="card-body">
-            <div class="card-kicker">30 JUL 2026</div>
-            <div class="card-title">Recap de la última gira</div>
+            <div class="card-kicker" id="blogDate3">30 JUL 2026</div>
+            <div class="card-title" id="blogTitle3">Recap de la última gira</div>
             <div class="card-meta">Resumen y fotos de los conciertos más recientes.</div>
             <a class="card-cta" href="#" onclick="return false;">Leer más →</a>
           </div>

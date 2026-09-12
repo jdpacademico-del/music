@@ -326,6 +326,42 @@
             var el = document.querySelector('#view-bio .stat-row .stat:nth-child(3) .num');
             if (el) el.textContent = content.stat_projects;
           }
+          if (content.blog1_image) {
+            var el = document.getElementById('blogImg1');
+            if (el) el.src = content.blog1_image;
+          }
+          if (content.blog2_image) {
+            var el = document.getElementById('blogImg2');
+            if (el) el.src = content.blog2_image;
+          }
+          if (content.blog3_image) {
+            var el = document.getElementById('blogImg3');
+            if (el) el.src = content.blog3_image;
+          }
+          if (content.blog1_date) {
+            var el = document.getElementById('blogDate1');
+            if (el) el.textContent = content.blog1_date;
+          }
+          if (content.blog2_date) {
+            var el = document.getElementById('blogDate2');
+            if (el) el.textContent = content.blog2_date;
+          }
+          if (content.blog3_date) {
+            var el = document.getElementById('blogDate3');
+            if (el) el.textContent = content.blog3_date;
+          }
+          if (content.blog1_title) {
+            var el = document.getElementById('blogTitle1');
+            if (el) el.textContent = content.blog1_title;
+          }
+          if (content.blog2_title) {
+            var el = document.getElementById('blogTitle2');
+            if (el) el.textContent = content.blog2_title;
+          }
+          if (content.blog3_title) {
+            var el = document.getElementById('blogTitle3');
+            if (el) el.textContent = content.blog3_title;
+          }
           if (content.contact_email) {
             var links = document.querySelectorAll('a[href^="mailto:"]');
             links.forEach(function (a) {
