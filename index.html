@@ -604,8 +604,48 @@ hr.rule{border:none; border-top:1px solid var(--line); margin:0;}
 
 /* ---------- Galería ---------- */
 .gal-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px;}
-.gal-grid .ph{cursor:pointer;}
-.gal-grid .ph:nth-child(4n+1){grid-row:span 2; aspect-ratio:auto;}
+.gal-item{
+  position:relative; aspect-ratio:1/1; overflow:hidden;
+  border-radius:var(--radius); border:1px solid var(--line);
+  background:var(--bg-alt); cursor:pointer;
+  box-shadow:0 8px 24px rgba(0,0,0,.4);
+  transition:border-color .3s var(--ease), box-shadow .3s var(--ease);
+}
+.gal-item:nth-child(4n+1){grid-row:span 2; aspect-ratio:auto;}
+.gal-item img{
+  width:100%; height:100%; object-fit:cover; display:block;
+  transition:transform .4s var(--ease);
+}
+.gal-item:hover{
+  border-color:var(--gold);
+  box-shadow:0 14px 34px rgba(0,0,0,.6), 0 0 20px rgba(227, 178, 60, 0.12);
+}
+.gal-item:hover img{
+  transform:scale(1.05);
+}
+
+/* Lightbox para fotos de galería */
+.gal-lightbox{
+  position:fixed; inset:0; background:rgba(0,0,0,.92);
+  z-index:9999; display:none; align-items:center; justify-content:center;
+  padding:24px; backdrop-filter:blur(8px);
+}
+.gal-lightbox.open{display:flex;}
+.gal-lightbox-inner{
+  position:relative; max-width:92vw; max-height:92vh; display:flex; flex-direction:column; align-items:center;
+}
+.gal-lightbox img{
+  max-width:100%; max-height:85vh; object-fit:contain;
+  border-radius:var(--radius); border:1px solid rgba(255,255,255,.1);
+  box-shadow:0 24px 60px rgba(0,0,0,.9);
+}
+.gal-lightbox-close{
+  position:absolute; top:-40px; right:0;
+  background:transparent; border:none; color:#fff;
+  font-size:32px; cursor:pointer; line-height:1;
+  transition:color .2s var(--ease);
+}
+.gal-lightbox-close:hover{color:var(--gold);}
 
 /* ---------- Donar ---------- */
 .donate-panel{
@@ -1322,14 +1362,22 @@ footer{
       <p class="section-desc">Reemplaza cada uno de estos espacios con fotografías reales de conciertos, sesiones y detrás de cámaras.</p>
 
       <div class="gal-grid" style="margin-top:40px;">
-        <div class="ph ph-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="1.5"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 16l-5-5-4 4-3-3-5 5"/></svg></div>
-        <div class="ph ph-2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="1.5"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 16l-5-5-4 4-3-3-5 5"/></svg></div>
-        <div class="ph ph-3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="1.5"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 16l-5-5-4 4-3-3-5 5"/></svg></div>
-        <div class="ph ph-4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="1.5"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 16l-5-5-4 4-3-3-5 5"/></svg></div>
-        <div class="ph ph-2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="1.5"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 16l-5-5-4 4-3-3-5 5"/></svg></div>
-        <div class="ph ph-3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="1.5"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 16l-5-5-4 4-3-3-5 5"/></svg></div>
-        <div class="ph ph-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="1.5"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 16l-5-5-4 4-3-3-5 5"/></svg></div>
-        <div class="ph ph-4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="1.5"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 16l-5-5-4 4-3-3-5 5"/></svg></div>
+        <div class="gal-item" data-gal-index="1"><img id="galImg1" src="img/blog2.png" alt="MoisesMusic en Vivo" loading="lazy"></div>
+        <div class="gal-item" data-gal-index="2"><img id="galImg2" src="img/musica1.png" alt="Lanzamiento Musical" loading="lazy"></div>
+        <div class="gal-item" data-gal-index="3"><img id="galImg3" src="img/blog1.png" alt="Sesión de Piano en Estudio" loading="lazy"></div>
+        <div class="gal-item" data-gal-index="4"><img id="galImg4" src="img/musica2.png" alt="Producción Musical" loading="lazy"></div>
+        <div class="gal-item" data-gal-index="5"><img id="galImg5" src="img/blog3.png" alt="Sesión Acústica" loading="lazy"></div>
+        <div class="gal-item" data-gal-index="6"><img id="galImg6" src="img/musica3.png" alt="Nuevo Sencillo" loading="lazy"></div>
+        <div class="gal-item" data-gal-index="7"><img id="galImg7" src="img/hero.jpg" alt="Retrato Oficial" loading="lazy"></div>
+        <div class="gal-item" data-gal-index="8"><img id="galImg8" src="img/musica4.png" alt="Concierto MoisesMusic" loading="lazy"></div>
+      </div>
+
+      <!-- Modal Lightbox para fotos de galería -->
+      <div class="gal-lightbox" id="galLightbox" role="dialog" aria-modal="true">
+        <div class="gal-lightbox-inner">
+          <button type="button" class="gal-lightbox-close" id="galLightboxClose" aria-label="Cerrar">&times;</button>
+          <img id="galLightboxImg" src="" alt="Vista ampliada">
+        </div>
       </div>
     </div>
   </section>
@@ -1758,6 +1806,42 @@ window.closeBlogPost = function(shouldScroll){
       });
     }
   });
+
+  /* ---------- Lightbox de Galería ---------- */
+  var galLightbox = document.getElementById('galLightbox');
+  var galLightboxImg = document.getElementById('galLightboxImg');
+  var galLightboxClose = document.getElementById('galLightboxClose');
+
+  if(galLightbox && galLightboxImg){
+    document.querySelectorAll('.gal-item').forEach(function(item){
+      item.addEventListener('click', function(){
+        var img = item.querySelector('img');
+        if(img && img.src){
+          galLightboxImg.src = img.src;
+          galLightboxImg.alt = img.alt || 'Foto de Galería';
+          galLightbox.classList.add('open');
+        }
+      });
+    });
+
+    if(galLightboxClose){
+      galLightboxClose.addEventListener('click', function(){
+        galLightbox.classList.remove('open');
+      });
+    }
+
+    galLightbox.addEventListener('click', function(e){
+      if(e.target === galLightbox){
+        galLightbox.classList.remove('open');
+      }
+    });
+
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && galLightbox.classList.contains('open')){
+        galLightbox.classList.remove('open');
+      }
+    });
+  }
 })();
 </script>
 

@@ -195,6 +195,7 @@ header.admin-nav{
       <button class="tab-btn active" data-tab="tab-eventos">🎟️ Eventos y Tour</button>
       <button class="tab-btn" data-tab="tab-textos">✏️ Textos y Títulos</button>
       <button class="tab-btn" data-tab="tab-musica">🎵 Discografía</button>
+      <button class="tab-btn" data-tab="tab-galeria">🖼️ Galería</button>
       <button class="tab-btn" data-tab="tab-redes">📱 Redes y Contacto</button>
       <button class="tab-btn" data-tab="tab-config">⚙️ Supabase Config</button>
     </nav>
@@ -486,6 +487,134 @@ header.admin-nav{
             <input type="text" id="txt-video-url" placeholder="https://youtu.be/1Ty7oSPE-K8">
           </div>
           <button class="btn btn-solid btn-sm" type="submit" style="margin-top:8px;">Guardar Video Destacado</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- TAB: GALERÍA DE FOTOS -->
+    <section class="tab-panel" id="tab-galeria">
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
+          <div>
+            <h2>Galería de Fotos (Mosaico)</h2>
+            <p class="sub" style="margin-bottom:0;">Personaliza las 8 fotografías que componen el mosaico de la pestaña Galería.</p>
+          </div>
+          <button class="btn btn-solid btn-sm" id="btnSaveGalleryTop" type="button">💾 Guardar Galería</button>
+        </div>
+
+        <form id="galleryForm">
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:18px; margin-top:20px;">
+            
+            <div style="background:var(--bg-alt-2); padding:16px; border-radius:var(--radius); border:1px solid var(--line);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <strong style="color:var(--gold); font-size:13px;">Espacio #1 (Vertical Grande)</strong>
+              </div>
+              <div style="aspect-ratio:16/10; border-radius:var(--radius); overflow:hidden; background:#14161a; margin-bottom:10px; border:1px solid var(--line);">
+                <img id="prev-gal-1" src="img/blog2.png" alt="Espacio 1" style="width:100%; height:100%; object-fit:cover; display:block;">
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label for="gal-img-1" style="font-size:12px;">URL o ruta local</label>
+                <input type="text" id="gal-img-1" value="img/blog2.png" placeholder="img/... o URL">
+              </div>
+            </div>
+
+            <div style="background:var(--bg-alt-2); padding:16px; border-radius:var(--radius); border:1px solid var(--line);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <strong style="color:var(--gold); font-size:13px;">Espacio #2 (Cuadrado)</strong>
+              </div>
+              <div style="aspect-ratio:16/10; border-radius:var(--radius); overflow:hidden; background:#14161a; margin-bottom:10px; border:1px solid var(--line);">
+                <img id="prev-gal-2" src="img/musica1.png" alt="Espacio 2" style="width:100%; height:100%; object-fit:cover; display:block;">
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label for="gal-img-2" style="font-size:12px;">URL o ruta local</label>
+                <input type="text" id="gal-img-2" value="img/musica1.png" placeholder="img/... o URL">
+              </div>
+            </div>
+
+            <div style="background:var(--bg-alt-2); padding:16px; border-radius:var(--radius); border:1px solid var(--line);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <strong style="color:var(--gold); font-size:13px;">Espacio #3 (Cuadrado)</strong>
+              </div>
+              <div style="aspect-ratio:16/10; border-radius:var(--radius); overflow:hidden; background:#14161a; margin-bottom:10px; border:1px solid var(--line);">
+                <img id="prev-gal-3" src="img/blog1.png" alt="Espacio 3" style="width:100%; height:100%; object-fit:cover; display:block;">
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label for="gal-img-3" style="font-size:12px;">URL o ruta local</label>
+                <input type="text" id="gal-img-3" value="img/blog1.png" placeholder="img/... o URL">
+              </div>
+            </div>
+
+            <div style="background:var(--bg-alt-2); padding:16px; border-radius:var(--radius); border:1px solid var(--line);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <strong style="color:var(--gold); font-size:13px;">Espacio #4 (Cuadrado)</strong>
+              </div>
+              <div style="aspect-ratio:16/10; border-radius:var(--radius); overflow:hidden; background:#14161a; margin-bottom:10px; border:1px solid var(--line);">
+                <img id="prev-gal-4" src="img/musica2.png" alt="Espacio 4" style="width:100%; height:100%; object-fit:cover; display:block;">
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label for="gal-img-4" style="font-size:12px;">URL o ruta local</label>
+                <input type="text" id="gal-img-4" value="img/musica2.png" placeholder="img/... o URL">
+              </div>
+            </div>
+
+            <div style="background:var(--bg-alt-2); padding:16px; border-radius:var(--radius); border:1px solid var(--line);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <strong style="color:var(--gold); font-size:13px;">Espacio #5 (Vertical Grande)</strong>
+              </div>
+              <div style="aspect-ratio:16/10; border-radius:var(--radius); overflow:hidden; background:#14161a; margin-bottom:10px; border:1px solid var(--line);">
+                <img id="prev-gal-5" src="img/blog3.png" alt="Espacio 5" style="width:100%; height:100%; object-fit:cover; display:block;">
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label for="gal-img-5" style="font-size:12px;">URL o ruta local</label>
+                <input type="text" id="gal-img-5" value="img/blog3.png" placeholder="img/... o URL">
+              </div>
+            </div>
+
+            <div style="background:var(--bg-alt-2); padding:16px; border-radius:var(--radius); border:1px solid var(--line);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <strong style="color:var(--gold); font-size:13px;">Espacio #6 (Cuadrado)</strong>
+              </div>
+              <div style="aspect-ratio:16/10; border-radius:var(--radius); overflow:hidden; background:#14161a; margin-bottom:10px; border:1px solid var(--line);">
+                <img id="prev-gal-6" src="img/musica3.png" alt="Espacio 6" style="width:100%; height:100%; object-fit:cover; display:block;">
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label for="gal-img-6" style="font-size:12px;">URL o ruta local</label>
+                <input type="text" id="gal-img-6" value="img/musica3.png" placeholder="img/... o URL">
+              </div>
+            </div>
+
+            <div style="background:var(--bg-alt-2); padding:16px; border-radius:var(--radius); border:1px solid var(--line);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <strong style="color:var(--gold); font-size:13px;">Espacio #7 (Cuadrado)</strong>
+              </div>
+              <div style="aspect-ratio:16/10; border-radius:var(--radius); overflow:hidden; background:#14161a; margin-bottom:10px; border:1px solid var(--line);">
+                <img id="prev-gal-7" src="img/hero.jpg" alt="Espacio 7" style="width:100%; height:100%; object-fit:cover; display:block;">
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label for="gal-img-7" style="font-size:12px;">URL o ruta local</label>
+                <input type="text" id="gal-img-7" value="img/hero.jpg" placeholder="img/... o URL">
+              </div>
+            </div>
+
+            <div style="background:var(--bg-alt-2); padding:16px; border-radius:var(--radius); border:1px solid var(--line);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <strong style="color:var(--gold); font-size:13px;">Espacio #8 (Cuadrado)</strong>
+              </div>
+              <div style="aspect-ratio:16/10; border-radius:var(--radius); overflow:hidden; background:#14161a; margin-bottom:10px; border:1px solid var(--line);">
+                <img id="prev-gal-8" src="img/musica4.png" alt="Espacio 8" style="width:100%; height:100%; object-fit:cover; display:block;">
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label for="gal-img-8" style="font-size:12px;">URL o ruta local</label>
+                <input type="text" id="gal-img-8" value="img/musica4.png" placeholder="img/... o URL">
+              </div>
+            </div>
+
+          </div>
+
+          <div style="display:flex; gap:12px; margin-top:24px;">
+            <button class="btn btn-solid" type="submit">💾 Guardar Galería de Fotos</button>
+            <button class="btn" type="button" id="btnResetGalleryDefaults">Restablecer Ejemplos</button>
+          </div>
         </form>
       </div>
     </section>
@@ -1056,10 +1185,89 @@ header.admin-nav{
     });
   }
 
+  // ============================================================
+  // GESTIÓN DE GALERÍA DE FOTOS
+  // ============================================================
+  var galleryForm = document.getElementById('galleryForm');
+  var btnSaveGalleryTop = document.getElementById('btnSaveGalleryTop');
+  var btnResetGalleryDefaults = document.getElementById('btnResetGalleryDefaults');
+
+  var defaultGalleryImages = {
+    1: 'img/blog2.png',
+    2: 'img/musica1.png',
+    3: 'img/blog1.png',
+    4: 'img/musica2.png',
+    5: 'img/blog3.png',
+    6: 'img/musica3.png',
+    7: 'img/hero.jpg',
+    8: 'img/musica4.png'
+  };
+
+  async function loadGallery(){
+    var content = await window.MM_DB.content.getAll();
+    for(var i = 1; i <= 8; i++){
+      var input = document.getElementById('gal-img-' + i);
+      var prev = document.getElementById('prev-gal-' + i);
+      var val = (content && content['gallery_img_' + i]) ? content['gallery_img_' + i] : defaultGalleryImages[i];
+      if(input) input.value = val;
+      if(prev) prev.src = val;
+    }
+  }
+
+  // Previsualización en tiempo real al escribir en cada campo
+  for(var g = 1; g <= 8; g++){
+    (function(num){
+      var input = document.getElementById('gal-img-' + num);
+      var prev = document.getElementById('prev-gal-' + num);
+      if(input && prev){
+        input.addEventListener('input', function(){
+          var src = input.value.trim() || defaultGalleryImages[num];
+          prev.src = src;
+        });
+      }
+    })(g);
+  }
+
+  async function saveGalleryHandler(e){
+    if(e && e.preventDefault) e.preventDefault();
+    var payload = {};
+    for(var i = 1; i <= 8; i++){
+      var input = document.getElementById('gal-img-' + i);
+      payload['gallery_img_' + i] = input ? input.value.trim() : defaultGalleryImages[i];
+    }
+    try {
+      await window.MM_DB.content.bulkSave(payload);
+      showAlert('¡Galería de fotos actualizada correctamente!', true);
+    } catch(err){
+      showAlert('Error al guardar galería: ' + err.message, false);
+    }
+  }
+
+  if(galleryForm){
+    galleryForm.addEventListener('submit', saveGalleryHandler);
+  }
+  if(btnSaveGalleryTop){
+    btnSaveGalleryTop.addEventListener('click', saveGalleryHandler);
+  }
+
+  if(btnResetGalleryDefaults){
+    btnResetGalleryDefaults.addEventListener('click', function(){
+      if(confirm('¿Deseas restablecer los campos con las 8 fotos de ejemplo?')){
+        for(var i = 1; i <= 8; i++){
+          var input = document.getElementById('gal-img-' + i);
+          var prev = document.getElementById('prev-gal-' + i);
+          if(input) input.value = defaultGalleryImages[i];
+          if(prev) prev.src = defaultGalleryImages[i];
+        }
+      }
+    });
+  }
+
   function loadDashboardData(){
     loadEvents();
     loadTexts();
     loadMusic();
+    loadGallery();
     loadFeaturedVideo();
     loadSocial();
   }

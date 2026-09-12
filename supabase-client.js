@@ -380,6 +380,14 @@
           if (content.blog3_content) {
             if (window.BLOG_POSTS && window.BLOG_POSTS[3]) window.BLOG_POSTS[3].content = content.blog3_content;
           }
+          // Hidratar las 8 imágenes de la galería
+          for (var g = 1; g <= 8; g++) {
+            var gKey = 'gallery_img_' + g;
+            if (content[gKey]) {
+              var gEl = document.getElementById('galImg' + g);
+              if (gEl) gEl.src = content[gKey];
+            }
+          }
           if (content.contact_email) {
             var links = document.querySelectorAll('a[href^="mailto:"]');
             links.forEach(function (a) {
