@@ -388,6 +388,51 @@
               if (gEl) gEl.src = content[gKey];
             }
           }
+          // Hidratar cuentas bancarias de la sección Donar
+          if (content.donate_bank1_country) {
+            var el = document.getElementById('donateBank1Country');
+            if (el) el.textContent = content.donate_bank1_country;
+          }
+          if (content.donate_bank1_type) {
+            var el = document.getElementById('donateBank1Type');
+            if (el) el.textContent = content.donate_bank1_type;
+          }
+          if (content.donate_bank1_name) {
+            var el = document.getElementById('donateBank1Name');
+            if (el) el.textContent = content.donate_bank1_name;
+          }
+          if (content.donate_bank1_holder) {
+            var el = document.getElementById('donateBank1Holder');
+            if (el) el.textContent = content.donate_bank1_holder;
+          }
+          if (content.donate_bank1_number) {
+            var el = document.getElementById('donateBank1Number');
+            if (el) el.textContent = content.donate_bank1_number;
+          }
+          if (content.donate_bank2_country) {
+            var el = document.getElementById('donateBank2Country');
+            if (el) el.textContent = content.donate_bank2_country;
+          }
+          if (content.donate_bank2_type) {
+            var el = document.getElementById('donateBank2Type');
+            if (el) el.textContent = content.donate_bank2_type;
+          }
+          if (content.donate_bank2_name) {
+            var el = document.getElementById('donateBank2Name');
+            if (el) el.textContent = content.donate_bank2_name;
+          }
+          if (content.donate_bank2_holder) {
+            var el = document.getElementById('donateBank2Holder');
+            if (el) el.textContent = content.donate_bank2_holder;
+          }
+          if (content.donate_bank2_number) {
+            var el = document.getElementById('donateBank2Number');
+            if (el) el.textContent = content.donate_bank2_number;
+          }
+          if (content.donate_note) {
+            var el = document.getElementById('donateNote');
+            if (el) el.textContent = content.donate_note;
+          }
           if (content.contact_email) {
             var links = document.querySelectorAll('a[href^="mailto:"]');
             links.forEach(function (a) {

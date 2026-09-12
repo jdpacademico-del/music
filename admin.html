@@ -422,6 +422,74 @@ header.admin-nav{
             </div>
           </div>
 
+          <hr style="border:0; border-top:1px solid var(--line); margin:28px 0 20px;">
+          <h3 style="font-size:16px; margin-bottom:6px; color:var(--gold);">💰 Sección Donaciones / Cuentas Bancarias</h3>
+          <p class="sub" style="margin-bottom:16px;">Configura la información de las cuentas y números para transferencias o donaciones.</p>
+
+          <!-- Cuenta Bancaria 1 -->
+          <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(227,178,60,0.25); border-radius:8px; padding:16px; margin-bottom:18px;">
+            <h4 style="font-size:14px; color:var(--gold); margin-bottom:12px;">Cuenta #1 (Ej: Colombia / Bancolombia)</h4>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="txt-donate-bank1-country">Título / País</label>
+                <input type="text" id="txt-donate-bank1-country" placeholder="COLOMBIA">
+              </div>
+              <div class="form-group">
+                <label for="txt-donate-bank1-type">Tipo de Cuenta / Etiqueta</label>
+                <input type="text" id="txt-donate-bank1-type" placeholder="Cuenta de Ahorros">
+              </div>
+            </div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="txt-donate-bank1-name">Entidad Bancaria</label>
+                <input type="text" id="txt-donate-bank1-name" placeholder="Bancolombia">
+              </div>
+              <div class="form-group">
+                <label for="txt-donate-bank1-holder">Titular de la Cuenta</label>
+                <input type="text" id="txt-donate-bank1-holder" placeholder="MoisesMusic">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="txt-donate-bank1-number">Número de Cuenta</label>
+              <input type="text" id="txt-donate-bank1-number" placeholder="123-456789-00">
+            </div>
+          </div>
+
+          <!-- Cuenta Bancaria 2 -->
+          <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(227,178,60,0.25); border-radius:8px; padding:16px; margin-bottom:18px;">
+            <h4 style="font-size:14px; color:var(--gold); margin-bottom:12px;">Cuenta #2 (Ej: Billetera Digital / Nequi / Daviplata)</h4>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="txt-donate-bank2-country">Título / Opción</label>
+                <input type="text" id="txt-donate-bank2-country" placeholder="NEQUI / DAVIPLATA">
+              </div>
+              <div class="form-group">
+                <label for="txt-donate-bank2-type">Tipo de Cuenta / Etiqueta</label>
+                <input type="text" id="txt-donate-bank2-type" placeholder="Billetera Digital">
+              </div>
+            </div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="txt-donate-bank2-name">Entidad / Plataforma</label>
+                <input type="text" id="txt-donate-bank2-name" placeholder="Nequi">
+              </div>
+              <div class="form-group">
+                <label for="txt-donate-bank2-holder">Titular de la Cuenta</label>
+                <input type="text" id="txt-donate-bank2-holder" placeholder="MoisesMusic">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="txt-donate-bank2-number">Número de Celular / Cuenta</label>
+              <input type="text" id="txt-donate-bank2-number" placeholder="300 123 4567">
+            </div>
+          </div>
+
+          <!-- Nota / Instrucción para el donante -->
+          <div class="form-group">
+            <label for="txt-donate-note">Mensaje / Nota para Comprobante</label>
+            <textarea id="txt-donate-note" rows="3" placeholder="Una vez realizada tu transferencia, puedes enviar tu comprobante al WhatsApp o correo de contacto..."></textarea>
+          </div>
+
           <button class="btn btn-solid" style="margin-top:12px;" type="submit">Guardar Todos los Textos</button>
         </form>
       </div>
@@ -972,6 +1040,21 @@ header.admin-nav{
       document.getElementById('txt-blog3-content').value = content.blog3_content;
     }
     updateCharCount('txt-blog3-content', 'charCountBlog3');
+
+    // Cuentas Bancarias / Donaciones
+    if(content.donate_bank1_country) document.getElementById('txt-donate-bank1-country').value = content.donate_bank1_country;
+    if(content.donate_bank1_type) document.getElementById('txt-donate-bank1-type').value = content.donate_bank1_type;
+    if(content.donate_bank1_name) document.getElementById('txt-donate-bank1-name').value = content.donate_bank1_name;
+    if(content.donate_bank1_holder) document.getElementById('txt-donate-bank1-holder').value = content.donate_bank1_holder;
+    if(content.donate_bank1_number) document.getElementById('txt-donate-bank1-number').value = content.donate_bank1_number;
+
+    if(content.donate_bank2_country) document.getElementById('txt-donate-bank2-country').value = content.donate_bank2_country;
+    if(content.donate_bank2_type) document.getElementById('txt-donate-bank2-type').value = content.donate_bank2_type;
+    if(content.donate_bank2_name) document.getElementById('txt-donate-bank2-name').value = content.donate_bank2_name;
+    if(content.donate_bank2_holder) document.getElementById('txt-donate-bank2-holder').value = content.donate_bank2_holder;
+    if(content.donate_bank2_number) document.getElementById('txt-donate-bank2-number').value = content.donate_bank2_number;
+
+    if(content.donate_note) document.getElementById('txt-donate-note').value = content.donate_note;
   }
 
   function updateCharCount(inputId, counterId){
@@ -1019,7 +1102,18 @@ header.admin-nav{
       blog3_image: document.getElementById('txt-blog3-img').value.trim(),
       blog3_date: document.getElementById('txt-blog3-date').value.trim(),
       blog3_title: document.getElementById('txt-blog3-title').value.trim(),
-      blog3_content: document.getElementById('txt-blog3-content').value.trim()
+      blog3_content: document.getElementById('txt-blog3-content').value.trim(),
+      donate_bank1_country: document.getElementById('txt-donate-bank1-country').value.trim(),
+      donate_bank1_type: document.getElementById('txt-donate-bank1-type').value.trim(),
+      donate_bank1_name: document.getElementById('txt-donate-bank1-name').value.trim(),
+      donate_bank1_holder: document.getElementById('txt-donate-bank1-holder').value.trim(),
+      donate_bank1_number: document.getElementById('txt-donate-bank1-number').value.trim(),
+      donate_bank2_country: document.getElementById('txt-donate-bank2-country').value.trim(),
+      donate_bank2_type: document.getElementById('txt-donate-bank2-type').value.trim(),
+      donate_bank2_name: document.getElementById('txt-donate-bank2-name').value.trim(),
+      donate_bank2_holder: document.getElementById('txt-donate-bank2-holder').value.trim(),
+      donate_bank2_number: document.getElementById('txt-donate-bank2-number').value.trim(),
+      donate_note: document.getElementById('txt-donate-note').value.trim()
     };
     try {
       await window.MM_DB.content.bulkSave(payload);
