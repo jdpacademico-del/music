@@ -350,6 +350,32 @@ hr.rule{border:none; border-top:1px solid var(--line); margin:0;}
   z-index:2;
 }
 
+/* ---------- Sección Último Video en Inicio (Fondo degradado grises con naranja #e3b23c) ---------- */
+.home-video-section{
+  position:relative;
+  background:
+    radial-gradient(90% 70% at 50% 0%, rgba(227, 178, 60, 0.16) 0%, rgba(227, 178, 60, 0.04) 45%, transparent 75%),
+    radial-gradient(75% 60% at 85% 100%, rgba(227, 178, 60, 0.10) 0%, transparent 60%),
+    radial-gradient(60% 50% at 15% 100%, rgba(227, 178, 60, 0.07) 0%, transparent 55%),
+    linear-gradient(180deg, #1d2026 0%, #15171d 40%, #1c1f26 80%, #111317 100%);
+  border-top:1px solid rgba(227, 178, 60, 0.22);
+  border-bottom:1px solid rgba(255, 255, 255, 0.08);
+  overflow:hidden;
+}
+.home-video-section::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background-image:
+    radial-gradient(circle at 50% 30%, rgba(227, 178, 60, 0.05) 0, transparent 50%),
+    repeating-linear-gradient(135deg, rgba(255,255,255,.012) 0 2px, transparent 2px 8px);
+  pointer-events:none;
+}
+.home-video-section .wrap{
+  position:relative;
+  z-index:2;
+}
+
 /* ---------- Grids: música / blog ---------- */
 .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:26px;}
 .grid-2{display:grid; grid-template-columns:repeat(2,1fr); gap:26px;}
@@ -891,7 +917,7 @@ footer{
     </div>
   </section>
 
-  <section class="tight" style="border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:var(--bg-alt);">
+  <section class="tight home-video-section">
     <div class="wrap">
       <div class="section-head">
         <div>
