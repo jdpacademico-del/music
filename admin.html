@@ -360,6 +360,13 @@ header.admin-nav{
                 <input type="text" id="txt-blog1-title" placeholder="Título de la primera entrada del blog">
               </div>
             </div>
+            <div class="form-group" style="margin-top:10px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <label for="txt-blog1-content" style="margin-bottom:0;">Contenido Completo del Artículo (Máximo 2000 caracteres)</label>
+                <span id="charCountBlog1" style="font-size:12px; color:var(--muted);">0 / 2000</span>
+              </div>
+              <textarea id="txt-blog1-content" rows="6" maxlength="2000" placeholder="Escribe aquí el texto que se verá al pulsar 'LEER MÁS' (máx 2000 caracteres)..."></textarea>
+            </div>
           </div>
 
           <div style="background:var(--bg-alt-2); padding:16px; border-radius:var(--radius); border:1px solid var(--line); margin-bottom:16px;">
@@ -379,6 +386,13 @@ header.admin-nav{
                 <input type="text" id="txt-blog2-title" placeholder="La historia detrás de la nueva canción">
               </div>
             </div>
+            <div class="form-group" style="margin-top:10px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <label for="txt-blog2-content" style="margin-bottom:0;">Contenido Completo del Artículo (Máximo 2000 caracteres)</label>
+                <span id="charCountBlog2" style="font-size:12px; color:var(--muted);">0 / 2000</span>
+              </div>
+              <textarea id="txt-blog2-content" rows="6" maxlength="2000" placeholder="Escribe aquí el texto que se verá al pulsar 'LEER MÁS' (máx 2000 caracteres)..."></textarea>
+            </div>
           </div>
 
           <div style="background:var(--bg-alt-2); padding:16px; border-radius:var(--radius); border:1px solid var(--line); margin-bottom:16px;">
@@ -397,6 +411,13 @@ header.admin-nav{
                 <label for="txt-blog3-title">Título</label>
                 <input type="text" id="txt-blog3-title" placeholder="Recap de la última gira">
               </div>
+            </div>
+            <div class="form-group" style="margin-top:10px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <label for="txt-blog3-content" style="margin-bottom:0;">Contenido Completo del Artículo (Máximo 2000 caracteres)</label>
+                <span id="charCountBlog3" style="font-size:12px; color:var(--muted);">0 / 2000</span>
+              </div>
+              <textarea id="txt-blog3-content" rows="6" maxlength="2000" placeholder="Escribe aquí el texto que se verá al pulsar 'LEER MÁS' (máx 2000 caracteres)..."></textarea>
             </div>
           </div>
 
@@ -805,7 +826,41 @@ header.admin-nav{
     if(content.blog3_image) document.getElementById('txt-blog3-img').value = content.blog3_image;
     if(content.blog3_date) document.getElementById('txt-blog3-date').value = content.blog3_date;
     if(content.blog3_title) document.getElementById('txt-blog3-title').value = content.blog3_title;
+
+    if(content.blog1_content){
+      document.getElementById('txt-blog1-content').value = content.blog1_content;
+    } else {
+      document.getElementById('txt-blog1-content').value = "He hablado con muchas personas que dicen: yo no quiero saber nada de Dios, ni de iglesia.\n\nY cuando uno les pregunta: ¿por qué? su respuesta es que han visto creyentes dando mal ejemplo.\n\nHay un hombre en la biblia llamado Samuel. Su historia es sumamente interesante porque él desde muy niño vivió en el templo y su profesor fue un sacerdote llamado Elí. Los hijos de Elí eran terribles, malos ejemplos en todo sentido, eran perversos. Pero lo interesante es ver qué Samuel nunca se dejó llevar por el mal ejemplo de ellos.\n\nSamuel con los años llega a ser un profeta muy importante, y en el contexto de la época era un líder político y social para el pueblo. Ejerció como líder por muchos años y cuando ya era un anciano él se despide de su cargo y al despedirse le dice a la gente algo impresionante: Si a alguien le fallé, si a alguien perjudiqué, si a alguien le hice daño quisiera que me lo dijeran. Sorprendentemente nadie pudo acusarlo de nada. WOW! estamos hablando de alguien que fue íntegro toda su vida, que caminó con Dios toda su vida, pese a que había visto malos ejemplos.\n\nLo que hayan hecho otros no es una excusa para vivir resentido con Dios y con su iglesia.\n\nEn nuestra vida veremos buenos y malos ejemplos, pero cada persona escoge lo que quiere imitar y la forma en qué quiere vivir.\n\nSoy cantante de música cristiana y por mi profesión he tenido la oportunidad de conocer todo tipo de líderes. Buenos y malos, he visto de todo! Cuando comencé el ministerio vi cosas que me impactaron y recuerdo que llegaba a donde mi madre a contarlo lo que había visto y cómo me había afectado. Y la respuesta de mi mamá siempre fue... HIJO... PUESTOS LOS OJOS EN JESÚS... PUESTOS LOS OJOS EN JESÚS... el autor y consumador de nuestra fe.\n\nLo que mi madre me estaba diciendo era: hijo, mira a Jesús. No mirés al ser humano porque te va a defraudar. Y mi mensaje para aquellos que se escudan en las faltas de otros para no buscar a Dios es que pongan sus ojos en Jesús, Él jamás nos defraudará.";
+    }
+    updateCharCount('txt-blog1-content', 'charCountBlog1');
+
+    if(content.blog2_content){
+      document.getElementById('txt-blog2-content').value = content.blog2_content;
+    }
+    updateCharCount('txt-blog2-content', 'charCountBlog2');
+
+    if(content.blog3_content){
+      document.getElementById('txt-blog3-content').value = content.blog3_content;
+    }
+    updateCharCount('txt-blog3-content', 'charCountBlog3');
   }
+
+  function updateCharCount(inputId, counterId){
+    var el = document.getElementById(inputId);
+    var countEl = document.getElementById(counterId);
+    if(el && countEl){
+      countEl.textContent = el.value.length + ' / 2000';
+    }
+  }
+
+  ['txt-blog1-content', 'txt-blog2-content', 'txt-blog3-content'].forEach(function(id, idx){
+    var el = document.getElementById(id);
+    if(el){
+      el.addEventListener('input', function(){
+        updateCharCount(id, 'charCountBlog' + (idx + 1));
+      });
+    }
+  });
 
   textsForm.addEventListener('submit', async function(e){
     e.preventDefault();
@@ -827,12 +882,15 @@ header.admin-nav{
       blog1_image: document.getElementById('txt-blog1-img').value.trim(),
       blog1_date: document.getElementById('txt-blog1-date').value.trim(),
       blog1_title: document.getElementById('txt-blog1-title').value.trim(),
+      blog1_content: document.getElementById('txt-blog1-content').value.trim(),
       blog2_image: document.getElementById('txt-blog2-img').value.trim(),
       blog2_date: document.getElementById('txt-blog2-date').value.trim(),
       blog2_title: document.getElementById('txt-blog2-title').value.trim(),
+      blog2_content: document.getElementById('txt-blog2-content').value.trim(),
       blog3_image: document.getElementById('txt-blog3-img').value.trim(),
       blog3_date: document.getElementById('txt-blog3-date').value.trim(),
-      blog3_title: document.getElementById('txt-blog3-title').value.trim()
+      blog3_title: document.getElementById('txt-blog3-title').value.trim(),
+      blog3_content: document.getElementById('txt-blog3-content').value.trim()
     };
     try {
       await window.MM_DB.content.bulkSave(payload);

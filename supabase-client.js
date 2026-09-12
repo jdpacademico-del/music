@@ -329,38 +329,56 @@
           if (content.blog1_image) {
             var el = document.getElementById('blogImg1');
             if (el) el.src = content.blog1_image;
+            if (window.BLOG_POSTS && window.BLOG_POSTS[1]) window.BLOG_POSTS[1].image = content.blog1_image;
           }
           if (content.blog2_image) {
             var el = document.getElementById('blogImg2');
             if (el) el.src = content.blog2_image;
+            if (window.BLOG_POSTS && window.BLOG_POSTS[2]) window.BLOG_POSTS[2].image = content.blog2_image;
           }
           if (content.blog3_image) {
             var el = document.getElementById('blogImg3');
             if (el) el.src = content.blog3_image;
+            if (window.BLOG_POSTS && window.BLOG_POSTS[3]) window.BLOG_POSTS[3].image = content.blog3_image;
           }
           if (content.blog1_date) {
             var el = document.getElementById('blogDate1');
             if (el) el.textContent = content.blog1_date;
+            if (window.BLOG_POSTS && window.BLOG_POSTS[1]) window.BLOG_POSTS[1].date = content.blog1_date;
           }
           if (content.blog2_date) {
             var el = document.getElementById('blogDate2');
             if (el) el.textContent = content.blog2_date;
+            if (window.BLOG_POSTS && window.BLOG_POSTS[2]) window.BLOG_POSTS[2].date = content.blog2_date;
           }
           if (content.blog3_date) {
             var el = document.getElementById('blogDate3');
             if (el) el.textContent = content.blog3_date;
+            if (window.BLOG_POSTS && window.BLOG_POSTS[3]) window.BLOG_POSTS[3].date = content.blog3_date;
           }
           if (content.blog1_title) {
             var el = document.getElementById('blogTitle1');
             if (el) el.textContent = content.blog1_title;
+            if (window.BLOG_POSTS && window.BLOG_POSTS[1]) window.BLOG_POSTS[1].title = content.blog1_title;
           }
           if (content.blog2_title) {
             var el = document.getElementById('blogTitle2');
             if (el) el.textContent = content.blog2_title;
+            if (window.BLOG_POSTS && window.BLOG_POSTS[2]) window.BLOG_POSTS[2].title = content.blog2_title;
           }
           if (content.blog3_title) {
             var el = document.getElementById('blogTitle3');
             if (el) el.textContent = content.blog3_title;
+            if (window.BLOG_POSTS && window.BLOG_POSTS[3]) window.BLOG_POSTS[3].title = content.blog3_title;
+          }
+          if (content.blog1_content) {
+            if (window.BLOG_POSTS && window.BLOG_POSTS[1]) window.BLOG_POSTS[1].content = content.blog1_content;
+          }
+          if (content.blog2_content) {
+            if (window.BLOG_POSTS && window.BLOG_POSTS[2]) window.BLOG_POSTS[2].content = content.blog2_content;
+          }
+          if (content.blog3_content) {
+            if (window.BLOG_POSTS && window.BLOG_POSTS[3]) window.BLOG_POSTS[3].content = content.blog3_content;
           }
           if (content.contact_email) {
             var links = document.querySelectorAll('a[href^="mailto:"]');
