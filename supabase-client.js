@@ -283,12 +283,24 @@
             var el = document.querySelector('.hero-sub');
             if (el) el.textContent = content.hero_subtitle;
           }
+          if (content.hero_bg_image) {
+            var hs = document.getElementById('heroScene');
+            if (hs) hs.style.backgroundImage = 'url(' + content.hero_bg_image + ')';
+          }
           if (content.next_event_title) {
-            var el = document.querySelector('.event-strip .event-title');
+            var el = document.getElementById('nextEventTitle') || document.querySelector('.event-title') || document.querySelector('.banner-title');
             if (el) {
-              var venue = content.next_event_venue ? ' · ' + content.next_event_venue : '';
-              el.innerHTML = content.next_event_title + ' <span class="muted">' + venue + '</span>';
+              var venue = content.next_event_venue ? ' – ' + content.next_event_venue : '';
+              el.textContent = content.next_event_title + venue;
             }
+          }
+          if (content.next_event_bg_image) {
+            var neb = document.getElementById('nextEventBanner');
+            if (neb) neb.style.backgroundImage = 'url(' + content.next_event_bg_image + ')';
+          }
+          if (content.next_event_date) {
+            var nec = document.getElementById('nextEventCountdown');
+            if (nec) nec.setAttribute('data-target', content.next_event_date);
           }
           if (content.bio_title) {
             var el = document.querySelector('#view-bio .section-title');
@@ -337,6 +349,21 @@
             var yt = document.querySelector('a[aria-label="YouTube"]');
             if (yt) yt.href = content.youtube_url;
           }
+          if (content.featured_video_url) {
+            var vUrl = content.featured_video_url.trim();
+            var match = vUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+            var videoId = (match && match[1]) ? match[1] : vUrl;
+            var wraps = document.querySelectorAll('.video-frame-wrap');
+            wraps.forEach(function (wrap) {
+              wrap.setAttribute('data-video-id', videoId);
+              var vIframe = wrap.querySelector('iframe');
+              if (vIframe) vIframe.src = 'https://www.youtube-nocookie.com/embed/' + videoId + '?rel=0&modestbranding=1';
+              var facade = wrap.querySelector('.yt-facade');
+              if (facade) facade.style.backgroundImage = "url('https://i.ytimg.com/vi/" + videoId + "/maxresdefault.jpg')";
+              var badge = wrap.querySelector('.yt-facade-badge');
+              if (badge) badge.href = 'https://youtu.be/' + videoId;
+            });
+          }
         }
 
         // 2. Hidratar Eventos / Tour
@@ -365,9 +392,10 @@
           if (musicGrid) {
             var mHtml = '';
             musicList.forEach(function (m, index) {
-              var phNum = (index % 4) + 1;
+              var fallbackImg = 'img/musica' + ((index % 6) + 1) + '.png';
+              var coverSrc = m.cover_url || fallbackImg;
               mHtml += '<div class="card">' +
-                '<div class="ph ph-' + phNum + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.4"/></svg></div>' +
+                '<div class="card-media"><img src="' + coverSrc + '" alt="' + m.title + '" loading="lazy"></div>' +
                 '<div class="card-body">' +
                 '<div class="card-kicker">' + m.category + '</div>' +
                 '<div class="card-title">' + m.title + '</div>' +

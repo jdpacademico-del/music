@@ -277,8 +277,19 @@ header.admin-nav{
               <input type="text" id="txt-hero-tag" placeholder="#NuevaMúsica">
             </div>
             <div class="form-group">
-              <label for="txt-next-event-title">Ticker: Título Próximo Evento</label>
-              <input type="text" id="txt-next-event-title" placeholder="14 Noviembre — Bogotá">
+              <label for="txt-next-event-title">Banner: Título Próximo Evento</label>
+              <input type="text" id="txt-next-event-title" placeholder="14 NOVIEMBRE, BOGOTÁ – TEATRO PRINCIPAL">
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="txt-next-event-date">Fecha y Hora del Evento (Contador Regresivo)</label>
+              <input type="text" id="txt-next-event-date" placeholder="2026-11-14T20:00:00 (Formato YYYY-MM-DDTHH:mm:ss)">
+            </div>
+            <div class="form-group">
+              <label for="txt-next-event-bg">Imagen de Fondo del Evento (URL o ruta local)</label>
+              <input type="text" id="txt-next-event-bg" placeholder="img/event-bg.gif o URL">
             </div>
           </div>
 
@@ -290,6 +301,11 @@ header.admin-nav{
           <div class="form-group">
             <label for="txt-hero-sub">Subtítulo del Hero</label>
             <textarea id="txt-hero-sub" rows="2"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="txt-hero-img">Imagen de Fondo del Hero (URL o ruta local)</label>
+            <input type="text" id="txt-hero-img" placeholder="img/hero.jpg o URL externa">
           </div>
 
           <hr style="border:none; border-top:1px solid var(--line); margin:28px 0;">
@@ -357,6 +373,10 @@ header.admin-nav{
                 <label for="mu-url">Enlace a Spotify / Plataforma</label>
                 <input type="text" id="mu-url" placeholder="https://open.spotify.com/track/..." required>
               </div>
+              <div class="form-group full">
+                <label for="mu-cover">Imagen de Portada / Carátula (URL o ruta local)</label>
+                <input type="text" id="mu-cover" placeholder="img/musica1.png o URL externa">
+              </div>
             </div>
             <div style="display:flex; gap:10px; margin-top:8px;">
               <button class="btn btn-solid" type="submit">Guardar Lanzamiento</button>
@@ -368,6 +388,19 @@ header.admin-nav{
         <div class="items-list" id="musicList">
           <div style="color:var(--muted); text-align:center; padding:30px;">Cargando música...</div>
         </div>
+
+        <hr style="border:none; border-top:1px solid var(--line); margin:32px 0 24px;">
+
+        <h3 style="font-size:18px; margin-bottom:6px;">Video Destacado (Pestaña Música)</h3>
+        <p class="sub" style="margin-bottom:16px;">Pega el enlace de YouTube del video que se mostrará en la sección "ÚLTIMOS VIDEOS".</p>
+        
+        <form id="featuredVideoForm">
+          <div class="form-group">
+            <label for="txt-video-url">Enlace de YouTube (Ej: https://youtu.be/1Ty7oSPE-K8 o https://www.youtube.com/watch?v=...)</label>
+            <input type="text" id="txt-video-url" placeholder="https://youtu.be/1Ty7oSPE-K8">
+          </div>
+          <button class="btn btn-solid btn-sm" type="submit" style="margin-top:8px;">Guardar Video Destacado</button>
+        </form>
       </div>
     </section>
 
@@ -688,7 +721,10 @@ header.admin-nav{
     if(content.hero_tag) document.getElementById('txt-hero-tag').value = content.hero_tag;
     if(content.hero_title) document.getElementById('txt-hero-title').value = content.hero_title;
     if(content.hero_subtitle) document.getElementById('txt-hero-sub').value = content.hero_subtitle;
+    if(content.hero_bg_image) document.getElementById('txt-hero-img').value = content.hero_bg_image;
     if(content.next_event_title) document.getElementById('txt-next-event-title').value = content.next_event_title;
+    if(content.next_event_date) document.getElementById('txt-next-event-date').value = content.next_event_date;
+    if(content.next_event_bg_image) document.getElementById('txt-next-event-bg').value = content.next_event_bg_image;
     if(content.bio_title) document.getElementById('txt-bio-title').value = content.bio_title;
     if(content.bio_text) document.getElementById('txt-bio-text').value = content.bio_text;
     if(content.stat_years) document.getElementById('txt-stat-years').value = content.stat_years;
@@ -703,7 +739,10 @@ header.admin-nav{
       hero_tag: document.getElementById('txt-hero-tag').value,
       hero_title: document.getElementById('txt-hero-title').value,
       hero_subtitle: document.getElementById('txt-hero-sub').value,
+      hero_bg_image: document.getElementById('txt-hero-img').value.trim(),
       next_event_title: document.getElementById('txt-next-event-title').value,
+      next_event_date: document.getElementById('txt-next-event-date').value.trim(),
+      next_event_bg_image: document.getElementById('txt-next-event-bg').value.trim(),
       bio_title: document.getElementById('txt-bio-title').value,
       bio_text: document.getElementById('txt-bio-text').value,
       stat_years: document.getElementById('txt-stat-years').value,
@@ -730,6 +769,7 @@ header.admin-nav{
   btnNewMusic.addEventListener('click', function(){
     musicForm.reset();
     document.getElementById('mu-id').value = '';
+    document.getElementById('mu-cover').value = '';
     document.getElementById('musicFormTitle').textContent = 'Nuevo Lanzamiento';
     musicFormContainer.style.display = 'block';
   });
@@ -747,8 +787,12 @@ header.admin-nav{
     }
     var html = '';
     list.forEach(function(m){
-      html += '<div class="item-row" data-id="' + m.id + '">' +
-        '<div class="item-info">' +
+      var coverThumb = m.cover_url
+        ? '<img src="' + m.cover_url + '" alt="' + m.title + '" style="width:42px; height:42px; object-fit:cover; border-radius:3px; margin-right:12px; border:1px solid var(--line);">'
+        : '';
+      html += '<div class="item-row" data-id="' + m.id + '" style="display:flex; align-items:center;">' +
+        coverThumb +
+        '<div class="item-info" style="flex:1;">' +
           '<div class="title">' + m.title + ' <span class="badge" style="color:var(--gold); border-color:var(--gold);">' + m.category + '</span></div>' +
           '<div class="meta">Enlace: ' + m.stream_url + '</div>' +
         '</div>' +
@@ -769,6 +813,7 @@ header.admin-nav{
         document.getElementById('mu-title').value = m.title;
         document.getElementById('mu-category').value = m.category;
         document.getElementById('mu-url').value = m.stream_url;
+        document.getElementById('mu-cover').value = m.cover_url || '';
         document.getElementById('musicFormTitle').textContent = 'Editar Lanzamiento';
         musicFormContainer.style.display = 'block';
         musicFormContainer.scrollIntoView({ behavior:'smooth' });
@@ -796,7 +841,8 @@ header.admin-nav{
     var payload = {
       title: document.getElementById('mu-title').value.trim(),
       category: document.getElementById('mu-category').value,
-      stream_url: document.getElementById('mu-url').value.trim()
+      stream_url: document.getElementById('mu-url').value.trim(),
+      cover_url: document.getElementById('mu-cover').value.trim()
     };
     var id = document.getElementById('mu-id').value;
     if(id) payload.id = id;
@@ -846,10 +892,32 @@ header.admin-nav{
     }
   });
 
+  var featuredVideoForm = document.getElementById('featuredVideoForm');
+  async function loadFeaturedVideo(){
+    var content = await window.MM_DB.content.getAll();
+    if(content && content.featured_video_url){
+      document.getElementById('txt-video-url').value = content.featured_video_url;
+    }
+  }
+
+  if(featuredVideoForm){
+    featuredVideoForm.addEventListener('submit', async function(e){
+      e.preventDefault();
+      var vUrl = document.getElementById('txt-video-url').value.trim();
+      try {
+        await window.MM_DB.content.save('featured_video_url', vUrl);
+        showAlert('¡Video destacado de YouTube actualizado!', true);
+      } catch(err){
+        showAlert('Error al guardar video: ' + err.message, false);
+      }
+    });
+  }
+
   function loadDashboardData(){
     loadEvents();
     loadTexts();
     loadMusic();
+    loadFeaturedVideo();
     loadSocial();
   }
 

@@ -147,6 +147,7 @@ header.site-nav .btn{
 .menu-toggle svg{width:24px;height:24px;}
 
 /* ---------- Vistas ---------- */
+section.view{padding:0;}
 .view{display:none;}
 .view.active{display:block; animation:fadeIn .45s var(--ease);}
 @keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
@@ -165,13 +166,17 @@ header.site-nav .btn{
 }
 .hero-scene{
   position:absolute; inset:0;
-  background:
-    conic-gradient(from 220deg at 78% 30%, #2b2410, #0d0e11 35%, #1c1408 60%, #0d0e11 85%);
-  filter:saturate(1.05);
+  background-image: url('img/hero.jpg');
+  background-size: cover;
+  background-position: center 25%;
+  background-repeat: no-repeat;
+  filter: brightness(0.62) contrast(1.05);
 }
 .hero-scene::after{
   content:''; position:absolute; inset:0;
-  background:radial-gradient(60% 55% at 80% 20%, rgba(227,178,60,.18), transparent 70%);
+  background:
+    linear-gradient(180deg, rgba(13,14,17,.35) 0%, rgba(13,14,17,.72) 65%, #0D0E11 100%),
+    radial-gradient(80% 65% at 20% 40%, rgba(227,178,60,.15), transparent 70%);
 }
 .hero-inner{position:relative; z-index:2; width:100%; padding:64px 28px 56px; max-width:var(--maxw); margin:0 auto;}
 .hero-tag{
@@ -193,17 +198,126 @@ header.site-nav .btn{
 .hero-stream a:hover{border-color:var(--gold); color:var(--gold); transform:translateY(-2px);}
 .hero-stream svg{width:20px;height:20px;}
 
-/* ---------- Ticker de evento próximo ---------- */
-.event-strip{
-  border-bottom:1px solid var(--line); background:var(--bg-alt);
+/* ---------- Banner Próximos Eventos (Destacado con Countdown) ---------- */
+.event-banner{
+  position:relative;
+  background-color:#0A0B0E;
+  background-image:url('img/event-bg.gif');
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  padding:72px 24px 76px;
+  text-align:center;
+  overflow:hidden;
 }
-.event-strip .wrap{
-  display:flex; flex-wrap:wrap; gap:18px; align-items:center; justify-content:space-between;
-  padding:20px 28px;
+.event-banner::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(180deg, rgba(10,11,14,.70) 0%, rgba(10,11,14,.82) 60%, #0D0E11 100%),
+    radial-gradient(ellipse at center, rgba(14,20,32,.50) 0%, rgba(10,11,14,.86) 100%);
+  z-index:1;
 }
-.event-strip .label{font-size:11px; letter-spacing:.12em; color:var(--gold); font-weight:700;}
-.event-strip .event-title{font-family:'Fraunces',serif; font-size:19px; margin-top:4px;}
-.event-strip .event-title .muted{color:var(--muted); font-weight:400;}
+.event-banner .wrap{
+  position:relative;
+  z-index:2;
+  max-width:880px;
+  margin:0 auto;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.event-banner .banner-label{
+  font-family:'Syne','Outfit',sans-serif;
+  font-size:14.5px;
+  font-weight:700;
+  letter-spacing:.26em;
+  color:var(--ink);
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+.event-banner .banner-icon{
+  color:var(--gold);
+  font-size:16px;
+  line-height:1;
+  margin-bottom:18px;
+  opacity:.85;
+}
+.event-banner .banner-title{
+  font-family:'Syne','Inter',sans-serif;
+  font-size:clamp(16px, 2.6vw, 23px);
+  font-weight:600;
+  letter-spacing:.12em;
+  color:var(--ink);
+  text-transform:uppercase;
+  margin-bottom:34px;
+  max-width:38ch;
+  line-height:1.35;
+}
+.event-banner .countdown-wrap{
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  gap:16px;
+  margin-bottom:36px;
+}
+.event-banner .countdown-box{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  min-width:64px;
+}
+.event-banner .countdown-num{
+  font-family:'Fraunces',serif;
+  font-size:clamp(36px, 5.5vw, 54px);
+  font-weight:500;
+  line-height:1;
+  color:var(--ink);
+  letter-spacing:-0.02em;
+}
+.event-banner .countdown-sep{
+  font-family:'Fraunces',serif;
+  font-size:clamp(26px, 4.5vw, 38px);
+  color:var(--gold);
+  line-height:1;
+  opacity:.65;
+  padding-top:2px;
+}
+.event-banner .countdown-lbl{
+  font-family:'Syne','Outfit',sans-serif;
+  font-size:9.5px;
+  font-weight:700;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-top:10px;
+}
+.event-banner .btn-banner{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:12px 32px;
+  border:1px solid rgba(227,178,60,.5);
+  background:rgba(15,17,21,.65);
+  color:var(--ink);
+  font-family:'Syne','Outfit',sans-serif;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  border-radius:var(--radius);
+  transition:all .25s var(--ease);
+}
+.event-banner .btn-banner:hover{
+  border-color:var(--gold);
+  background:var(--gold);
+  color:#1a1305;
+  transform:translateY(-2px);
+  box-shadow:0 6px 22px rgba(227,178,60,.3);
+}
 
 /* ---------- Secciones genéricas ---------- */
 section{padding:88px 0;}
@@ -215,6 +329,27 @@ section.tight{padding:64px 0;}
 .section-desc{color:var(--muted); max-width:60ch; margin-top:14px;}
 hr.rule{border:none; border-top:1px solid var(--line); margin:0;}
 
+/* ---------- Sección Discografía en Inicio (Fondo degradado gris profesional) ---------- */
+.home-music-section{
+  position:relative;
+  background:
+    radial-gradient(110% 70% at 50% 10%, #262a33 0%, #1a1d24 50%, #0e1014 100%),
+    linear-gradient(180deg, #1f2229 0%, #15171d 100%);
+  border-top:1px solid rgba(255,255,255,.06);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.home-music-section::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background-image:repeating-linear-gradient(125deg, rgba(255,255,255,.012) 0 2px, transparent 2px 7px);
+  pointer-events:none;
+}
+.home-music-section .wrap{
+  position:relative;
+  z-index:2;
+}
+
 /* ---------- Grids: música / blog ---------- */
 .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:26px;}
 .grid-2{display:grid; grid-template-columns:repeat(2,1fr); gap:26px;}
@@ -223,6 +358,16 @@ hr.rule{border:none; border-top:1px solid var(--line); margin:0;}
   overflow:hidden; transition:border-color .25s var(--ease);
 }
 .card:hover{border-color:var(--gold-dim);}
+.card-media{
+  aspect-ratio:1/1; position:relative; overflow:hidden; background:#14161a;
+}
+.card-media img{
+  width:100%; height:100%; object-fit:cover; display:block;
+  transition:transform .35s var(--ease);
+}
+.card:hover .card-media img{
+  transform:scale(1.04);
+}
 .ph{
   aspect-ratio:1/1; position:relative; overflow:hidden;
   display:flex; align-items:center; justify-content:center;
@@ -235,6 +380,126 @@ hr.rule{border:none; border-top:1px solid var(--line); margin:0;}
 .ph-4{background:linear-gradient(135deg,#141c24,#0d0e11);}
 .ph-wide{aspect-ratio:16/10;}
 .ph-tall{aspect-ratio:3/4;}
+.video-frame-wrap{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  overflow:hidden;
+  background:#000;
+  box-shadow:0 12px 36px rgba(0,0,0,.5);
+}
+.video-frame-wrap iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:none;
+}
+.yt-facade{
+  position:absolute;
+  inset:0;
+  cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  z-index:2;
+  transition:opacity .3s ease;
+}
+.yt-facade::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg, rgba(0,0,0,.65) 0%, rgba(0,0,0,.15) 35%, rgba(0,0,0,.65) 100%);
+  z-index:1;
+}
+.yt-facade-top{
+  position:relative;
+  z-index:2;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:16px 20px;
+}
+.yt-facade-avatar{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:var(--gold);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Fraunces',serif;
+  font-weight:700;
+  font-size:16px;
+  color:#1a1305;
+  flex-shrink:0;
+}
+.yt-facade-top-text{
+  display:flex;
+  flex-direction:column;
+  text-shadow:0 1px 3px rgba(0,0,0,.9);
+}
+.yt-facade-top-text h4{
+  font-family:'Inter',sans-serif;
+  font-size:15px;
+  font-weight:600;
+  color:#fff;
+  margin:0;
+  line-height:1.3;
+}
+.yt-facade-top-text span{
+  font-size:12px;
+  color:#ccc;
+}
+.yt-facade-play{
+  position:relative;
+  z-index:2;
+  align-self:center;
+  width:68px;
+  height:48px;
+  transition:transform .2s var(--ease), filter .2s var(--ease);
+}
+.yt-facade:hover .yt-facade-play{
+  transform:scale(1.12);
+  filter:drop-shadow(0 0 16px rgba(255,0,0,.7));
+}
+.yt-facade-bottom{
+  position:relative;
+  z-index:2;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 20px;
+}
+.yt-facade-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:rgba(20,20,20,.85);
+  backdrop-filter:blur(6px);
+  color:#fff;
+  font-size:12px;
+  padding:7px 14px;
+  border-radius:4px;
+  border:1px solid rgba(255,255,255,.15);
+  text-decoration:none;
+  transition:all .2s var(--ease);
+}
+.yt-facade-badge:hover{
+  background:#000;
+  border-color:var(--gold);
+  color:var(--gold);
+}
+.yt-facade-badge svg{
+  width:16px;
+  height:16px;
+  fill:#f00;
+}
 .card-body{padding:20px 22px 24px;}
 .card-kicker{font-size:11.5px; letter-spacing:.08em; color:var(--gold); font-weight:700;}
 .card-title{font-family:'Fraunces',serif; font-size:20px; margin-top:8px;}
@@ -529,7 +794,7 @@ footer{
 <!-- ============ INICIO ============ -->
 <section class="view active" id="view-inicio">
   <div class="hero">
-    <div class="hero-scene"></div>
+    <div class="hero-scene" id="heroScene"></div>
     <div class="hero-noise"></div>
     <div class="hero-inner">
       <div class="hero-tag">#NuevaMúsica</div>
@@ -553,17 +818,39 @@ footer{
     </div>
   </div>
 
-  <div class="event-strip">
+  <div class="event-banner" id="nextEventBanner">
     <div class="wrap">
-      <div>
-        <div class="label">PRÓXIMO EVENTO</div>
-        <div class="event-title">14 Noviembre — Bogotá <span class="muted">· Teatro Principal</span></div>
+      <div class="banner-label">PRÓXIMOS EVENTOS</div>
+      <div class="banner-icon">▽</div>
+      <div class="banner-title" id="nextEventTitle">14 NOVIEMBRE, BOGOTÁ – TEATRO PRINCIPAL</div>
+      
+      <div class="countdown-wrap" id="nextEventCountdown" data-target="2026-11-14T20:00:00">
+        <div class="countdown-box">
+          <span class="countdown-num" id="cdDays">00</span>
+          <span class="countdown-lbl">DÍAS</span>
+        </div>
+        <span class="countdown-sep">.</span>
+        <div class="countdown-box">
+          <span class="countdown-num" id="cdHours">00</span>
+          <span class="countdown-lbl">HORAS</span>
+        </div>
+        <span class="countdown-sep">.</span>
+        <div class="countdown-box">
+          <span class="countdown-num" id="cdMins">00</span>
+          <span class="countdown-lbl">MINUTOS</span>
+        </div>
+        <span class="countdown-sep">.</span>
+        <div class="countdown-box">
+          <span class="countdown-num" id="cdSecs">00</span>
+          <span class="countdown-lbl">SEGUNDOS</span>
+        </div>
       </div>
-      <a class="btn btn-solid" href="#tour" data-nav="tour">VER TODAS LAS FECHAS</a>
+
+      <a class="btn-banner" href="#tour" data-nav="tour">TODAS LAS FECHAS</a>
     </div>
   </div>
 
-  <section>
+  <section class="home-music-section">
     <div class="wrap">
       <div class="section-head">
         <div>
@@ -574,7 +861,7 @@ footer{
       </div>
       <div class="grid-3">
         <div class="card">
-          <div class="ph ph-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.4"/></svg></div>
+          <div class="card-media"><img src="img/musica1.png" alt="Título del sencillo" loading="lazy"></div>
           <div class="card-body">
             <div class="card-kicker">SENCILLO · 2026</div>
             <div class="card-title">Título del sencillo</div>
@@ -583,7 +870,7 @@ footer{
           </div>
         </div>
         <div class="card">
-          <div class="ph ph-2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.4"/></svg></div>
+          <div class="card-media"><img src="img/musica2.png" alt="Segundo sencillo" loading="lazy"></div>
           <div class="card-body">
             <div class="card-kicker">SENCILLO · 2025</div>
             <div class="card-title">Segundo sencillo</div>
@@ -592,7 +879,7 @@ footer{
           </div>
         </div>
         <div class="card">
-          <div class="ph ph-3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.4"/></svg></div>
+          <div class="card-media"><img src="img/musica3.png" alt="Nombre del EP" loading="lazy"></div>
           <div class="card-body">
             <div class="card-kicker">EP · 2025</div>
             <div class="card-title">Nombre del EP</div>
@@ -608,13 +895,46 @@ footer{
     <div class="wrap">
       <div class="section-head">
         <div>
-          <div class="eyebrow">TIENDA</div>
-          <h2 class="section-title">MIRA NUESTROS <em>PRODUCTOS</em></h2>
+          <div class="eyebrow">VIDEO</div>
+          <h2 class="section-title">ÚLTIMO <em>VIDEO</em></h2>
         </div>
-        <a class="btn" href="#" onclick="return false;">VISITAR LA TIENDA</a>
+        <a class="card-cta" href="https://www.youtube.com/@moisesmusic" target="_blank" rel="noopener">VER CANAL DE YOUTUBE →</a>
       </div>
-      <div class="ph ph-1 ph-wide" style="border:1px solid var(--line); border-radius:var(--radius);">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+      <div class="video-frame-wrap" id="homeVideoFrameWrap" data-video-id="1Ty7oSPE-K8">
+        <div class="yt-facade" id="homeYtFacade" style="background-image: url('https://i.ytimg.com/vi/1Ty7oSPE-K8/maxresdefault.jpg');" title="Reproducir video oficial">
+          <div class="yt-facade-top">
+            <div class="yt-facade-avatar">M</div>
+            <div class="yt-facade-top-text">
+              <h4>Mi Tesoro - Gilberto Daza | Vídeo Oficial</h4>
+              <span>Gilberto Daza &middot; MoisesMusic</span>
+            </div>
+          </div>
+          
+          <div class="yt-facade-play">
+            <svg viewBox="0 0 68 48" width="68" height="48">
+              <path d="M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.64-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z" fill="#f00"></path>
+              <path d="M 45,24 27,14 27,34" fill="#fff"></path>
+            </svg>
+          </div>
+
+          <div class="yt-facade-bottom">
+            <div></div>
+            <a class="yt-facade-badge" href="https://youtu.be/1Ty7oSPE-K8" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><path d="M21.6 7.2s-.21-1.5-.87-2.16c-.83-.87-1.76-.87-2.19-.92C15.4 4 12 4 12 4h-.01s-3.4 0-6.54.12c-.43.05-1.36.05-2.19.92-.66.66-.87 2.16-.87 2.16S2.18 8.94 2.18 10.68v1.63c0 1.74.21 3.48.21 3.48s.21 1.5.87 2.16c.83.87 1.92.84 2.4.93 1.74.17 7.35.22 7.35.22s3.4-.01 6.54-.13c.43-.05 1.36-.05 2.19-.92.66-.66.87-2.16.87-2.16s.21-1.74.21-3.48v-1.63c0-1.74-.21-3.48-.21-3.48zM9.98 14.6V8.72l5.4 2.95-5.4 2.93z"/></svg>
+              Mirar en YouTube
+            </a>
+          </div>
+        </div>
+
+        <iframe 
+          id="homeFeaturedVideoIframe"
+          src="https://www.youtube-nocookie.com/embed/1Ty7oSPE-K8?rel=0&modestbranding=1" 
+          title="MoisesMusic — Video Oficial" 
+          referrerpolicy="strict-origin-when-cross-origin"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          allowfullscreen 
+          loading="lazy">
+        </iframe>
       </div>
     </div>
   </section>
@@ -738,12 +1058,54 @@ footer{
       <p class="section-desc">Cada lanzamiento de MoisesMusic, con enlace directo a las plataformas de streaming.</p>
 
       <div class="grid-3" style="margin-top:44px;" id="musicGrid">
-        <div class="card"><div class="ph ph-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.4"/></svg></div><div class="card-body"><div class="card-kicker">SENCILLO</div><div class="card-title">Título del sencillo 1</div><a class="card-cta" href="https://open.spotify.com/artist/moisesmusic" target="_blank" rel="noopener">Escuchar en Spotify →</a></div></div>
-        <div class="card"><div class="ph ph-2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.4"/></svg></div><div class="card-body"><div class="card-kicker">SENCILLO</div><div class="card-title">Título del sencillo 2</div><a class="card-cta" href="https://open.spotify.com/artist/moisesmusic" target="_blank" rel="noopener">Escuchar en Spotify →</a></div></div>
-        <div class="card"><div class="ph ph-3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.4"/></svg></div><div class="card-body"><div class="card-kicker">EP</div><div class="card-title">Nombre del EP</div><a class="card-cta" href="https://open.spotify.com/artist/moisesmusic" target="_blank" rel="noopener">Escuchar en Spotify →</a></div></div>
-        <div class="card"><div class="ph ph-4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.4"/></svg></div><div class="card-body"><div class="card-kicker">ÁLBUM</div><div class="card-title">Nombre del álbum</div><a class="card-cta" href="https://open.spotify.com/artist/moisesmusic" target="_blank" rel="noopener">Escuchar en Spotify →</a></div></div>
-        <div class="card"><div class="ph ph-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.4"/></svg></div><div class="card-body"><div class="card-kicker">SENCILLO</div><div class="card-title">Título del sencillo 3</div><a class="card-cta" href="https://open.spotify.com/artist/moisesmusic" target="_blank" rel="noopener">Escuchar en Spotify →</a></div></div>
-        <div class="card"><div class="ph ph-2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.4"/></svg></div><div class="card-body"><div class="card-kicker">COLABORACIÓN</div><div class="card-title">Título con artista invitado</div><a class="card-cta" href="https://open.spotify.com/artist/moisesmusic" target="_blank" rel="noopener">Escuchar en Spotify →</a></div></div>
+        <div class="card">
+          <div class="card-media"><img src="img/musica1.png" alt="Título del sencillo" loading="lazy"></div>
+          <div class="card-body">
+            <div class="card-kicker">SENCILLO</div>
+            <div class="card-title">Título del sencillo</div>
+            <a class="card-cta" href="https://open.spotify.com/artist/moisesmusic" target="_blank" rel="noopener">ESCUCHAR EN SPOTIFY →</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-media"><img src="img/musica2.png" alt="Segundo sencillo" loading="lazy"></div>
+          <div class="card-body">
+            <div class="card-kicker">SENCILLO</div>
+            <div class="card-title">Segundo sencillo</div>
+            <a class="card-cta" href="https://open.spotify.com/artist/moisesmusic" target="_blank" rel="noopener">ESCUCHAR EN SPOTIFY →</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-media"><img src="img/musica3.png" alt="Nombre del EP" loading="lazy"></div>
+          <div class="card-body">
+            <div class="card-kicker">EP</div>
+            <div class="card-title">Nombre del EP</div>
+            <a class="card-cta" href="https://open.spotify.com/artist/moisesmusic" target="_blank" rel="noopener">ESCUCHAR EN SPOTIFY →</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-media"><img src="img/musica4.png" alt="Nombre del álbum" loading="lazy"></div>
+          <div class="card-body">
+            <div class="card-kicker">ÁLBUM</div>
+            <div class="card-title">Nombre del álbum</div>
+            <a class="card-cta" href="https://open.spotify.com/artist/moisesmusic" target="_blank" rel="noopener">ESCUCHAR EN SPOTIFY →</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-media"><img src="img/musica5.png" alt="Título del sencillo 3" loading="lazy"></div>
+          <div class="card-body">
+            <div class="card-kicker">SENCILLO</div>
+            <div class="card-title">Título del sencillo 3</div>
+            <a class="card-cta" href="https://open.spotify.com/artist/moisesmusic" target="_blank" rel="noopener">ESCUCHAR EN SPOTIFY →</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-media"><img src="img/musica6.png" alt="Título con artista invitado" loading="lazy"></div>
+          <div class="card-body">
+            <div class="card-kicker">COLABORACIÓN</div>
+            <div class="card-title">Título con artista invitado</div>
+            <a class="card-cta" href="https://open.spotify.com/artist/moisesmusic" target="_blank" rel="noopener">ESCUCHAR EN SPOTIFY →</a>
+          </div>
+        </div>
       </div>
 
       <div class="section-head" style="margin-top:70px;">
@@ -751,10 +1113,43 @@ footer{
           <div class="eyebrow">VIDEOS</div>
           <h2 class="section-title">ÚLTIMOS <em>VIDEOS</em></h2>
         </div>
-        <a class="card-cta" href="https://www.youtube.com/@moisesmusic" target="_blank" rel="noopener">Ver canal de YouTube →</a>
+        <a class="card-cta" href="https://www.youtube.com/@moisesmusic" target="_blank" rel="noopener">VER CANAL DE YOUTUBE →</a>
       </div>
-      <div class="ph ph-4 ph-wide" style="border:1px solid var(--line); border-radius:var(--radius);">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M10 9l5 3-5 3V9z" fill="currentColor" stroke="none"/></svg>
+      <div class="video-frame-wrap" id="videoFrameWrap" data-video-id="1Ty7oSPE-K8">
+        <div class="yt-facade" id="ytFacade" style="background-image: url('https://i.ytimg.com/vi/1Ty7oSPE-K8/maxresdefault.jpg');" title="Reproducir video oficial">
+          <div class="yt-facade-top">
+            <div class="yt-facade-avatar">M</div>
+            <div class="yt-facade-top-text">
+              <h4>Mi Tesoro - Gilberto Daza | Vídeo Oficial</h4>
+              <span>Gilberto Daza &middot; MoisesMusic</span>
+            </div>
+          </div>
+          
+          <div class="yt-facade-play">
+            <svg viewBox="0 0 68 48" width="68" height="48">
+              <path d="M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.64-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z" fill="#f00"></path>
+              <path d="M 45,24 27,14 27,34" fill="#fff"></path>
+            </svg>
+          </div>
+
+          <div class="yt-facade-bottom">
+            <div></div>
+            <a class="yt-facade-badge" href="https://youtu.be/1Ty7oSPE-K8" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><path d="M21.6 7.2s-.21-1.5-.87-2.16c-.83-.87-1.76-.87-2.19-.92C15.4 4 12 4 12 4h-.01s-3.4 0-6.54.12c-.43.05-1.36.05-2.19.92-.66.66-.87 2.16-.87 2.16S2.18 8.94 2.18 10.68v1.63c0 1.74.21 3.48.21 3.48s.21 1.5.87 2.16c.83.87 1.92.84 2.4.93 1.74.17 7.35.22 7.35.22s3.4-.01 6.54-.13c.43-.05 1.36-.05 2.19-.92.66-.66.87-2.16.87-2.16s.21-1.74.21-3.48v-1.63c0-1.74-.21-3.48-.21-3.48zM9.98 14.6V8.72l5.4 2.95-5.4 2.93z"/></svg>
+              Mirar en YouTube
+            </a>
+          </div>
+        </div>
+
+        <iframe 
+          id="featuredVideoIframe"
+          src="https://www.youtube-nocookie.com/embed/1Ty7oSPE-K8?rel=0&modestbranding=1" 
+          title="MoisesMusic — Video Oficial" 
+          referrerpolicy="strict-origin-when-cross-origin"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          allowfullscreen 
+          loading="lazy">
+        </iframe>
       </div>
     </div>
   </section>
@@ -1041,6 +1436,75 @@ footer{
       }
     }, {passive:true});
   }
+})();
+
+/* ---------- Contador de cuenta regresiva (Próximos Eventos) ---------- */
+(function(){
+  var countdownEl = document.getElementById('nextEventCountdown');
+  if(!countdownEl) return;
+
+  var dEl = document.getElementById('cdDays');
+  var hEl = document.getElementById('cdHours');
+  var mEl = document.getElementById('cdMins');
+  var sEl = document.getElementById('cdSecs');
+
+  function updateCountdown(){
+    var targetAttr = countdownEl.getAttribute('data-target');
+    var targetDate = targetAttr ? new Date(targetAttr).getTime() : new Date('2026-11-14T20:00:00').getTime();
+    var now = new Date().getTime();
+    var diff = targetDate - now;
+
+    if(isNaN(diff) || diff <= 0){
+      if(dEl) dEl.textContent = '00';
+      if(hEl) hEl.textContent = '00';
+      if(mEl) mEl.textContent = '00';
+      if(sEl) sEl.textContent = '00';
+      return;
+    }
+
+    var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    if(dEl) dEl.textContent = String(days).padStart(2, '0');
+    if(hEl) hEl.textContent = String(hours).padStart(2, '0');
+    if(mEl) mEl.textContent = String(minutes).padStart(2, '0');
+    if(sEl) sEl.textContent = String(seconds).padStart(2, '0');
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+})();
+
+/* ---------- Reproductor interactivo de video oficial (Inicio y Música) ---------- */
+(function(){
+  var facades = document.querySelectorAll('.yt-facade');
+  facades.forEach(function(facade){
+    var wrap = facade.closest('.video-frame-wrap');
+    if(!wrap) return;
+    var iframe = wrap.querySelector('iframe');
+
+    facade.addEventListener('click', function(e){
+      if(e.target.closest('.yt-facade-badge')){
+        return; // Clic directo en "Mirar en YouTube"
+      }
+      var videoId = wrap.getAttribute('data-video-id') || '1Ty7oSPE-K8';
+      
+      // Si se abre localmente como archivo (file:///), YouTube bloquea por política de origen (Error 153).
+      if(window.location.protocol === 'file:'){
+        window.open('https://youtu.be/' + videoId, '_blank');
+        return;
+      }
+
+      // En servidor HTTP/HTTPS (Netlify o localhost), reproduce directamente dentro del marco
+      if(iframe){
+        iframe.src = 'https://www.youtube-nocookie.com/embed/' + videoId + '?autoplay=1&rel=0&modestbranding=1';
+      }
+      facade.style.opacity = '0';
+      setTimeout(function(){ facade.style.display = 'none'; }, 300);
+    });
+  });
 })();
 </script>
 
