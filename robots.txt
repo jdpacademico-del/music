@@ -1,0 +1,8 @@
+﻿# robots.txt para AGRIDULCE MUSIC
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin.html
+
+# Sitemap
+Sitemap: sitemap.xml
