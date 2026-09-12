@@ -1,6 +1,6 @@
-# MoisesMusic — Sitio Web Oficial
+# AGRIDULCE MUSIC — Sitio Web Oficial
 
-Sitio web oficial de **MoisesMusic** desarrollado en HTML5 semántico, CSS moderno y JavaScript vanilla, optimizado para despliegue rápido, gratuito y de alto rendimiento en **GitHub** y **Vercel**.
+Sitio web oficial de **AGRIDULCE MUSIC** desarrollado en HTML5 semántico, CSS moderno y JavaScript vanilla, optimizado para despliegue rápido, gratuito y de alto rendimiento en **GitHub** y **Vercel**.
 
 ---
 
