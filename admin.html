@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AGRIDULCE MUSIC — Panel de Control</title>
+<title>AGRIDULCE MUSIC — Panel de Control Administrativo</title>
 <link rel="icon" type="image/png" href="img/logonaranja.png">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="shortcut icon" href="favicon.ico">
@@ -24,7 +24,7 @@
   --rust:#9A3324;
   --ok:#48bb78;
   --err:#f56565;
-  --radius:4px;
+  --radius:6px;
 }
 *{box-sizing:border-box; margin:0; padding:0;}
 body{
@@ -53,12 +53,12 @@ input:focus, textarea:focus, select:focus{
 }
 label{
   display:block;
-  font-size:12.5px;
-  font-weight:600;
+  font-size:12px;
+  font-weight:700;
   color:var(--muted);
   margin-bottom:6px;
   text-transform:uppercase;
-  letter-spacing:.05em;
+  letter-spacing:.06em;
 }
 .btn{
   display:inline-flex; align-items:center; justify-content:center; gap:8px;
@@ -79,55 +79,177 @@ label{
 header.admin-nav{
   background:var(--bg-alt);
   border-bottom:1px solid var(--line);
-  padding:16px 28px;
+  padding:14px 28px;
   display:flex; justify-content:space-between; align-items:center;
   position:sticky; top:0; z-index:50;
 }
+.brand-wrap{display:flex; align-items:center; gap:12px;}
+.brand-wrap img{width:32px; height:32px; object-fit:contain;}
 .brand{font-family:'Fraunces',serif; font-size:20px; font-weight:700;}
 .brand span{color:var(--gold);}
 .nav-actions{display:flex; align-items:center; gap:14px;}
 .badge{
-  font-size:11.5px; padding:4px 10px; border-radius:20px;
+  font-size:11.5px; padding:4px 12px; border-radius:20px;
   border:1px solid var(--line); font-weight:600;
 }
 .badge.connected{background:rgba(72,187,120,.15); color:var(--ok); border-color:rgba(72,187,120,.4);}
 .badge.disconnected{background:rgba(245,101,101,.15); color:var(--err); border-color:rgba(245,101,101,.4);}
 
 /* Layout */
-.container{max-width:1100px; margin:36px auto; padding:0 24px;}
+.container{max-width:1160px; margin:30px auto; padding:0 24px;}
+
+/* Pestañas de Vistas organizadas profesionalmente */
+.tabs-nav-wrap{
+  background:var(--bg-alt);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:6px;
+  margin-bottom:28px;
+  box-shadow:0 6px 20px rgba(0,0,0,.25);
+}
+.tabs-header-title{
+  font-size:11px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--gold);
+  font-weight:700;
+  padding:6px 12px 8px;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  margin-bottom:6px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
 .tabs{
-  display:flex; gap:6px; border-bottom:1px solid var(--line);
-  margin-bottom:32px; overflow-x:auto; padding-bottom:2px;
+  display:flex; gap:4px; overflow-x:auto; padding-bottom:4px;
 }
+.tabs::-webkit-scrollbar{height:4px;}
+.tabs::-webkit-scrollbar-thumb{background:var(--line); border-radius:2px;}
 .tab-btn{
-  background:none; border:none; color:var(--muted);
+  background:transparent; border:none; color:var(--muted);
   font-family:'Syne',sans-serif; font-size:12px; font-weight:700;
-  letter-spacing:.08em; text-transform:uppercase; padding:12px 18px;
-  border-bottom:2px solid transparent; transition:all .2s;
-  white-space:nowrap;
+  letter-spacing:.06em; text-transform:uppercase; padding:10px 16px;
+  border-radius:4px; transition:all .2s;
+  white-space:nowrap; display:flex; align-items:center; gap:8px;
 }
-.tab-btn:hover{color:var(--ink);}
-.tab-btn.active{color:var(--gold); border-bottom-color:var(--gold);}
+.tab-btn:hover{color:var(--ink); background:rgba(255,255,255,0.04);}
+.tab-btn.active{color:#1a1305; background:var(--gold);}
 
 /* Panels */
 .tab-panel{display:none;}
-.tab-panel.active{display:block; animation:fadeIn .3s ease;}
+.tab-panel.active{display:block; animation:fadeIn .25s ease;}
 @keyframes fadeIn{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);}}
 
 .card{
   background:var(--bg-alt);
   border:1px solid var(--line);
   border-radius:var(--radius);
-  padding:26px;
+  padding:28px;
   margin-bottom:24px;
 }
-.card h2{
-  font-family:'Fraunces',serif; font-size:22px; margin-bottom:6px;
+.card-header{
+  border-bottom:1px solid var(--line);
+  padding-bottom:18px;
+  margin-bottom:22px;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  flex-wrap:wrap;
+  gap:12px;
 }
-.card p.sub{color:var(--muted); font-size:13.5px; margin-bottom:22px;}
+.card-title-group h2{
+  font-family:'Fraunces',serif; font-size:24px; margin-bottom:4px; display:flex; align-items:center; gap:10px;
+}
+.card-title-group p.sub{color:var(--muted); font-size:14px; margin-bottom:0;}
+.view-tag{
+  font-family:'Syne',sans-serif; font-size:11px; font-weight:800;
+  letter-spacing:.08em; text-transform:uppercase;
+  background:rgba(227,178,60,.12); color:var(--gold);
+  border:1px solid rgba(227,178,60,.3); padding:4px 10px; border-radius:4px;
+}
+
 .form-grid{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+.form-grid-3{display:grid; grid-template-columns:repeat(3, 1fr); gap:18px;}
 .form-group{margin-bottom:18px;}
 .full{grid-column:1 / -1;}
+
+/* ============================================================
+   WIDGET DE SUBIDA DE IMAGEN CON PREVISUALIZACIÓN Y REEMPLAZO
+   ============================================================ */
+.img-uploader-box{
+  background:var(--bg-alt-2);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:16px;
+  margin-bottom:18px;
+  transition:border-color .2s;
+}
+.img-uploader-box:hover{
+  border-color:rgba(227,178,60,.4);
+}
+.img-uploader-header{
+  display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;
+}
+.img-uploader-header label{
+  margin-bottom:0; font-size:12.5px; color:var(--ink);
+}
+.img-preview-container{
+  position:relative;
+  width:100%;
+  height:180px;
+  background:#090a0d;
+  border-radius:4px;
+  border:1px dashed var(--line);
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:12px;
+}
+.img-preview-container.tall{
+  height:240px;
+}
+.img-preview-container.square{
+  aspect-ratio:1/1;
+  height:auto;
+  max-height:220px;
+}
+.img-preview-container img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  transition:transform .3s ease;
+}
+.img-uploader-actions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.file-input-hidden{display:none;}
+.img-status-msg{
+  font-size:12px;
+  color:var(--ok);
+  margin-top:8px;
+  display:none;
+}
+.toggle-url-link{
+  font-size:11.5px;
+  color:var(--muted);
+  text-decoration:underline;
+  cursor:pointer;
+  margin-top:6px;
+  display:inline-block;
+}
+.toggle-url-link:hover{color:var(--gold);}
+.url-input-collapse{
+  display:none;
+  margin-top:8px;
+}
+.url-input-collapse.show{
+  display:block;
+}
 
 /* Tables / Items list */
 .items-list{display:flex; flex-direction:column; gap:12px; margin-top:20px;}
@@ -144,23 +266,35 @@ header.admin-nav{
 .alert{
   padding:14px 18px; border-radius:var(--radius);
   font-size:14px; margin-bottom:20px; display:none;
+  position:sticky; top:75px; z-index:45;
+  box-shadow:0 8px 24px rgba(0,0,0,.6);
 }
-.alert.show{display:block;}
-.alert.ok{background:rgba(72,187,120,.15); color:var(--ok); border:1px solid rgba(72,187,120,.4);}
-.alert.err{background:rgba(245,101,101,.15); color:var(--err); border:1px solid rgba(245,101,101,.4);}
+.alert.show{display:block; animation:fadeIn .2s ease;}
+.alert.ok{background:rgba(20,55,30,.92); color:#a3e635; border:1px solid rgba(72,187,120,.5);}
+.alert.err{background:rgba(60,20,20,.92); color:#fca5a5; border:1px solid rgba(245,101,101,.5);}
 
 /* Auth Screen */
 #authScreen{max-width:440px; margin:80px auto; padding:0 20px;}
+
+@media(max-width:850px){
+  .form-grid{grid-template-columns:1fr;}
+  .form-grid-3{grid-template-columns:1fr;}
+  .header.admin-nav{padding:12px 16px;}
+  .container{padding:0 14px;}
+}
 </style>
 </head>
 <body>
 
 <header class="admin-nav">
-  <div class="brand">AGRIDULCE<span>MUSIC</span> &mdash; Admin</div>
+  <div class="brand-wrap">
+    <img src="img/logonaranja.png" alt="Logo AGRIDULCE MUSIC">
+    <div class="brand">AGRIDULCE<span>MUSIC</span> &mdash; Admin</div>
+  </div>
   <div class="nav-actions">
     <span class="badge disconnected" id="dbStatusBadge">Sin configurar</span>
     <a class="btn btn-sm" href="index.html" target="_blank" rel="noopener">Ver Sitio Web ↗</a>
-    <button class="btn btn-sm btn-danger" id="btnLogout" style="display:none;">Salir</button>
+    <button class="btn btn-sm btn-danger" id="btnLogout" style="display:none;">Cerrar Sesión</button>
   </div>
 </header>
 
@@ -171,13 +305,16 @@ header.admin-nav{
   <!-- PANTALLA 1: INICIO DE SESIÓN -->
   <div id="authScreen">
     <div class="card">
-      <h2>Iniciar Sesión</h2>
-      <p class="sub">Accede con tu usuario administrador para actualizar tu página web.</p>
+      <div style="text-align:center; margin-bottom:20px;">
+        <img src="img/logonaranja.png" alt="Logo" style="width:58px; height:58px; margin:0 auto 12px; display:block;">
+        <h2>Iniciar Sesión</h2>
+        <p class="sub">Accede con tu usuario administrador para gestionar todo tu sitio web.</p>
+      </div>
 
       <form id="loginForm">
         <div class="form-group">
           <label for="loginEmail">Correo Electrónico</label>
-          <input type="email" id="loginEmail" required placeholder="admin@moisesmusic.com">
+          <input type="email" id="loginEmail" required placeholder="admin@agridulcemusic.com">
         </div>
         <div class="form-group">
           <label for="loginPassword">Contraseña</label>
@@ -192,40 +329,220 @@ header.admin-nav{
     </div>
   </div>
 
-  <!-- PANTALLA 2: PANEL DE ADMINISTRACIÓN (TABS) -->
+  <!-- PANTALLA 2: PANEL DE ADMINISTRACIÓN ORGANIZADO POR VISTAS -->
   <div id="dashboardScreen" style="display:none;">
-    <nav class="tabs">
-      <button class="tab-btn active" data-tab="tab-eventos">🎟️ Eventos y Tour</button>
-      <button class="tab-btn" data-tab="tab-textos">✏️ Textos y Títulos</button>
-      <button class="tab-btn" data-tab="tab-musica">🎵 Discografía</button>
-      <button class="tab-btn" data-tab="tab-galeria">🖼️ Galería</button>
-      <button class="tab-btn" data-tab="tab-redes">📱 Redes y Contacto</button>
-      <button class="tab-btn" data-tab="tab-config">⚙️ Supabase Config</button>
-    </nav>
 
-    <!-- TAB 1: EVENTOS / TOUR -->
-    <section class="tab-panel active" id="tab-eventos">
+    <!-- Barra de Navegación de Vistas -->
+    <div class="tabs-nav-wrap">
+      <div class="tabs-header-title">
+        <span>Vistas del Sitio Web</span>
+        <span style="color:var(--muted); font-weight:normal; font-size:11px;">Selecciona la sección que deseas editar</span>
+      </div>
+      <nav class="tabs">
+        <button class="tab-btn active" data-tab="tab-inicio">🏠 Inicio</button>
+        <button class="tab-btn" data-tab="tab-bio">👤 Bio</button>
+        <button class="tab-btn" data-tab="tab-tour">🎟️ Tour</button>
+        <button class="tab-btn" data-tab="tab-blog">📰 Blog</button>
+        <button class="tab-btn" data-tab="tab-musica">🎵 Música</button>
+        <button class="tab-btn" data-tab="tab-galeria">🖼️ Galería</button>
+        <button class="tab-btn" data-tab="tab-donar">💰 Donar</button>
+        <button class="tab-btn" data-tab="tab-contacto">📱 Contacto</button>
+        <button class="tab-btn" data-tab="tab-config">⚙️ Config</button>
+      </nav>
+    </div>
+
+    <!-- ============================================================
+         VISTA 1: INICIO (HERO, MARQUESINA, PRÓXIMO EVENTO)
+         ============================================================ -->
+    <section class="tab-panel active" id="tab-inicio">
       <div class="card">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-          <div>
-            <h2>Fechas de Tour / Conciertos</h2>
-            <p class="sub" style="margin-bottom:0;">Gestiona tus próximas presentaciones en vivo.</p>
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>🏠 Vista Inicio (Página Principal)</h2>
+            <p class="sub">Personaliza los títulos, subtítulos, imagen de fondo del Hero y el banner de próximo evento.</p>
           </div>
-          <button class="btn btn-solid btn-sm" id="btnNewEvent">+ Agregar Fecha</button>
+          <span class="view-tag">Vista: Inicio</span>
+        </div>
+
+        <form id="inicioForm">
+          <!-- Marquesina Superior -->
+          <div class="form-group">
+            <label for="txt-topbar">Barra de Aviso Superior (#NuevaMúsica Marquesina)</label>
+            <input type="text" id="txt-topbar" placeholder="#NuevaMúsica — escucha el último sencillo de AGRIDULCE MUSIC">
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="txt-hero-tag">Etiqueta del Hero</label>
+              <input type="text" id="txt-hero-tag" placeholder="#NuevaMúsica">
+            </div>
+            <div class="form-group">
+              <label for="txt-hero-title">Título Principal (Hero)</label>
+              <input type="text" id="txt-hero-title" placeholder="MÚSICA QUE <em>HABLA</em><br>DE LO QUE VIVIMOS">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="txt-hero-sub">Subtítulo del Hero</label>
+            <textarea id="txt-hero-sub" rows="2" placeholder="Sitio oficial de AGRIDULCE MUSIC..."></textarea>
+          </div>
+
+          <!-- IMAGEN DE FONDO DEL HERO -->
+          <div class="img-uploader-box">
+            <div class="img-uploader-header">
+              <label>🌄 Imagen de Fondo Principal (Hero Background)</label>
+              <span style="font-size:11.5px; color:var(--muted);">Recomendado: 1920x1080px horizontal</span>
+            </div>
+            <div class="img-preview-container">
+              <img id="prev-hero-img" src="img/hero.jpg" alt="Fondo Hero">
+            </div>
+            <div class="img-uploader-actions">
+              <button class="btn btn-solid btn-sm btn-trigger-upload" type="button" data-input="file-hero-img">📁 Subir Imagen de mi PC</button>
+              <button class="btn btn-sm btn-reset-img" type="button" data-target="txt-hero-img" data-preview="prev-hero-img" data-default="img/hero.jpg">Restablecer Imagen</button>
+              <input type="file" id="file-hero-img" class="file-input-hidden" accept="image/*" data-target="txt-hero-img" data-preview="prev-hero-img" data-status="status-hero-img">
+            </div>
+            <div class="img-status-msg" id="status-hero-img"></div>
+            <span class="toggle-url-link" data-toggle="collapse-hero-url">Ver o editar enlace directo / ruta</span>
+            <div class="url-input-collapse" id="collapse-hero-url">
+              <input type="text" id="txt-hero-img" placeholder="img/hero.jpg o URL">
+            </div>
+          </div>
+
+          <hr style="border:none; border-top:1px solid var(--line); margin:28px 0 22px;">
+
+          <h3 style="font-size:18px; margin-bottom:12px; color:var(--gold);">Banner de Próximo Evento / Concierto</h3>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="txt-next-event-title">Título del Evento Destacado</label>
+              <input type="text" id="txt-next-event-title" placeholder="14 NOVIEMBRE, BOGOTÁ – TEATRO PRINCIPAL">
+            </div>
+            <div class="form-group">
+              <label for="txt-next-event-date">Fecha y Hora de la Cuenta Regresiva</label>
+              <input type="text" id="txt-next-event-date" placeholder="2026-11-14T20:00:00 (Formato YYYY-MM-DDTHH:mm:ss)">
+            </div>
+          </div>
+
+          <!-- IMAGEN DE FONDO DEL BANNER DE PRÓXIMO EVENTO -->
+          <div class="img-uploader-box">
+            <div class="img-uploader-header">
+              <label>🎟️ Imagen de Fondo del Banner de Próximo Evento</label>
+              <span style="font-size:11.5px; color:var(--muted);">GIF o imagen horizontal</span>
+            </div>
+            <div class="img-preview-container">
+              <img id="prev-next-event-bg" src="img/event-bg.gif" alt="Fondo Próximo Evento">
+            </div>
+            <div class="img-uploader-actions">
+              <button class="btn btn-solid btn-sm btn-trigger-upload" type="button" data-input="file-next-event-bg">📁 Subir Imagen de mi PC</button>
+              <button class="btn btn-sm btn-reset-img" type="button" data-target="txt-next-event-bg" data-preview="prev-next-event-bg" data-default="img/event-bg.gif">Restablecer Imagen</button>
+              <input type="file" id="file-next-event-bg" class="file-input-hidden" accept="image/*" data-target="txt-next-event-bg" data-preview="prev-next-event-bg" data-status="status-next-event-bg">
+            </div>
+            <div class="img-status-msg" id="status-next-event-bg"></div>
+            <span class="toggle-url-link" data-toggle="collapse-next-event-url">Ver o editar enlace directo / ruta</span>
+            <div class="url-input-collapse" id="collapse-next-event-url">
+              <input type="text" id="txt-next-event-bg" placeholder="img/event-bg.gif o URL">
+            </div>
+          </div>
+
+          <div style="margin-top:24px;">
+            <button class="btn btn-solid" type="submit">💾 Guardar Cambios de Vista Inicio</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         VISTA 2: BIO (BIOGRAFÍA, FOTO Y ESTADÍSTICAS)
+         ============================================================ -->
+    <section class="tab-panel" id="tab-bio">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>👤 Vista Biografía</h2>
+            <p class="sub">Edita la descripción oficial del artista, su fotografía y las estadísticas de carrera.</p>
+          </div>
+          <span class="view-tag">Vista: Bio</span>
+        </div>
+
+        <form id="bioForm">
+          <div class="form-group">
+            <label for="txt-bio-title">Título de la Biografía</label>
+            <input type="text" id="txt-bio-title" placeholder="MÚSICA CON <em>PROPÓSITO</em> Y PASIÓN">
+          </div>
+
+          <div class="form-group">
+            <label for="txt-bio-text">Texto Completo de Biografía</label>
+            <textarea id="txt-bio-text" rows="5" placeholder="Biografía oficial de AGRIDULCE MUSIC..."></textarea>
+          </div>
+
+          <!-- FOTO DE BIOGRAFÍA -->
+          <div class="img-uploader-box">
+            <div class="img-uploader-header">
+              <label>📷 Foto Oficial de Biografía</label>
+              <span style="font-size:11.5px; color:var(--muted);">Reemplaza inmediatamente la imagen anterior</span>
+            </div>
+            <div class="img-preview-container tall">
+              <img id="prev-bio-img" src="img/imagen biografia.png" alt="Foto Biografía">
+            </div>
+            <div class="img-uploader-actions">
+              <button class="btn btn-solid btn-sm btn-trigger-upload" type="button" data-input="file-bio-img">📁 Subir Foto de mi PC</button>
+              <button class="btn btn-sm btn-reset-img" type="button" data-target="txt-bio-image" data-preview="prev-bio-img" data-default="img/imagen biografia.png">Restablecer Imagen</button>
+              <input type="file" id="file-bio-img" class="file-input-hidden" accept="image/*" data-target="txt-bio-image" data-preview="prev-bio-img" data-status="status-bio-img">
+            </div>
+            <div class="img-status-msg" id="status-bio-img"></div>
+            <span class="toggle-url-link" data-toggle="collapse-bio-url">Ver o editar enlace directo / ruta</span>
+            <div class="url-input-collapse" id="collapse-bio-url">
+              <input type="text" id="txt-bio-image" placeholder="img/imagen biografia.png o URL">
+            </div>
+          </div>
+
+          <div class="form-grid-3">
+            <div class="form-group">
+              <label for="txt-stat-years">Años de Carrera</label>
+              <input type="text" id="txt-stat-years" placeholder="10+">
+            </div>
+            <div class="form-group">
+              <label for="txt-stat-concerts">Conciertos Realizados</label>
+              <input type="text" id="txt-stat-concerts" placeholder="50+">
+            </div>
+            <div class="form-group">
+              <label for="txt-stat-projects">Proyectos Lanzados</label>
+              <input type="text" id="txt-stat-projects" placeholder="3">
+            </div>
+          </div>
+
+          <div style="margin-top:20px;">
+            <button class="btn btn-solid" type="submit">💾 Guardar Cambios de Biografía</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         VISTA 3: TOUR (CONCIERTOS Y PRESENTACIONES)
+         ============================================================ -->
+    <section class="tab-panel" id="tab-tour">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>🎟️ Vista Tour (Fechas y Conciertos)</h2>
+            <p class="sub">Gestiona los próximos conciertos en vivo y los enlaces de venta de boletos.</p>
+          </div>
+          <button class="btn btn-solid btn-sm" id="btnNewEvent">+ Agregar Fecha de Concierto</button>
         </div>
 
         <!-- Formulario para crear / editar evento -->
-        <div id="eventFormContainer" style="display:none; background:var(--bg-alt-2); padding:20px; border-radius:var(--radius); border:1px solid var(--line); margin-bottom:24px;">
-          <h3 style="font-size:18px; margin-bottom:16px;" id="eventFormTitle">Nueva Fecha de Concierto</h3>
+        <div id="eventFormContainer" style="display:none; background:var(--bg-alt-2); padding:22px; border-radius:var(--radius); border:1px solid var(--line); margin-bottom:24px;">
+          <h3 style="font-size:18px; margin-bottom:16px; color:var(--gold);" id="eventFormTitle">Nueva Fecha de Concierto</h3>
           <form id="eventForm">
             <input type="hidden" id="ev-id">
             <div class="form-grid">
               <div class="form-group">
-                <label for="ev-day">Día (Número)</label>
+                <label for="ev-day">Día (Número, Ej: 14)</label>
                 <input type="text" id="ev-day" placeholder="14" required>
               </div>
               <div class="form-group">
-                <label for="ev-month">Mes y Año</label>
+                <label for="ev-month">Mes y Año (Ej: NOV 2026)</label>
                 <input type="text" id="ev-month" placeholder="NOV 2026" required>
               </div>
               <div class="form-group">
@@ -250,7 +567,7 @@ header.admin-nav{
               </div>
             </div>
             <div style="display:flex; gap:10px; margin-top:8px;">
-              <button class="btn btn-solid" type="submit">Guardar Evento</button>
+              <button class="btn btn-solid" type="submit">Guardar Concierto</button>
               <button class="btn" type="button" id="btnCancelEvent">Cancelar</button>
             </div>
           </form>
@@ -258,259 +575,186 @@ header.admin-nav{
 
         <!-- Lista de Eventos -->
         <div class="items-list" id="eventsList">
-          <div style="color:var(--muted); text-align:center; padding:30px;">Cargando eventos...</div>
+          <div style="color:var(--muted); text-align:center; padding:30px;">Cargando conciertos...</div>
         </div>
       </div>
     </section>
 
-    <!-- TAB 2: TEXTOS Y TÍTULOS -->
-    <section class="tab-panel" id="tab-textos">
+    <!-- ============================================================
+         VISTA 4: BLOG (3 ENTRADAS CON FOTO Y LECTOR COMPLETO)
+         ============================================================ -->
+    <section class="tab-panel" id="tab-blog">
       <div class="card">
-        <h2>Títulos y Textos Principales</h2>
-        <p class="sub">Actualiza los textos destacados que se muestran en el sitio web.</p>
-
-        <form id="textsForm">
-          <div class="form-group">
-            <label for="txt-topbar">Barra de Aviso Superior (#NuevaMúsica)</label>
-            <input type="text" id="txt-topbar" placeholder="#NuevaMúsica — escucha el último sencillo...">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>📰 Vista Blog (Últimas Noticias y Artículos)</h2>
+            <p class="sub">Personaliza la imagen, fecha, título y contenido completo (hasta 2000 caracteres) de los 3 artículos destacados.</p>
           </div>
+          <span class="view-tag">Vista: Blog</span>
+        </div>
 
-          <div class="form-grid">
-            <div class="form-group">
-              <label for="txt-hero-tag">Etiqueta del Hero</label>
-              <input type="text" id="txt-hero-tag" placeholder="#NuevaMúsica">
+        <form id="blogForm">
+          <!-- Entrada Blog #1 -->
+          <div style="background:var(--bg-alt-2); padding:20px; border-radius:var(--radius); border:1px solid var(--line); margin-bottom:24px;">
+            <h4 style="font-size:16px; color:var(--gold); margin-bottom:14px; border-bottom:1px solid rgba(227,178,60,.2); padding-bottom:6px;">
+              Entrada de Blog #1
+            </h4>
+
+            <div class="img-uploader-box" style="background:#131519;">
+              <div class="img-uploader-header">
+                <label>🖼️ Imagen del Artículo #1</label>
+                <span style="font-size:11.5px; color:var(--muted);">Reemplaza la imagen sin ocupar espacio extra</span>
+              </div>
+              <div class="img-preview-container">
+                <img id="prev-blog1-img" src="img/blog1.png" alt="Blog 1">
+              </div>
+              <div class="img-uploader-actions">
+                <button class="btn btn-solid btn-sm btn-trigger-upload" type="button" data-input="file-blog1-img">📁 Subir Foto de mi PC</button>
+                <button class="btn btn-sm btn-reset-img" type="button" data-target="txt-blog1-img" data-preview="prev-blog1-img" data-default="img/blog1.png">Restablecer Imagen</button>
+                <input type="file" id="file-blog1-img" class="file-input-hidden" accept="image/*" data-target="txt-blog1-img" data-preview="prev-blog1-img" data-status="status-blog1-img">
+              </div>
+              <div class="img-status-msg" id="status-blog1-img"></div>
+              <span class="toggle-url-link" data-toggle="collapse-blog1-url">Ver o editar enlace directo / ruta</span>
+              <div class="url-input-collapse" id="collapse-blog1-url">
+                <input type="text" id="txt-blog1-img" placeholder="img/blog1.png o URL">
+              </div>
             </div>
-            <div class="form-group">
-              <label for="txt-next-event-title">Banner: Título Próximo Evento</label>
-              <input type="text" id="txt-next-event-title" placeholder="14 NOVIEMBRE, BOGOTÁ – TEATRO PRINCIPAL">
-            </div>
-          </div>
 
-          <div class="form-grid">
-            <div class="form-group">
-              <label for="txt-next-event-date">Fecha y Hora del Evento (Contador Regresivo)</label>
-              <input type="text" id="txt-next-event-date" placeholder="2026-11-14T20:00:00 (Formato YYYY-MM-DDTHH:mm:ss)">
-            </div>
-            <div class="form-group">
-              <label for="txt-next-event-bg">Imagen de Fondo del Evento (URL o ruta local)</label>
-              <input type="text" id="txt-next-event-bg" placeholder="img/event-bg.gif o URL">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="txt-hero-title">Título Principal (Hero en Inicio)</label>
-            <textarea id="txt-hero-title" rows="2" placeholder="MÚSICA QUE <em>HABLA</em><br>DE LO QUE VIVIMOS"></textarea>
-          </div>
-
-          <div class="form-group">
-            <label for="txt-hero-sub">Subtítulo del Hero</label>
-            <textarea id="txt-hero-sub" rows="2"></textarea>
-          </div>
-
-          <div class="form-group">
-            <label for="txt-hero-img">Imagen de Fondo del Hero (URL o ruta local)</label>
-            <input type="text" id="txt-hero-img" placeholder="img/hero.jpg o URL externa">
-          </div>
-
-          <hr style="border:none; border-top:1px solid var(--line); margin:28px 0;">
-
-          <h3 style="font-size:18px; margin-bottom:16px;">Sección Biografía</h3>
-          <div class="form-group">
-            <label for="txt-bio-title">Título de la Biografía</label>
-            <input type="text" id="txt-bio-title">
-          </div>
-          <div class="form-group">
-            <label for="txt-bio-text">Texto de Biografía</label>
-            <textarea id="txt-bio-text" rows="4"></textarea>
-          </div>
-          <div class="form-group">
-            <label for="txt-bio-image">Foto de Biografía (URL o ruta local)</label>
-            <input type="text" id="txt-bio-image" placeholder="img/imagen biografia.png o URL">
-            <small style="display:block; color:var(--muted); margin-top:4px;">Por defecto: <code>img/imagen biografia.png</code>. Puedes escribir otra ruta local o pegar una URL de imagen externa.</small>
-          </div>
-
-          <div class="form-grid">
-            <div class="form-group">
-              <label for="txt-stat-years">Años de Carrera</label>
-              <input type="text" id="txt-stat-years" placeholder="10+">
-            </div>
-            <div class="form-group">
-              <label for="txt-stat-concerts">Conciertos Realizados</label>
-              <input type="text" id="txt-stat-concerts" placeholder="50+">
-            </div>
-            <div class="form-group">
-              <label for="txt-stat-projects">Proyectos Lanzados</label>
-              <input type="text" id="txt-stat-projects" placeholder="3">
-            </div>
-          <hr style="border:none; border-top:1px solid var(--line); margin:28px 0;">
-
-          <h3 style="font-size:18px; margin-bottom:8px;">Sección Blog / Últimas Noticias</h3>
-          <p class="sub" style="margin-bottom:16px;">Personaliza las imágenes y textos de las 3 entradas mostradas en la pestaña Blog.</p>
-
-          <div style="background:var(--bg-alt-2); padding:16px; border-radius:var(--radius); border:1px solid var(--line); margin-bottom:16px;">
-            <h4 style="font-size:14px; color:var(--gold); margin-bottom:10px;">Entrada Blog #1</h4>
-            <div class="form-group">
-              <label for="txt-blog1-img">Imagen (URL o ruta local)</label>
-              <input type="text" id="txt-blog1-img" placeholder="img/blog1.png">
-              <small style="display:block; color:var(--muted); margin-top:4px;">Por defecto: <code>img/blog1.png</code></small>
-            </div>
             <div class="form-grid">
               <div class="form-group">
-                <label for="txt-blog1-date">Fecha</label>
+                <label for="txt-blog1-date">Fecha de Publicación</label>
                 <input type="text" id="txt-blog1-date" placeholder="5 SEP 2026">
               </div>
               <div class="form-group">
-                <label for="txt-blog1-title">Título</label>
+                <label for="txt-blog1-title">Título del Artículo</label>
                 <input type="text" id="txt-blog1-title" placeholder="Título de la primera entrada del blog">
               </div>
             </div>
-            <div class="form-group" style="margin-top:10px;">
+
+            <div class="form-group" style="margin-bottom:0;">
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                <label for="txt-blog1-content" style="margin-bottom:0;">Contenido Completo del Artículo (Máximo 2000 caracteres)</label>
-                <span id="charCountBlog1" style="font-size:12px; color:var(--muted);">0 / 2000</span>
+                <label for="txt-blog1-content" style="margin-bottom:0;">Contenido Completo (Lector al hacer clic en "LEER MÁS")</label>
+                <span id="charCountBlog1" style="font-size:12px; color:var(--gold); font-weight:600;">0 / 2000</span>
               </div>
-              <textarea id="txt-blog1-content" rows="6" maxlength="2000" placeholder="Escribe aquí el texto que se verá al pulsar 'LEER MÁS' (máx 2000 caracteres)..."></textarea>
+              <textarea id="txt-blog1-content" rows="6" maxlength="2000" placeholder="Escribe aquí el texto que se verá al pulsar 'LEER MÁS'..."></textarea>
             </div>
           </div>
 
-          <div style="background:var(--bg-alt-2); padding:16px; border-radius:var(--radius); border:1px solid var(--line); margin-bottom:16px;">
-            <h4 style="font-size:14px; color:var(--gold); margin-bottom:10px;">Entrada Blog #2</h4>
-            <div class="form-group">
-              <label for="txt-blog2-img">Imagen (URL o ruta local)</label>
-              <input type="text" id="txt-blog2-img" placeholder="img/blog2.png">
-              <small style="display:block; color:var(--muted); margin-top:4px;">Por defecto: <code>img/blog2.png</code></small>
+          <!-- Entrada Blog #2 -->
+          <div style="background:var(--bg-alt-2); padding:20px; border-radius:var(--radius); border:1px solid var(--line); margin-bottom:24px;">
+            <h4 style="font-size:16px; color:var(--gold); margin-bottom:14px; border-bottom:1px solid rgba(227,178,60,.2); padding-bottom:6px;">
+              Entrada de Blog #2
+            </h4>
+
+            <div class="img-uploader-box" style="background:#131519;">
+              <div class="img-uploader-header">
+                <label>🖼️ Imagen del Artículo #2</label>
+                <span style="font-size:11.5px; color:var(--muted);">Reemplaza la imagen sin ocupar espacio extra</span>
+              </div>
+              <div class="img-preview-container">
+                <img id="prev-blog2-img" src="img/blog2.png" alt="Blog 2">
+              </div>
+              <div class="img-uploader-actions">
+                <button class="btn btn-solid btn-sm btn-trigger-upload" type="button" data-input="file-blog2-img">📁 Subir Foto de mi PC</button>
+                <button class="btn btn-sm btn-reset-img" type="button" data-target="txt-blog2-img" data-preview="prev-blog2-img" data-default="img/blog2.png">Restablecer Imagen</button>
+                <input type="file" id="file-blog2-img" class="file-input-hidden" accept="image/*" data-target="txt-blog2-img" data-preview="prev-blog2-img" data-status="status-blog2-img">
+              </div>
+              <div class="img-status-msg" id="status-blog2-img"></div>
+              <span class="toggle-url-link" data-toggle="collapse-blog2-url">Ver o editar enlace directo / ruta</span>
+              <div class="url-input-collapse" id="collapse-blog2-url">
+                <input type="text" id="txt-blog2-img" placeholder="img/blog2.png o URL">
+              </div>
             </div>
+
             <div class="form-grid">
               <div class="form-group">
-                <label for="txt-blog2-date">Fecha</label>
+                <label for="txt-blog2-date">Fecha de Publicación</label>
                 <input type="text" id="txt-blog2-date" placeholder="22 AGO 2026">
               </div>
               <div class="form-group">
-                <label for="txt-blog2-title">Título</label>
+                <label for="txt-blog2-title">Título del Artículo</label>
                 <input type="text" id="txt-blog2-title" placeholder="La historia detrás de la nueva canción">
               </div>
             </div>
-            <div class="form-group" style="margin-top:10px;">
+
+            <div class="form-group" style="margin-bottom:0;">
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                <label for="txt-blog2-content" style="margin-bottom:0;">Contenido Completo del Artículo (Máximo 2000 caracteres)</label>
-                <span id="charCountBlog2" style="font-size:12px; color:var(--muted);">0 / 2000</span>
+                <label for="txt-blog2-content" style="margin-bottom:0;">Contenido Completo (Lector al hacer clic en "LEER MÁS")</label>
+                <span id="charCountBlog2" style="font-size:12px; color:var(--gold); font-weight:600;">0 / 2000</span>
               </div>
-              <textarea id="txt-blog2-content" rows="6" maxlength="2000" placeholder="Escribe aquí el texto que se verá al pulsar 'LEER MÁS' (máx 2000 caracteres)..."></textarea>
+              <textarea id="txt-blog2-content" rows="6" maxlength="2000" placeholder="Escribe aquí el texto que se verá al pulsar 'LEER MÁS'..."></textarea>
             </div>
           </div>
 
-          <div style="background:var(--bg-alt-2); padding:16px; border-radius:var(--radius); border:1px solid var(--line); margin-bottom:16px;">
-            <h4 style="font-size:14px; color:var(--gold); margin-bottom:10px;">Entrada Blog #3</h4>
-            <div class="form-group">
-              <label for="txt-blog3-img">Imagen (URL o ruta local)</label>
-              <input type="text" id="txt-blog3-img" placeholder="img/blog3.png">
-              <small style="display:block; color:var(--muted); margin-top:4px;">Por defecto: <code>img/blog3.png</code></small>
+          <!-- Entrada Blog #3 -->
+          <div style="background:var(--bg-alt-2); padding:20px; border-radius:var(--radius); border:1px solid var(--line); margin-bottom:24px;">
+            <h4 style="font-size:16px; color:var(--gold); margin-bottom:14px; border-bottom:1px solid rgba(227,178,60,.2); padding-bottom:6px;">
+              Entrada de Blog #3
+            </h4>
+
+            <div class="img-uploader-box" style="background:#131519;">
+              <div class="img-uploader-header">
+                <label>🖼️ Imagen del Artículo #3</label>
+                <span style="font-size:11.5px; color:var(--muted);">Reemplaza la imagen sin ocupar espacio extra</span>
+              </div>
+              <div class="img-preview-container">
+                <img id="prev-blog3-img" src="img/blog3.png" alt="Blog 3">
+              </div>
+              <div class="img-uploader-actions">
+                <button class="btn btn-solid btn-sm btn-trigger-upload" type="button" data-input="file-blog3-img">📁 Subir Foto de mi PC</button>
+                <button class="btn btn-sm btn-reset-img" type="button" data-target="txt-blog3-img" data-preview="prev-blog3-img" data-default="img/blog3.png">Restablecer Imagen</button>
+                <input type="file" id="file-blog3-img" class="file-input-hidden" accept="image/*" data-target="txt-blog3-img" data-preview="prev-blog3-img" data-status="status-blog3-img">
+              </div>
+              <div class="img-status-msg" id="status-blog3-img"></div>
+              <span class="toggle-url-link" data-toggle="collapse-blog3-url">Ver o editar enlace directo / ruta</span>
+              <div class="url-input-collapse" id="collapse-blog3-url">
+                <input type="text" id="txt-blog3-img" placeholder="img/blog3.png o URL">
+              </div>
             </div>
+
             <div class="form-grid">
               <div class="form-group">
-                <label for="txt-blog3-date">Fecha</label>
+                <label for="txt-blog3-date">Fecha de Publicación</label>
                 <input type="text" id="txt-blog3-date" placeholder="30 JUL 2026">
               </div>
               <div class="form-group">
-                <label for="txt-blog3-title">Título</label>
+                <label for="txt-blog3-title">Título del Artículo</label>
                 <input type="text" id="txt-blog3-title" placeholder="Recap de la última gira">
               </div>
             </div>
-            <div class="form-group" style="margin-top:10px;">
+
+            <div class="form-group" style="margin-bottom:0;">
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                <label for="txt-blog3-content" style="margin-bottom:0;">Contenido Completo del Artículo (Máximo 2000 caracteres)</label>
-                <span id="charCountBlog3" style="font-size:12px; color:var(--muted);">0 / 2000</span>
+                <label for="txt-blog3-content" style="margin-bottom:0;">Contenido Completo (Lector al hacer clic en "LEER MÁS")</label>
+                <span id="charCountBlog3" style="font-size:12px; color:var(--gold); font-weight:600;">0 / 2000</span>
               </div>
-              <textarea id="txt-blog3-content" rows="6" maxlength="2000" placeholder="Escribe aquí el texto que se verá al pulsar 'LEER MÁS' (máx 2000 caracteres)..."></textarea>
+              <textarea id="txt-blog3-content" rows="6" maxlength="2000" placeholder="Escribe aquí el texto que se verá al pulsar 'LEER MÁS'..."></textarea>
             </div>
           </div>
 
-          <hr style="border:0; border-top:1px solid var(--line); margin:28px 0 20px;">
-          <h3 style="font-size:16px; margin-bottom:6px; color:var(--gold);">💰 Sección Donaciones / Cuentas Bancarias</h3>
-          <p class="sub" style="margin-bottom:16px;">Configura la información de las cuentas y números para transferencias o donaciones.</p>
-
-          <!-- Cuenta Bancaria 1 -->
-          <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(227,178,60,0.25); border-radius:8px; padding:16px; margin-bottom:18px;">
-            <h4 style="font-size:14px; color:var(--gold); margin-bottom:12px;">Cuenta #1 (Ej: Colombia / Bancolombia)</h4>
-            <div class="form-grid">
-              <div class="form-group">
-                <label for="txt-donate-bank1-country">Título / País</label>
-                <input type="text" id="txt-donate-bank1-country" placeholder="COLOMBIA">
-              </div>
-              <div class="form-group">
-                <label for="txt-donate-bank1-type">Tipo de Cuenta / Etiqueta</label>
-                <input type="text" id="txt-donate-bank1-type" placeholder="Cuenta de Ahorros">
-              </div>
-            </div>
-            <div class="form-grid">
-              <div class="form-group">
-                <label for="txt-donate-bank1-name">Entidad Bancaria</label>
-                <input type="text" id="txt-donate-bank1-name" placeholder="Bancolombia">
-              </div>
-              <div class="form-group">
-                <label for="txt-donate-bank1-holder">Titular de la Cuenta</label>
-                <input type="text" id="txt-donate-bank1-holder" placeholder="AGRIDULCE MUSIC">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="txt-donate-bank1-number">Número de Cuenta</label>
-              <input type="text" id="txt-donate-bank1-number" placeholder="123-456789-00">
-            </div>
+          <div>
+            <button class="btn btn-solid" type="submit">💾 Guardar Cambios de Vista Blog</button>
           </div>
-
-          <!-- Cuenta Bancaria 2 -->
-          <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(227,178,60,0.25); border-radius:8px; padding:16px; margin-bottom:18px;">
-            <h4 style="font-size:14px; color:var(--gold); margin-bottom:12px;">Cuenta #2 (Ej: Billetera Digital / Nequi / Daviplata)</h4>
-            <div class="form-grid">
-              <div class="form-group">
-                <label for="txt-donate-bank2-country">Título / Opción</label>
-                <input type="text" id="txt-donate-bank2-country" placeholder="NEQUI / DAVIPLATA">
-              </div>
-              <div class="form-group">
-                <label for="txt-donate-bank2-type">Tipo de Cuenta / Etiqueta</label>
-                <input type="text" id="txt-donate-bank2-type" placeholder="Billetera Digital">
-              </div>
-            </div>
-            <div class="form-grid">
-              <div class="form-group">
-                <label for="txt-donate-bank2-name">Entidad / Plataforma</label>
-                <input type="text" id="txt-donate-bank2-name" placeholder="Nequi">
-              </div>
-              <div class="form-group">
-                <label for="txt-donate-bank2-holder">Titular de la Cuenta</label>
-                <input type="text" id="txt-donate-bank2-holder" placeholder="AGRIDULCE MUSIC">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="txt-donate-bank2-number">Número de Celular / Cuenta</label>
-              <input type="text" id="txt-donate-bank2-number" placeholder="300 123 4567">
-            </div>
-          </div>
-
-          <!-- Nota / Instrucción para el donante -->
-          <div class="form-group">
-            <label for="txt-donate-note">Mensaje / Nota para Comprobante</label>
-            <textarea id="txt-donate-note" rows="3" placeholder="Una vez realizada tu transferencia, puedes enviar tu comprobante al WhatsApp o correo de contacto..."></textarea>
-          </div>
-
-          <button class="btn btn-solid" style="margin-top:12px;" type="submit">Guardar Todos los Textos</button>
         </form>
       </div>
     </section>
 
-    <!-- TAB 3: DISCOGRAFÍA -->
+    <!-- ============================================================
+         VISTA 5: MÚSICA (DISCOGRAFÍA Y VIDEO DESTACADO)
+         ============================================================ -->
     <section class="tab-panel" id="tab-musica">
       <div class="card">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-          <div>
-            <h2>Discografía y Música</h2>
-            <p class="sub" style="margin-bottom:0;">Administra tus sencillos, EPs y álbumes.</p>
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>🎵 Vista Música (Discografía y Canciones)</h2>
+            <p class="sub" style="margin-bottom:0;">Administra los sencillos, EPs y álbumes con su carátula y enlace a Spotify u otra plataforma.</p>
           </div>
           <button class="btn btn-solid btn-sm" id="btnNewMusic">+ Agregar Canción / Álbum</button>
         </div>
 
-        <div id="musicFormContainer" style="display:none; background:var(--bg-alt-2); padding:20px; border-radius:var(--radius); border:1px solid var(--line); margin-bottom:24px;">
-          <h3 style="font-size:18px; margin-bottom:16px;" id="musicFormTitle">Nuevo Lanzamiento</h3>
+        <!-- Formulario Modal / En línea de Música -->
+        <div id="musicFormContainer" style="display:none; background:var(--bg-alt-2); padding:22px; border-radius:var(--radius); border:1px solid var(--line); margin-bottom:24px;">
+          <h3 style="font-size:18px; margin-bottom:16px; color:var(--gold);" id="musicFormTitle">Nuevo Lanzamiento Musical</h3>
           <form id="musicForm">
             <input type="hidden" id="mu-id">
             <div class="form-grid">
@@ -531,11 +775,29 @@ header.admin-nav{
                 <label for="mu-url">Enlace a Spotify / Plataforma</label>
                 <input type="text" id="mu-url" placeholder="https://open.spotify.com/track/..." required>
               </div>
-              <div class="form-group full">
-                <label for="mu-cover">Imagen de Portada / Carátula (URL o ruta local)</label>
-                <input type="text" id="mu-cover" placeholder="img/musica1.png o URL externa">
+            </div>
+
+            <!-- FOTO DE PORTADA / CARÁTULA -->
+            <div class="img-uploader-box" style="background:#131519;">
+              <div class="img-uploader-header">
+                <label>💿 Carátula / Portada del Lanzamiento</label>
+                <span style="font-size:11.5px; color:var(--muted);">Formato cuadrado recomendado</span>
+              </div>
+              <div class="img-preview-container square" style="max-height:180px;">
+                <img id="prev-mu-cover" src="img/musica1.png" alt="Carátula">
+              </div>
+              <div class="img-uploader-actions">
+                <button class="btn btn-solid btn-sm btn-trigger-upload" type="button" data-input="file-mu-cover">📁 Subir Carátula de mi PC</button>
+                <button class="btn btn-sm btn-reset-img" type="button" data-target="mu-cover" data-preview="prev-mu-cover" data-default="img/musica1.png">Restablecer Imagen</button>
+                <input type="file" id="file-mu-cover" class="file-input-hidden" accept="image/*" data-target="mu-cover" data-preview="prev-mu-cover" data-status="status-mu-cover">
+              </div>
+              <div class="img-status-msg" id="status-mu-cover"></div>
+              <span class="toggle-url-link" data-toggle="collapse-mu-cover-url">Ver o editar enlace directo / ruta</span>
+              <div class="url-input-collapse" id="collapse-mu-cover-url">
+                <input type="text" id="mu-cover" placeholder="img/musica1.png o URL">
               </div>
             </div>
+
             <div style="display:flex; gap:10px; margin-top:8px;">
               <button class="btn btn-solid" type="submit">Guardar Lanzamiento</button>
               <button class="btn" type="button" id="btnCancelMusic">Cancelar</button>
@@ -549,134 +811,192 @@ header.admin-nav{
 
         <hr style="border:none; border-top:1px solid var(--line); margin:32px 0 24px;">
 
-        <h3 style="font-size:18px; margin-bottom:6px;">Video Destacado (Pestaña Música)</h3>
-        <p class="sub" style="margin-bottom:16px;">Pega el enlace de YouTube del video que se mostrará en la sección "ÚLTIMOS VIDEOS".</p>
+        <h3 style="font-size:18px; margin-bottom:6px; color:var(--gold);">Video Oficial de YouTube (Sección ÚLTIMOS VIDEOS)</h3>
+        <p class="sub" style="margin-bottom:16px;">Ingresa el enlace de YouTube del video que se mostrará en el reproductor de la pestaña Música.</p>
         
         <form id="featuredVideoForm">
           <div class="form-group">
             <label for="txt-video-url">Enlace de YouTube (Ej: https://youtu.be/1Ty7oSPE-K8 o https://www.youtube.com/watch?v=...)</label>
             <input type="text" id="txt-video-url" placeholder="https://youtu.be/1Ty7oSPE-K8">
           </div>
-          <button class="btn btn-solid btn-sm" type="submit" style="margin-top:8px;">Guardar Video Destacado</button>
+          <button class="btn btn-solid btn-sm" type="submit">Guardar Video Destacado</button>
         </form>
       </div>
     </section>
 
-    <!-- TAB: GALERÍA DE FOTOS -->
+    <!-- ============================================================
+         VISTA 6: GALERÍA (MOSAICO DE 8 FOTOGRAFÍAS)
+         ============================================================ -->
     <section class="tab-panel" id="tab-galeria">
       <div class="card">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
-          <div>
-            <h2>Galería de Fotos (Mosaico)</h2>
-            <p class="sub" style="margin-bottom:0;">Personaliza las 8 fotografías que componen el mosaico de la pestaña Galería.</p>
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>🖼️ Vista Galería (Mosaico de 8 Fotos)</h2>
+            <p class="sub">Haz clic en <strong>"Subir Foto de mi PC"</strong> para reemplazar cualquier espacio por una nueva foto. Al guardar, la foto anterior se sustituye inmediatamente.</p>
           </div>
-          <button class="btn btn-solid btn-sm" id="btnSaveGalleryTop" type="button">💾 Guardar Galería</button>
+          <button class="btn btn-solid btn-sm" id="btnSaveGalleryTop" type="button">💾 Guardar Galería de Fotos</button>
         </div>
 
         <form id="galleryForm">
-          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:18px; margin-top:20px;">
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:18px;">
             
-            <div style="background:var(--bg-alt-2); padding:16px; border-radius:var(--radius); border:1px solid var(--line);">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <!-- Espacio 1 -->
+            <div class="img-uploader-box">
+              <div class="img-uploader-header">
                 <strong style="color:var(--gold); font-size:13px;">Espacio #1 (Vertical Grande)</strong>
               </div>
-              <div style="aspect-ratio:16/10; border-radius:var(--radius); overflow:hidden; background:#14161a; margin-bottom:10px; border:1px solid var(--line);">
-                <img id="prev-gal-1" src="img/blog2.png" alt="Espacio 1" style="width:100%; height:100%; object-fit:cover; display:block;">
+              <div class="img-preview-container">
+                <img id="prev-gal-1" src="img/blog2.png" alt="Espacio 1">
               </div>
-              <div class="form-group" style="margin-bottom:0;">
-                <label for="gal-img-1" style="font-size:12px;">URL o ruta local</label>
-                <input type="text" id="gal-img-1" value="img/blog2.png" placeholder="img/... o URL">
+              <div class="img-uploader-actions">
+                <button class="btn btn-solid btn-sm btn-trigger-upload" type="button" data-input="file-gal-1">📁 Subir Foto de mi PC</button>
+                <button class="btn btn-sm btn-reset-img" type="button" data-target="gal-img-1" data-preview="prev-gal-1" data-default="img/blog2.png">Reset</button>
+                <input type="file" id="file-gal-1" class="file-input-hidden" accept="image/*" data-target="gal-img-1" data-preview="prev-gal-1" data-status="status-gal-1">
+              </div>
+              <div class="img-status-msg" id="status-gal-1"></div>
+              <span class="toggle-url-link" data-toggle="collapse-gal-1">Ver o editar ruta</span>
+              <div class="url-input-collapse" id="collapse-gal-1">
+                <input type="text" id="gal-img-1" value="img/blog2.png">
               </div>
             </div>
 
-            <div style="background:var(--bg-alt-2); padding:16px; border-radius:var(--radius); border:1px solid var(--line);">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <!-- Espacio 2 -->
+            <div class="img-uploader-box">
+              <div class="img-uploader-header">
                 <strong style="color:var(--gold); font-size:13px;">Espacio #2 (Cuadrado)</strong>
               </div>
-              <div style="aspect-ratio:16/10; border-radius:var(--radius); overflow:hidden; background:#14161a; margin-bottom:10px; border:1px solid var(--line);">
-                <img id="prev-gal-2" src="img/musica1.png" alt="Espacio 2" style="width:100%; height:100%; object-fit:cover; display:block;">
+              <div class="img-preview-container">
+                <img id="prev-gal-2" src="img/musica1.png" alt="Espacio 2">
               </div>
-              <div class="form-group" style="margin-bottom:0;">
-                <label for="gal-img-2" style="font-size:12px;">URL o ruta local</label>
-                <input type="text" id="gal-img-2" value="img/musica1.png" placeholder="img/... o URL">
+              <div class="img-uploader-actions">
+                <button class="btn btn-solid btn-sm btn-trigger-upload" type="button" data-input="file-gal-2">📁 Subir Foto de mi PC</button>
+                <button class="btn btn-sm btn-reset-img" type="button" data-target="gal-img-2" data-preview="prev-gal-2" data-default="img/musica1.png">Reset</button>
+                <input type="file" id="file-gal-2" class="file-input-hidden" accept="image/*" data-target="gal-img-2" data-preview="prev-gal-2" data-status="status-gal-2">
+              </div>
+              <div class="img-status-msg" id="status-gal-2"></div>
+              <span class="toggle-url-link" data-toggle="collapse-gal-2">Ver o editar ruta</span>
+              <div class="url-input-collapse" id="collapse-gal-2">
+                <input type="text" id="gal-img-2" value="img/musica1.png">
               </div>
             </div>
 
-            <div style="background:var(--bg-alt-2); padding:16px; border-radius:var(--radius); border:1px solid var(--line);">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <!-- Espacio 3 -->
+            <div class="img-uploader-box">
+              <div class="img-uploader-header">
                 <strong style="color:var(--gold); font-size:13px;">Espacio #3 (Cuadrado)</strong>
               </div>
-              <div style="aspect-ratio:16/10; border-radius:var(--radius); overflow:hidden; background:#14161a; margin-bottom:10px; border:1px solid var(--line);">
-                <img id="prev-gal-3" src="img/blog1.png" alt="Espacio 3" style="width:100%; height:100%; object-fit:cover; display:block;">
+              <div class="img-preview-container">
+                <img id="prev-gal-3" src="img/blog1.png" alt="Espacio 3">
               </div>
-              <div class="form-group" style="margin-bottom:0;">
-                <label for="gal-img-3" style="font-size:12px;">URL o ruta local</label>
-                <input type="text" id="gal-img-3" value="img/blog1.png" placeholder="img/... o URL">
+              <div class="img-uploader-actions">
+                <button class="btn btn-solid btn-sm btn-trigger-upload" type="button" data-input="file-gal-3">📁 Subir Foto de mi PC</button>
+                <button class="btn btn-sm btn-reset-img" type="button" data-target="gal-img-3" data-preview="prev-gal-3" data-default="img/blog1.png">Reset</button>
+                <input type="file" id="file-gal-3" class="file-input-hidden" accept="image/*" data-target="gal-img-3" data-preview="prev-gal-3" data-status="status-gal-3">
+              </div>
+              <div class="img-status-msg" id="status-gal-3"></div>
+              <span class="toggle-url-link" data-toggle="collapse-gal-3">Ver o editar ruta</span>
+              <div class="url-input-collapse" id="collapse-gal-3">
+                <input type="text" id="gal-img-3" value="img/blog1.png">
               </div>
             </div>
 
-            <div style="background:var(--bg-alt-2); padding:16px; border-radius:var(--radius); border:1px solid var(--line);">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <!-- Espacio 4 -->
+            <div class="img-uploader-box">
+              <div class="img-uploader-header">
                 <strong style="color:var(--gold); font-size:13px;">Espacio #4 (Cuadrado)</strong>
               </div>
-              <div style="aspect-ratio:16/10; border-radius:var(--radius); overflow:hidden; background:#14161a; margin-bottom:10px; border:1px solid var(--line);">
-                <img id="prev-gal-4" src="img/musica2.png" alt="Espacio 4" style="width:100%; height:100%; object-fit:cover; display:block;">
+              <div class="img-preview-container">
+                <img id="prev-gal-4" src="img/musica2.png" alt="Espacio 4">
               </div>
-              <div class="form-group" style="margin-bottom:0;">
-                <label for="gal-img-4" style="font-size:12px;">URL o ruta local</label>
-                <input type="text" id="gal-img-4" value="img/musica2.png" placeholder="img/... o URL">
+              <div class="img-uploader-actions">
+                <button class="btn btn-solid btn-sm btn-trigger-upload" type="button" data-input="file-gal-4">📁 Subir Foto de mi PC</button>
+                <button class="btn btn-sm btn-reset-img" type="button" data-target="gal-img-4" data-preview="prev-gal-4" data-default="img/musica2.png">Reset</button>
+                <input type="file" id="file-gal-4" class="file-input-hidden" accept="image/*" data-target="gal-img-4" data-preview="prev-gal-4" data-status="status-gal-4">
+              </div>
+              <div class="img-status-msg" id="status-gal-4"></div>
+              <span class="toggle-url-link" data-toggle="collapse-gal-4">Ver o editar ruta</span>
+              <div class="url-input-collapse" id="collapse-gal-4">
+                <input type="text" id="gal-img-4" value="img/musica2.png">
               </div>
             </div>
 
-            <div style="background:var(--bg-alt-2); padding:16px; border-radius:var(--radius); border:1px solid var(--line);">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <!-- Espacio 5 -->
+            <div class="img-uploader-box">
+              <div class="img-uploader-header">
                 <strong style="color:var(--gold); font-size:13px;">Espacio #5 (Vertical Grande)</strong>
               </div>
-              <div style="aspect-ratio:16/10; border-radius:var(--radius); overflow:hidden; background:#14161a; margin-bottom:10px; border:1px solid var(--line);">
-                <img id="prev-gal-5" src="img/blog3.png" alt="Espacio 5" style="width:100%; height:100%; object-fit:cover; display:block;">
+              <div class="img-preview-container">
+                <img id="prev-gal-5" src="img/blog3.png" alt="Espacio 5">
               </div>
-              <div class="form-group" style="margin-bottom:0;">
-                <label for="gal-img-5" style="font-size:12px;">URL o ruta local</label>
-                <input type="text" id="gal-img-5" value="img/blog3.png" placeholder="img/... o URL">
+              <div class="img-uploader-actions">
+                <button class="btn btn-solid btn-sm btn-trigger-upload" type="button" data-input="file-gal-5">📁 Subir Foto de mi PC</button>
+                <button class="btn btn-sm btn-reset-img" type="button" data-target="gal-img-5" data-preview="prev-gal-5" data-default="img/blog3.png">Reset</button>
+                <input type="file" id="file-gal-5" class="file-input-hidden" accept="image/*" data-target="gal-img-5" data-preview="prev-gal-5" data-status="status-gal-5">
+              </div>
+              <div class="img-status-msg" id="status-gal-5"></div>
+              <span class="toggle-url-link" data-toggle="collapse-gal-5">Ver o editar ruta</span>
+              <div class="url-input-collapse" id="collapse-gal-5">
+                <input type="text" id="gal-img-5" value="img/blog3.png">
               </div>
             </div>
 
-            <div style="background:var(--bg-alt-2); padding:16px; border-radius:var(--radius); border:1px solid var(--line);">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <!-- Espacio 6 -->
+            <div class="img-uploader-box">
+              <div class="img-uploader-header">
                 <strong style="color:var(--gold); font-size:13px;">Espacio #6 (Cuadrado)</strong>
               </div>
-              <div style="aspect-ratio:16/10; border-radius:var(--radius); overflow:hidden; background:#14161a; margin-bottom:10px; border:1px solid var(--line);">
-                <img id="prev-gal-6" src="img/musica3.png" alt="Espacio 6" style="width:100%; height:100%; object-fit:cover; display:block;">
+              <div class="img-preview-container">
+                <img id="prev-gal-6" src="img/musica3.png" alt="Espacio 6">
               </div>
-              <div class="form-group" style="margin-bottom:0;">
-                <label for="gal-img-6" style="font-size:12px;">URL o ruta local</label>
-                <input type="text" id="gal-img-6" value="img/musica3.png" placeholder="img/... o URL">
+              <div class="img-uploader-actions">
+                <button class="btn btn-solid btn-sm btn-trigger-upload" type="button" data-input="file-gal-6">📁 Subir Foto de mi PC</button>
+                <button class="btn btn-sm btn-reset-img" type="button" data-target="gal-img-6" data-preview="prev-gal-6" data-default="img/musica3.png">Reset</button>
+                <input type="file" id="file-gal-6" class="file-input-hidden" accept="image/*" data-target="gal-img-6" data-preview="prev-gal-6" data-status="status-gal-6">
+              </div>
+              <div class="img-status-msg" id="status-gal-6"></div>
+              <span class="toggle-url-link" data-toggle="collapse-gal-6">Ver o editar ruta</span>
+              <div class="url-input-collapse" id="collapse-gal-6">
+                <input type="text" id="gal-img-6" value="img/musica3.png">
               </div>
             </div>
 
-            <div style="background:var(--bg-alt-2); padding:16px; border-radius:var(--radius); border:1px solid var(--line);">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <!-- Espacio 7 -->
+            <div class="img-uploader-box">
+              <div class="img-uploader-header">
                 <strong style="color:var(--gold); font-size:13px;">Espacio #7 (Cuadrado)</strong>
               </div>
-              <div style="aspect-ratio:16/10; border-radius:var(--radius); overflow:hidden; background:#14161a; margin-bottom:10px; border:1px solid var(--line);">
-                <img id="prev-gal-7" src="img/hero.jpg" alt="Espacio 7" style="width:100%; height:100%; object-fit:cover; display:block;">
+              <div class="img-preview-container">
+                <img id="prev-gal-7" src="img/hero.jpg" alt="Espacio 7">
               </div>
-              <div class="form-group" style="margin-bottom:0;">
-                <label for="gal-img-7" style="font-size:12px;">URL o ruta local</label>
-                <input type="text" id="gal-img-7" value="img/hero.jpg" placeholder="img/... o URL">
+              <div class="img-uploader-actions">
+                <button class="btn btn-solid btn-sm btn-trigger-upload" type="button" data-input="file-gal-7">📁 Subir Foto de mi PC</button>
+                <button class="btn btn-sm btn-reset-img" type="button" data-target="gal-img-7" data-preview="prev-gal-7" data-default="img/hero.jpg">Reset</button>
+                <input type="file" id="file-gal-7" class="file-input-hidden" accept="image/*" data-target="gal-img-7" data-preview="prev-gal-7" data-status="status-gal-7">
+              </div>
+              <div class="img-status-msg" id="status-gal-7"></div>
+              <span class="toggle-url-link" data-toggle="collapse-gal-7">Ver o editar ruta</span>
+              <div class="url-input-collapse" id="collapse-gal-7">
+                <input type="text" id="gal-img-7" value="img/hero.jpg">
               </div>
             </div>
 
-            <div style="background:var(--bg-alt-2); padding:16px; border-radius:var(--radius); border:1px solid var(--line);">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <!-- Espacio 8 -->
+            <div class="img-uploader-box">
+              <div class="img-uploader-header">
                 <strong style="color:var(--gold); font-size:13px;">Espacio #8 (Cuadrado)</strong>
               </div>
-              <div style="aspect-ratio:16/10; border-radius:var(--radius); overflow:hidden; background:#14161a; margin-bottom:10px; border:1px solid var(--line);">
-                <img id="prev-gal-8" src="img/musica4.png" alt="Espacio 8" style="width:100%; height:100%; object-fit:cover; display:block;">
+              <div class="img-preview-container">
+                <img id="prev-gal-8" src="img/musica4.png" alt="Espacio 8">
               </div>
-              <div class="form-group" style="margin-bottom:0;">
-                <label for="gal-img-8" style="font-size:12px;">URL o ruta local</label>
-                <input type="text" id="gal-img-8" value="img/musica4.png" placeholder="img/... o URL">
+              <div class="img-uploader-actions">
+                <button class="btn btn-solid btn-sm btn-trigger-upload" type="button" data-input="file-gal-8">📁 Subir Foto de mi PC</button>
+                <button class="btn btn-sm btn-reset-img" type="button" data-target="gal-img-8" data-preview="prev-gal-8" data-default="img/musica4.png">Reset</button>
+                <input type="file" id="file-gal-8" class="file-input-hidden" accept="image/*" data-target="gal-img-8" data-preview="prev-gal-8" data-status="status-gal-8">
+              </div>
+              <div class="img-status-msg" id="status-gal-8"></div>
+              <span class="toggle-url-link" data-toggle="collapse-gal-8">Ver o editar ruta</span>
+              <div class="url-input-collapse" id="collapse-gal-8">
+                <input type="text" id="gal-img-8" value="img/musica4.png">
               </div>
             </div>
 
@@ -684,27 +1004,117 @@ header.admin-nav{
 
           <div style="display:flex; gap:12px; margin-top:24px;">
             <button class="btn btn-solid" type="submit">💾 Guardar Galería de Fotos</button>
-            <button class="btn" type="button" id="btnResetGalleryDefaults">Restablecer Ejemplos</button>
+            <button class="btn" type="button" id="btnResetGalleryDefaults">Restablecer Todas por Defecto</button>
           </div>
         </form>
       </div>
     </section>
 
-    <!-- TAB 4: REDES Y CONTACTO -->
-    <section class="tab-panel" id="tab-redes">
+    <!-- ============================================================
+         VISTA 7: DONAR (CUENTAS BANCARIAS Y BILLETERAS)
+         ============================================================ -->
+    <section class="tab-panel" id="tab-donar">
       <div class="card">
-        <h2>Enlaces de Contacto y Redes Sociales</h2>
-        <p class="sub">Actualiza los números y perfiles para que tus seguidores y contratistas te contacten.</p>
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>💰 Vista Donaciones (Cuentas y Aportes)</h2>
+            <p class="sub">Configura la información bancaria y de billeteras electrónicas para recibir ofrendas y donaciones.</p>
+          </div>
+          <span class="view-tag">Vista: Donar</span>
+        </div>
 
-        <form id="socialForm">
+        <form id="donarForm">
+          <!-- Cuenta Bancaria 1 -->
+          <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(227,178,60,0.3); border-radius:8px; padding:20px; margin-bottom:20px;">
+            <h4 style="font-size:15px; color:var(--gold); margin-bottom:14px;">Cuenta #1 (Ej: Colombia / Bancolombia)</h4>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="txt-donate-bank1-country">Título / País</label>
+                <input type="text" id="txt-donate-bank1-country" placeholder="COLOMBIA">
+              </div>
+              <div class="form-group">
+                <label for="txt-donate-bank1-type">Tipo de Cuenta / Etiqueta</label>
+                <input type="text" id="txt-donate-bank1-type" placeholder="Cuenta de Ahorros">
+              </div>
+            </div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="txt-donate-bank1-name">Entidad Bancaria</label>
+                <input type="text" id="txt-donate-bank1-name" placeholder="Bancolombia">
+              </div>
+              <div class="form-group">
+                <label for="txt-donate-bank1-holder">Titular de la Cuenta</label>
+                <input type="text" id="txt-donate-bank1-holder" placeholder="AGRIDULCE MUSIC">
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label for="txt-donate-bank1-number">Número de Cuenta</label>
+              <input type="text" id="txt-donate-bank1-number" placeholder="123-456789-00">
+            </div>
+          </div>
+
+          <!-- Cuenta Bancaria 2 -->
+          <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(227,178,60,0.3); border-radius:8px; padding:20px; margin-bottom:20px;">
+            <h4 style="font-size:15px; color:var(--gold); margin-bottom:14px;">Cuenta #2 (Ej: Billetera Digital / Nequi / Daviplata)</h4>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="txt-donate-bank2-country">Título / Opción</label>
+                <input type="text" id="txt-donate-bank2-country" placeholder="NEQUI / DAVIPLATA">
+              </div>
+              <div class="form-group">
+                <label for="txt-donate-bank2-type">Tipo de Cuenta / Etiqueta</label>
+                <input type="text" id="txt-donate-bank2-type" placeholder="Billetera Digital">
+              </div>
+            </div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="txt-donate-bank2-name">Entidad / Plataforma</label>
+                <input type="text" id="txt-donate-bank2-name" placeholder="Nequi">
+              </div>
+              <div class="form-group">
+                <label for="txt-donate-bank2-holder">Titular de la Cuenta</label>
+                <input type="text" id="txt-donate-bank2-holder" placeholder="AGRIDULCE MUSIC">
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label for="txt-donate-bank2-number">Número de Celular / Cuenta</label>
+              <input type="text" id="txt-donate-bank2-number" placeholder="300 123 4567">
+            </div>
+          </div>
+
+          <!-- Nota / Instrucción para el donante -->
+          <div class="form-group">
+            <label for="txt-donate-note">Mensaje o Instrucción para el Envío de Comprobantes</label>
+            <textarea id="txt-donate-note" rows="3" placeholder="Una vez realizada tu transferencia, puedes enviar tu comprobante al WhatsApp o correo de contacto..."></textarea>
+          </div>
+
+          <button class="btn btn-solid" type="submit">💾 Guardar Cuentas de Donación</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         VISTA 8: CONTACTO Y REDES
+         ============================================================ -->
+    <section class="tab-panel" id="tab-contacto">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>📱 Vista Contacto y Redes Sociales</h2>
+            <p class="sub">Actualiza los canales de contacto oficiales y los enlaces a tus perfiles en redes sociales.</p>
+          </div>
+          <span class="view-tag">Vista: Contacto</span>
+        </div>
+
+        <form id="contactoForm">
           <div class="form-grid">
             <div class="form-group">
               <label for="cnt-email">Email de Contacto General</label>
-              <input type="email" id="cnt-email" placeholder="contacto@moisesmusic.com">
+              <input type="email" id="cnt-email" placeholder="contacto@agridulcemusic.com">
             </div>
             <div class="form-group">
               <label for="cnt-booking">Email de Booking / Prensa</label>
-              <input type="email" id="cnt-booking" placeholder="booking@moisesmusic.com">
+              <input type="email" id="cnt-booking" placeholder="booking@agridulcemusic.com">
             </div>
             <div class="form-group">
               <label for="cnt-wa">Enlace o Número de WhatsApp</label>
@@ -727,16 +1137,23 @@ header.admin-nav{
               <input type="text" id="cnt-yt" placeholder="https://www.youtube.com/@moisesmusic">
             </div>
           </div>
-          <button class="btn btn-solid" style="margin-top:12px;" type="submit">Guardar Redes y Contacto</button>
+          <button class="btn btn-solid" style="margin-top:12px;" type="submit">💾 Guardar Redes y Contacto</button>
         </form>
       </div>
     </section>
 
-    <!-- TAB 5: CONFIGURACIÓN SUPABASE -->
+    <!-- ============================================================
+         VISTA 9: CONFIGURACIÓN SUPABASE
+         ============================================================ -->
     <section class="tab-panel" id="tab-config">
       <div class="card">
-        <h2>Conexión con Supabase</h2>
-        <p class="sub">Ingresa las credenciales API gratuitas de tu proyecto Supabase (disponibles en Project Settings > API).</p>
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>⚙️ Configuración del Sistema (Supabase)</h2>
+            <p class="sub">Gestiona la conexión con la base de datos Supabase donde se guardan tus datos.</p>
+          </div>
+          <span class="view-tag">Configuración</span>
+        </div>
 
         <form id="configForm">
           <div class="form-group">
@@ -754,24 +1171,26 @@ header.admin-nav{
         </form>
 
         <div style="margin-top:30px; border-top:1px solid var(--line); padding-top:20px;">
-          <h4 style="font-size:15px; margin-bottom:8px;">¿Aún no has creado las tablas en Supabase?</h4>
+          <h4 style="font-size:15px; margin-bottom:8px;">Base de datos y Almacenamiento</h4>
           <p style="color:var(--muted); font-size:13.5px; margin-bottom:12px;">
-            En tu panel de Supabase ve a <strong>SQL Editor</strong> y pega el contenido del archivo <code>supabase-schema.sql</code> incluido en el proyecto.
+            Todas las imágenes que subas son optimizadas y comprimidas en tu navegador antes de guardarse en la base de datos.
+            Al reemplazar o actualizar una imagen, la imagen anterior se elimina de inmediato y se actualiza por la nueva sin acumular archivos huérfanos.
           </p>
         </div>
       </div>
     </section>
+
   </div>
 </div>
 
 <!-- SDK de Supabase (CDN Oficial) -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<!-- Cliente Supabase de MoisesMusic -->
+<!-- Cliente Supabase de AGRIDULCE MUSIC -->
 <script src="supabase-client.js"></script>
 
 <script>
 (function(){
-  // Elementos DOM
+  // Elementos DOM Globales
   var authScreen = document.getElementById('authScreen');
   var dashboardScreen = document.getElementById('dashboardScreen');
   var dbStatusBadge = document.getElementById('dbStatusBadge');
@@ -781,7 +1200,8 @@ header.admin-nav{
   function showAlert(msg, isOk){
     globalAlert.textContent = msg;
     globalAlert.className = 'alert show ' + (isOk ? 'ok' : 'err');
-    setTimeout(function(){ globalAlert.className = 'alert'; }, 5000);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(function(){ globalAlert.className = 'alert'; }, 6000);
   }
 
   function updateBadge(){
@@ -794,7 +1214,147 @@ header.admin-nav{
     }
   }
 
-  // Comprobar estado de autenticación inicial
+  // ============================================================
+  // COMPRESOR Y MANEJADOR DE IMÁGENES LOCALES
+  // Optimiza a max 1280px con alta calidad, genera Base64 compacto
+  // y reemplaza inmediatamente la imagen anterior al guardar.
+  // ============================================================
+  function compressImageFile(file, maxDimension, quality, callback){
+    if(!file || !file.type.match(/^image\//)){
+      alert('Por favor selecciona un archivo de imagen válido (JPG, PNG, WebP o GIF).');
+      return;
+    }
+    maxDimension = maxDimension || 1280;
+    quality = quality || 0.84;
+
+    var reader = new FileReader();
+    reader.onload = function(e){
+      var img = new Image();
+      img.onload = function(){
+        var width = img.width;
+        var height = img.height;
+
+        if(width > maxDimension || height > maxDimension){
+          if(width > height){
+            height = Math.round((height * maxDimension) / width);
+            width = maxDimension;
+          } else {
+            width = Math.round((width * maxDimension) / height);
+            height = maxDimension;
+          }
+        }
+
+        var canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        var ctx = canvas.getContext('2d');
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+        ctx.drawImage(img, 0, 0, width, height);
+
+        var dataUrl = canvas.toDataURL('image/jpeg', quality);
+        var approxKb = Math.round(dataUrl.length * 3 / 4 / 1024);
+        callback(dataUrl, width, height, approxKb);
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // Inicializar todos los selectores de archivo de imágenes
+  document.querySelectorAll('.btn-trigger-upload').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var inputId = btn.getAttribute('data-input');
+      var inputEl = document.getElementById(inputId);
+      if(inputEl) inputEl.click();
+    });
+  });
+
+  document.querySelectorAll('.file-input-hidden').forEach(function(fileInput){
+    fileInput.addEventListener('change', function(){
+      if(!fileInput.files || !fileInput.files[0]) return;
+      var file = fileInput.files[0];
+      var targetId = fileInput.getAttribute('data-target');
+      var previewId = fileInput.getAttribute('data-preview');
+      var statusId = fileInput.getAttribute('data-status');
+
+      var targetInput = document.getElementById(targetId);
+      var previewImg = document.getElementById(previewId);
+      var statusEl = document.getElementById(statusId);
+
+      compressImageFile(file, 1280, 0.84, function(dataUrl, w, h, kb){
+        if(targetInput) targetInput.value = dataUrl;
+        if(previewImg) previewImg.src = dataUrl;
+        if(statusEl){
+          statusEl.textContent = '✓ Imagen lista (' + w + 'x' + h + 'px, ~' + kb + ' KB). Reemplazará la anterior al hacer clic en Guardar.';
+          statusEl.style.display = 'block';
+        }
+      });
+    });
+  });
+
+  // Botones de Reset / Quitar imagen
+  document.querySelectorAll('.btn-reset-img').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var targetId = btn.getAttribute('data-target');
+      var previewId = btn.getAttribute('data-preview');
+      var defaultSrc = btn.getAttribute('data-default') || '';
+
+      var targetInput = document.getElementById(targetId);
+      var previewImg = document.getElementById(previewId);
+
+      if(targetInput) targetInput.value = defaultSrc;
+      if(previewImg) previewImg.src = defaultSrc;
+
+      var box = btn.closest('.img-uploader-box');
+      if(box){
+        var statusEl = box.querySelector('.img-status-msg');
+        if(statusEl){
+          statusEl.textContent = 'Imagen restablecida al valor por defecto (' + defaultSrc + ').';
+          statusEl.style.display = 'block';
+        }
+      }
+    });
+  });
+
+  // Alternar vista de URL/ruta directa
+  document.querySelectorAll('.toggle-url-link').forEach(function(lnk){
+    lnk.addEventListener('click', function(){
+      var targetCollapseId = lnk.getAttribute('data-toggle');
+      var targetCollapse = document.getElementById(targetCollapseId);
+      if(targetCollapse){
+        targetCollapse.classList.toggle('show');
+      }
+    });
+  });
+
+  // Drag & drop en contenedores de previsualización
+  document.querySelectorAll('.img-preview-container').forEach(function(container){
+    container.addEventListener('dragover', function(e){
+      e.preventDefault();
+      container.style.borderColor = 'var(--gold)';
+    });
+    container.addEventListener('dragleave', function(){
+      container.style.borderColor = 'var(--line)';
+    });
+    container.addEventListener('drop', function(e){
+      e.preventDefault();
+      container.style.borderColor = 'var(--line)';
+      var box = container.closest('.img-uploader-box');
+      if(box && e.dataTransfer.files && e.dataTransfer.files[0]){
+        var fileInput = box.querySelector('.file-input-hidden');
+        if(fileInput){
+          fileInput.files = e.dataTransfer.files;
+          var changeEvent = new Event('change');
+          fileInput.dispatchEvent(changeEvent);
+        }
+      }
+    });
+  });
+
+  // ============================================================
+  // COMPROBACIÓN DE SESIÓN Y AUTENTICACIÓN
+  // ============================================================
   async function checkAuth(){
     updateBadge();
     var cfg = window.MM_DB.getConfig();
@@ -827,7 +1387,7 @@ header.admin-nav{
     }
   }
 
-  // Navegación de pestañas
+  // Navegación entre pestañas de vistas
   var tabButtons = document.querySelectorAll('.tab-btn');
   var tabPanels = document.querySelectorAll('.tab-panel');
   tabButtons.forEach(function(btn){
@@ -838,6 +1398,7 @@ header.admin-nav{
       var targetId = btn.getAttribute('data-tab');
       var panel = document.getElementById(targetId);
       if(panel) panel.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   });
 
@@ -893,7 +1454,53 @@ header.admin-nav{
   });
 
   // ============================================================
-  // GESTIÓN DE EVENTOS
+  // CARGA Y GUARDADO DE VISTA 1: INICIO
+  // ============================================================
+  var inicioForm = document.getElementById('inicioForm');
+  inicioForm.addEventListener('submit', async function(e){
+    e.preventDefault();
+    var payload = {
+      topbar_text: document.getElementById('txt-topbar').value.trim(),
+      hero_tag: document.getElementById('txt-hero-tag').value.trim(),
+      hero_title: document.getElementById('txt-hero-title').value.trim(),
+      hero_subtitle: document.getElementById('txt-hero-sub').value.trim(),
+      hero_bg_image: document.getElementById('txt-hero-img').value.trim(),
+      next_event_title: document.getElementById('txt-next-event-title').value.trim(),
+      next_event_date: document.getElementById('txt-next-event-date').value.trim(),
+      next_event_bg_image: document.getElementById('txt-next-event-bg').value.trim()
+    };
+    try {
+      await window.MM_DB.content.bulkSave(payload);
+      showAlert('¡Vista Inicio actualizada correctamente en el sitio web!', true);
+    } catch(err){
+      showAlert('Error al guardar Vista Inicio: ' + err.message, false);
+    }
+  });
+
+  // ============================================================
+  // CARGA Y GUARDADO DE VISTA 2: BIO
+  // ============================================================
+  var bioForm = document.getElementById('bioForm');
+  bioForm.addEventListener('submit', async function(e){
+    e.preventDefault();
+    var payload = {
+      bio_title: document.getElementById('txt-bio-title').value.trim(),
+      bio_text: document.getElementById('txt-bio-text').value.trim(),
+      bio_image: document.getElementById('txt-bio-image').value.trim(),
+      stat_years: document.getElementById('txt-stat-years').value.trim(),
+      stat_concerts: document.getElementById('txt-stat-concerts').value.trim(),
+      stat_projects: document.getElementById('txt-stat-projects').value.trim()
+    };
+    try {
+      await window.MM_DB.content.bulkSave(payload);
+      showAlert('¡Vista Biografía actualizada correctamente en el sitio web!', true);
+    } catch(err){
+      showAlert('Error al guardar Biografía: ' + err.message, false);
+    }
+  });
+
+  // ============================================================
+  // CARGA Y GUARDADO DE VISTA 3: TOUR / EVENTOS
   // ============================================================
   var eventFormContainer = document.getElementById('eventFormContainer');
   var eventForm = document.getElementById('eventForm');
@@ -906,6 +1513,7 @@ header.admin-nav{
     document.getElementById('ev-id').value = '';
     document.getElementById('eventFormTitle').textContent = 'Nueva Fecha de Concierto';
     eventFormContainer.style.display = 'block';
+    eventFormContainer.scrollIntoView({ behavior:'smooth' });
   });
 
   btnCancelEvent.addEventListener('click', function(){
@@ -913,10 +1521,10 @@ header.admin-nav{
   });
 
   async function loadEvents(){
-    eventsList.innerHTML = '<div style="color:var(--muted); text-align:center; padding:20px;">Cargando...</div>';
+    eventsList.innerHTML = '<div style="color:var(--muted); text-align:center; padding:20px;">Cargando conciertos...</div>';
     var events = await window.MM_DB.events.getAll();
     if(!events || events.length === 0){
-      eventsList.innerHTML = '<div style="color:var(--muted); text-align:center; padding:20px;">No hay eventos registrados. Haz clic en "+ Agregar Fecha".</div>';
+      eventsList.innerHTML = '<div style="color:var(--muted); text-align:center; padding:20px;">No hay fechas registradas. Haz clic en "+ Agregar Fecha de Concierto".</div>';
       return;
     }
     var html = '';
@@ -935,7 +1543,6 @@ header.admin-nav{
     });
     eventsList.innerHTML = html;
 
-    // Asignar listeners de edición y borrado
     document.querySelectorAll('.btn-edit-ev').forEach(function(btn){
       btn.addEventListener('click', function(){
         var row = btn.closest('.item-row');
@@ -965,7 +1572,7 @@ header.admin-nav{
             showAlert('Concierto eliminado.', true);
             loadEvents();
           } catch(err){
-            showAlert('Error al eliminar: ' + err.message, false);
+            showAlert('Error al eliminar concierto: ' + err.message, false);
           }
         }
       });
@@ -992,74 +1599,13 @@ header.admin-nav{
       eventFormContainer.style.display = 'none';
       loadEvents();
     } catch(err){
-      showAlert('Error al guardar: ' + err.message, false);
+      showAlert('Error al guardar concierto: ' + err.message, false);
     }
   });
 
   // ============================================================
-  // GESTIÓN DE TEXTOS Y TÍTULOS
+  // CARGA Y GUARDADO DE VISTA 4: BLOG
   // ============================================================
-  var textsForm = document.getElementById('textsForm');
-  async function loadTexts(){
-    var content = await window.MM_DB.content.getAll();
-    if(!content) return;
-    if(content.topbar_text) document.getElementById('txt-topbar').value = content.topbar_text;
-    if(content.hero_tag) document.getElementById('txt-hero-tag').value = content.hero_tag;
-    if(content.hero_title) document.getElementById('txt-hero-title').value = content.hero_title;
-    if(content.hero_subtitle) document.getElementById('txt-hero-sub').value = content.hero_subtitle;
-    if(content.hero_bg_image) document.getElementById('txt-hero-img').value = content.hero_bg_image;
-    if(content.next_event_title) document.getElementById('txt-next-event-title').value = content.next_event_title;
-    if(content.next_event_date) document.getElementById('txt-next-event-date').value = content.next_event_date;
-    if(content.next_event_bg_image) document.getElementById('txt-next-event-bg').value = content.next_event_bg_image;
-    if(content.bio_title) document.getElementById('txt-bio-title').value = content.bio_title;
-    if(content.bio_text) document.getElementById('txt-bio-text').value = content.bio_text;
-    if(content.bio_image) document.getElementById('txt-bio-image').value = content.bio_image;
-    if(content.stat_years) document.getElementById('txt-stat-years').value = content.stat_years;
-    if(content.stat_concerts) document.getElementById('txt-stat-concerts').value = content.stat_concerts;
-    if(content.stat_projects) document.getElementById('txt-stat-projects').value = content.stat_projects;
-    if(content.blog1_image) document.getElementById('txt-blog1-img').value = content.blog1_image;
-    if(content.blog1_date) document.getElementById('txt-blog1-date').value = content.blog1_date;
-    if(content.blog1_title) document.getElementById('txt-blog1-title').value = content.blog1_title;
-    if(content.blog2_image) document.getElementById('txt-blog2-img').value = content.blog2_image;
-    if(content.blog2_date) document.getElementById('txt-blog2-date').value = content.blog2_date;
-    if(content.blog2_title) document.getElementById('txt-blog2-title').value = content.blog2_title;
-    if(content.blog3_image) document.getElementById('txt-blog3-img').value = content.blog3_image;
-    if(content.blog3_date) document.getElementById('txt-blog3-date').value = content.blog3_date;
-    if(content.blog3_title) document.getElementById('txt-blog3-title').value = content.blog3_title;
-
-    if(content.blog1_content){
-      document.getElementById('txt-blog1-content').value = content.blog1_content;
-    } else {
-      document.getElementById('txt-blog1-content').value = "He hablado con muchas personas que dicen: yo no quiero saber nada de Dios, ni de iglesia.\n\nY cuando uno les pregunta: ¿por qué? su respuesta es que han visto creyentes dando mal ejemplo.\n\nHay un hombre en la biblia llamado Samuel. Su historia es sumamente interesante porque él desde muy niño vivió en el templo y su profesor fue un sacerdote llamado Elí. Los hijos de Elí eran terribles, malos ejemplos en todo sentido, eran perversos. Pero lo interesante es ver qué Samuel nunca se dejó llevar por el mal ejemplo de ellos.\n\nSamuel con los años llega a ser un profeta muy importante, y en el contexto de la época era un líder político y social para el pueblo. Ejerció como líder por muchos años y cuando ya era un anciano él se despide de su cargo y al despedirse le dice a la gente algo impresionante: Si a alguien le fallé, si a alguien perjudiqué, si a alguien le hice daño quisiera que me lo dijeran. Sorprendentemente nadie pudo acusarlo de nada. WOW! estamos hablando de alguien que fue íntegro toda su vida, que caminó con Dios toda su vida, pese a que había visto malos ejemplos.\n\nLo que hayan hecho otros no es una excusa para vivir resentido con Dios y con su iglesia.\n\nEn nuestra vida veremos buenos y malos ejemplos, pero cada persona escoge lo que quiere imitar y la forma en qué quiere vivir.\n\nSoy cantante de música cristiana y por mi profesión he tenido la oportunidad de conocer todo tipo de líderes. Buenos y malos, he visto de todo! Cuando comencé el ministerio vi cosas que me impactaron y recuerdo que llegaba a donde mi madre a contarlo lo que había visto y cómo me había afectado. Y la respuesta de mi mamá siempre fue... HIJO... PUESTOS LOS OJOS EN JESÚS... PUESTOS LOS OJOS EN JESÚS... el autor y consumador de nuestra fe.\n\nLo que mi madre me estaba diciendo era: hijo, mira a Jesús. No mirés al ser humano porque te va a defraudar. Y mi mensaje para aquellos que se escudan en las faltas de otros para no buscar a Dios es que pongan sus ojos en Jesús, Él jamás nos defraudará.";
-    }
-    updateCharCount('txt-blog1-content', 'charCountBlog1');
-
-    if(content.blog2_content){
-      document.getElementById('txt-blog2-content').value = content.blog2_content;
-    }
-    updateCharCount('txt-blog2-content', 'charCountBlog2');
-
-    if(content.blog3_content){
-      document.getElementById('txt-blog3-content').value = content.blog3_content;
-    }
-    updateCharCount('txt-blog3-content', 'charCountBlog3');
-
-    // Cuentas Bancarias / Donaciones
-    if(content.donate_bank1_country) document.getElementById('txt-donate-bank1-country').value = content.donate_bank1_country;
-    if(content.donate_bank1_type) document.getElementById('txt-donate-bank1-type').value = content.donate_bank1_type;
-    if(content.donate_bank1_name) document.getElementById('txt-donate-bank1-name').value = content.donate_bank1_name;
-    if(content.donate_bank1_holder) document.getElementById('txt-donate-bank1-holder').value = content.donate_bank1_holder;
-    if(content.donate_bank1_number) document.getElementById('txt-donate-bank1-number').value = content.donate_bank1_number;
-
-    if(content.donate_bank2_country) document.getElementById('txt-donate-bank2-country').value = content.donate_bank2_country;
-    if(content.donate_bank2_type) document.getElementById('txt-donate-bank2-type').value = content.donate_bank2_type;
-    if(content.donate_bank2_name) document.getElementById('txt-donate-bank2-name').value = content.donate_bank2_name;
-    if(content.donate_bank2_holder) document.getElementById('txt-donate-bank2-holder').value = content.donate_bank2_holder;
-    if(content.donate_bank2_number) document.getElementById('txt-donate-bank2-number').value = content.donate_bank2_number;
-
-    if(content.donate_note) document.getElementById('txt-donate-note').value = content.donate_note;
-  }
-
   function updateCharCount(inputId, counterId){
     var el = document.getElementById(inputId);
     var countEl = document.getElementById(counterId);
@@ -1077,23 +1623,10 @@ header.admin-nav{
     }
   });
 
-  textsForm.addEventListener('submit', async function(e){
+  var blogForm = document.getElementById('blogForm');
+  blogForm.addEventListener('submit', async function(e){
     e.preventDefault();
     var payload = {
-      topbar_text: document.getElementById('txt-topbar').value,
-      hero_tag: document.getElementById('txt-hero-tag').value,
-      hero_title: document.getElementById('txt-hero-title').value,
-      hero_subtitle: document.getElementById('txt-hero-sub').value,
-      hero_bg_image: document.getElementById('txt-hero-img').value.trim(),
-      next_event_title: document.getElementById('txt-next-event-title').value,
-      next_event_date: document.getElementById('txt-next-event-date').value.trim(),
-      next_event_bg_image: document.getElementById('txt-next-event-bg').value.trim(),
-      bio_title: document.getElementById('txt-bio-title').value,
-      bio_text: document.getElementById('txt-bio-text').value,
-      bio_image: document.getElementById('txt-bio-image').value.trim(),
-      stat_years: document.getElementById('txt-stat-years').value,
-      stat_concerts: document.getElementById('txt-stat-concerts').value,
-      stat_projects: document.getElementById('txt-stat-projects').value,
       blog1_image: document.getElementById('txt-blog1-img').value.trim(),
       blog1_date: document.getElementById('txt-blog1-date').value.trim(),
       blog1_title: document.getElementById('txt-blog1-title').value.trim(),
@@ -1105,29 +1638,18 @@ header.admin-nav{
       blog3_image: document.getElementById('txt-blog3-img').value.trim(),
       blog3_date: document.getElementById('txt-blog3-date').value.trim(),
       blog3_title: document.getElementById('txt-blog3-title').value.trim(),
-      blog3_content: document.getElementById('txt-blog3-content').value.trim(),
-      donate_bank1_country: document.getElementById('txt-donate-bank1-country').value.trim(),
-      donate_bank1_type: document.getElementById('txt-donate-bank1-type').value.trim(),
-      donate_bank1_name: document.getElementById('txt-donate-bank1-name').value.trim(),
-      donate_bank1_holder: document.getElementById('txt-donate-bank1-holder').value.trim(),
-      donate_bank1_number: document.getElementById('txt-donate-bank1-number').value.trim(),
-      donate_bank2_country: document.getElementById('txt-donate-bank2-country').value.trim(),
-      donate_bank2_type: document.getElementById('txt-donate-bank2-type').value.trim(),
-      donate_bank2_name: document.getElementById('txt-donate-bank2-name').value.trim(),
-      donate_bank2_holder: document.getElementById('txt-donate-bank2-holder').value.trim(),
-      donate_bank2_number: document.getElementById('txt-donate-bank2-number').value.trim(),
-      donate_note: document.getElementById('txt-donate-note').value.trim()
+      blog3_content: document.getElementById('txt-blog3-content').value.trim()
     };
     try {
       await window.MM_DB.content.bulkSave(payload);
-      showAlert('¡Textos y títulos actualizados en el sitio web!', true);
+      showAlert('¡Vista Blog actualizada correctamente en el sitio web!', true);
     } catch(err){
-      showAlert('Error al guardar textos: ' + err.message, false);
+      showAlert('Error al guardar Vista Blog: ' + err.message, false);
     }
   });
 
   // ============================================================
-  // GESTIÓN DE DISCOGRAFÍA / MÚSICA
+  // CARGA Y GUARDADO DE VISTA 5: MÚSICA Y DISCOGRAFÍA
   // ============================================================
   var musicFormContainer = document.getElementById('musicFormContainer');
   var musicForm = document.getElementById('musicForm');
@@ -1138,9 +1660,11 @@ header.admin-nav{
   btnNewMusic.addEventListener('click', function(){
     musicForm.reset();
     document.getElementById('mu-id').value = '';
-    document.getElementById('mu-cover').value = '';
+    document.getElementById('mu-cover').value = 'img/musica1.png';
+    document.getElementById('prev-mu-cover').src = 'img/musica1.png';
     document.getElementById('musicFormTitle').textContent = 'Nuevo Lanzamiento';
     musicFormContainer.style.display = 'block';
+    musicFormContainer.scrollIntoView({ behavior:'smooth' });
   });
 
   btnCancelMusic.addEventListener('click', function(){
@@ -1148,17 +1672,17 @@ header.admin-nav{
   });
 
   async function loadMusic(){
-    musicList.innerHTML = '<div style="color:var(--muted); text-align:center; padding:20px;">Cargando...</div>';
+    musicList.innerHTML = '<div style="color:var(--muted); text-align:center; padding:20px;">Cargando música...</div>';
     var list = await window.MM_DB.music.getAll();
     if(!list || list.length === 0){
-      musicList.innerHTML = '<div style="color:var(--muted); text-align:center; padding:20px;">No hay música registrada.</div>';
+      musicList.innerHTML = '<div style="color:var(--muted); text-align:center; padding:20px;">No hay música registrada. Haz clic en "+ Agregar Canción / Álbum".</div>';
       return;
     }
     var html = '';
     list.forEach(function(m){
       var coverThumb = m.cover_url
-        ? '<img src="' + m.cover_url + '" alt="' + m.title + '" style="width:42px; height:42px; object-fit:cover; border-radius:3px; margin-right:12px; border:1px solid var(--line);">'
-        : '';
+        ? '<img src="' + m.cover_url + '" alt="' + m.title + '" style="width:48px; height:48px; object-fit:cover; border-radius:4px; margin-right:14px; border:1px solid var(--line);">'
+        : '<div style="width:48px; height:48px; background:#14161a; border-radius:4px; margin-right:14px; display:flex; align-items:center; justify-content:center; color:var(--muted);">🎵</div>';
       html += '<div class="item-row" data-id="' + m.id + '" style="display:flex; align-items:center;">' +
         coverThumb +
         '<div class="item-info" style="flex:1;">' +
@@ -1182,7 +1706,9 @@ header.admin-nav{
         document.getElementById('mu-title').value = m.title;
         document.getElementById('mu-category').value = m.category;
         document.getElementById('mu-url').value = m.stream_url;
-        document.getElementById('mu-cover').value = m.cover_url || '';
+        var coverVal = m.cover_url || 'img/musica1.png';
+        document.getElementById('mu-cover').value = coverVal;
+        document.getElementById('prev-mu-cover').src = coverVal;
         document.getElementById('musicFormTitle').textContent = 'Editar Lanzamiento';
         musicFormContainer.style.display = 'block';
         musicFormContainer.scrollIntoView({ behavior:'smooth' });
@@ -1198,7 +1724,7 @@ header.admin-nav{
             showAlert('Lanzamiento eliminado.', true);
             loadMusic();
           } catch(err){
-            showAlert('Error al eliminar: ' + err.message, false);
+            showAlert('Error al eliminar música: ' + err.message, false);
           }
         }
       });
@@ -1218,57 +1744,16 @@ header.admin-nav{
 
     try {
       await window.MM_DB.music.save(payload);
-      showAlert('¡Lanzamiento guardado!', true);
+      showAlert('¡Lanzamiento guardado con éxito!', true);
       musicFormContainer.style.display = 'none';
       loadMusic();
     } catch(err){
-      showAlert('Error al guardar: ' + err.message, false);
+      showAlert('Error al guardar lanzamiento: ' + err.message, false);
     }
   });
 
-  // ============================================================
-  // GESTIÓN DE CONTACTO Y REDES
-  // ============================================================
-  var socialForm = document.getElementById('socialForm');
-  async function loadSocial(){
-    var content = await window.MM_DB.content.getAll();
-    if(!content) return;
-    if(content.contact_email) document.getElementById('cnt-email').value = content.contact_email;
-    if(content.booking_email) document.getElementById('cnt-booking').value = content.booking_email;
-    if(content.whatsapp_url) document.getElementById('cnt-wa').value = content.whatsapp_url;
-    if(content.instagram_url) document.getElementById('cnt-ig').value = content.instagram_url;
-    if(content.facebook_url) document.getElementById('cnt-fb').value = content.facebook_url;
-    if(content.twitter_url) document.getElementById('cnt-tw').value = content.twitter_url;
-    if(content.youtube_url) document.getElementById('cnt-yt').value = content.youtube_url;
-  }
-
-  socialForm.addEventListener('submit', async function(e){
-    e.preventDefault();
-    var payload = {
-      contact_email: document.getElementById('cnt-email').value.trim(),
-      booking_email: document.getElementById('cnt-booking').value.trim(),
-      whatsapp_url: document.getElementById('cnt-wa').value.trim(),
-      instagram_url: document.getElementById('cnt-ig').value.trim(),
-      facebook_url: document.getElementById('cnt-fb').value.trim(),
-      twitter_url: document.getElementById('cnt-tw').value.trim(),
-      youtube_url: document.getElementById('cnt-yt').value.trim()
-    };
-    try {
-      await window.MM_DB.content.bulkSave(payload);
-      showAlert('¡Redes y contactos actualizados!', true);
-    } catch(err){
-      showAlert('Error al guardar: ' + err.message, false);
-    }
-  });
-
+  // Video Destacado de YouTube
   var featuredVideoForm = document.getElementById('featuredVideoForm');
-  async function loadFeaturedVideo(){
-    var content = await window.MM_DB.content.getAll();
-    if(content && content.featured_video_url){
-      document.getElementById('txt-video-url').value = content.featured_video_url;
-    }
-  }
-
   if(featuredVideoForm){
     featuredVideoForm.addEventListener('submit', async function(e){
       e.preventDefault();
@@ -1283,12 +1768,8 @@ header.admin-nav{
   }
 
   // ============================================================
-  // GESTIÓN DE GALERÍA DE FOTOS
+  // CARGA Y GUARDADO DE VISTA 6: GALERÍA (8 ESPACIOS)
   // ============================================================
-  var galleryForm = document.getElementById('galleryForm');
-  var btnSaveGalleryTop = document.getElementById('btnSaveGalleryTop');
-  var btnResetGalleryDefaults = document.getElementById('btnResetGalleryDefaults');
-
   var defaultGalleryImages = {
     1: 'img/blog2.png',
     2: 'img/musica1.png',
@@ -1311,7 +1792,7 @@ header.admin-nav{
     }
   }
 
-  // Previsualización en tiempo real al escribir en cada campo
+  // Previsualización al escribir manualmente
   for(var g = 1; g <= 8; g++){
     (function(num){
       var input = document.getElementById('gal-img-' + num);
@@ -1334,22 +1815,22 @@ header.admin-nav{
     }
     try {
       await window.MM_DB.content.bulkSave(payload);
-      showAlert('¡Galería de fotos actualizada correctamente!', true);
+      showAlert('¡Galería de 8 fotos actualizada correctamente!', true);
     } catch(err){
       showAlert('Error al guardar galería: ' + err.message, false);
     }
   }
 
-  if(galleryForm){
-    galleryForm.addEventListener('submit', saveGalleryHandler);
-  }
-  if(btnSaveGalleryTop){
-    btnSaveGalleryTop.addEventListener('click', saveGalleryHandler);
-  }
+  var galleryForm = document.getElementById('galleryForm');
+  var btnSaveGalleryTop = document.getElementById('btnSaveGalleryTop');
+  var btnResetGalleryDefaults = document.getElementById('btnResetGalleryDefaults');
+
+  if(galleryForm) galleryForm.addEventListener('submit', saveGalleryHandler);
+  if(btnSaveGalleryTop) btnSaveGalleryTop.addEventListener('click', saveGalleryHandler);
 
   if(btnResetGalleryDefaults){
     btnResetGalleryDefaults.addEventListener('click', function(){
-      if(confirm('¿Deseas restablecer los campos con las 8 fotos de ejemplo?')){
+      if(confirm('¿Deseas restablecer los 8 espacios con las imágenes de ejemplo iniciales?')){
         for(var i = 1; i <= 8; i++){
           var input = document.getElementById('gal-img-' + i);
           var prev = document.getElementById('prev-gal-' + i);
@@ -1360,13 +1841,157 @@ header.admin-nav{
     });
   }
 
+  // ============================================================
+  // CARGA Y GUARDADO DE VISTA 7: DONAR
+  // ============================================================
+  var donarForm = document.getElementById('donarForm');
+  donarForm.addEventListener('submit', async function(e){
+    e.preventDefault();
+    var payload = {
+      donate_bank1_country: document.getElementById('txt-donate-bank1-country').value.trim(),
+      donate_bank1_type: document.getElementById('txt-donate-bank1-type').value.trim(),
+      donate_bank1_name: document.getElementById('txt-donate-bank1-name').value.trim(),
+      donate_bank1_holder: document.getElementById('txt-donate-bank1-holder').value.trim(),
+      donate_bank1_number: document.getElementById('txt-donate-bank1-number').value.trim(),
+      donate_bank2_country: document.getElementById('txt-donate-bank2-country').value.trim(),
+      donate_bank2_type: document.getElementById('txt-donate-bank2-type').value.trim(),
+      donate_bank2_name: document.getElementById('txt-donate-bank2-name').value.trim(),
+      donate_bank2_holder: document.getElementById('txt-donate-bank2-holder').value.trim(),
+      donate_bank2_number: document.getElementById('txt-donate-bank2-number').value.trim(),
+      donate_note: document.getElementById('txt-donate-note').value.trim()
+    };
+    try {
+      await window.MM_DB.content.bulkSave(payload);
+      showAlert('¡Información de Donaciones guardada correctamente!', true);
+    } catch(err){
+      showAlert('Error al guardar Donaciones: ' + err.message, false);
+    }
+  });
+
+  // ============================================================
+  // CARGA Y GUARDADO DE VISTA 8: CONTACTO Y REDES
+  // ============================================================
+  var contactoForm = document.getElementById('contactoForm');
+  contactoForm.addEventListener('submit', async function(e){
+    e.preventDefault();
+    var payload = {
+      contact_email: document.getElementById('cnt-email').value.trim(),
+      booking_email: document.getElementById('cnt-booking').value.trim(),
+      whatsapp_url: document.getElementById('cnt-wa').value.trim(),
+      instagram_url: document.getElementById('cnt-ig').value.trim(),
+      facebook_url: document.getElementById('cnt-fb').value.trim(),
+      twitter_url: document.getElementById('cnt-tw').value.trim(),
+      youtube_url: document.getElementById('cnt-yt').value.trim()
+    };
+    try {
+      await window.MM_DB.content.bulkSave(payload);
+      showAlert('¡Redes y Contacto actualizados correctamente!', true);
+    } catch(err){
+      showAlert('Error al guardar Contacto: ' + err.message, false);
+    }
+  });
+
+  // ============================================================
+  // CARGAR DATOS COMPLETOS DE TODAS LAS VISTAS DESDE SUPABASE
+  // ============================================================
+  async function loadAllContent(){
+    var content = await window.MM_DB.content.getAll();
+    if(!content) return;
+
+    // VISTA 1: INICIO
+    if(content.topbar_text) document.getElementById('txt-topbar').value = content.topbar_text;
+    if(content.hero_tag) document.getElementById('txt-hero-tag').value = content.hero_tag;
+    if(content.hero_title) document.getElementById('txt-hero-title').value = content.hero_title;
+    if(content.hero_subtitle) document.getElementById('txt-hero-sub').value = content.hero_subtitle;
+    if(content.hero_bg_image){
+      document.getElementById('txt-hero-img').value = content.hero_bg_image;
+      document.getElementById('prev-hero-img').src = content.hero_bg_image;
+    }
+    if(content.next_event_title) document.getElementById('txt-next-event-title').value = content.next_event_title;
+    if(content.next_event_date) document.getElementById('txt-next-event-date').value = content.next_event_date;
+    if(content.next_event_bg_image){
+      document.getElementById('txt-next-event-bg').value = content.next_event_bg_image;
+      document.getElementById('prev-next-event-bg').src = content.next_event_bg_image;
+    }
+
+    // VISTA 2: BIO
+    if(content.bio_title) document.getElementById('txt-bio-title').value = content.bio_title;
+    if(content.bio_text) document.getElementById('txt-bio-text').value = content.bio_text;
+    if(content.bio_image){
+      document.getElementById('txt-bio-image').value = content.bio_image;
+      document.getElementById('prev-bio-img').src = content.bio_image;
+    }
+    if(content.stat_years) document.getElementById('txt-stat-years').value = content.stat_years;
+    if(content.stat_concerts) document.getElementById('txt-stat-concerts').value = content.stat_concerts;
+    if(content.stat_projects) document.getElementById('txt-stat-projects').value = content.stat_projects;
+
+    // VISTA 4: BLOG
+    if(content.blog1_image){
+      document.getElementById('txt-blog1-img').value = content.blog1_image;
+      document.getElementById('prev-blog1-img').src = content.blog1_image;
+    }
+    if(content.blog1_date) document.getElementById('txt-blog1-date').value = content.blog1_date;
+    if(content.blog1_title) document.getElementById('txt-blog1-title').value = content.blog1_title;
+    if(content.blog1_content){
+      document.getElementById('txt-blog1-content').value = content.blog1_content;
+    } else {
+      document.getElementById('txt-blog1-content').value = "He hablado con muchas personas que dicen: yo no quiero saber nada de Dios, ni de iglesia.\n\nY cuando uno les pregunta: ¿por qué? su respuesta es que han visto creyentes dando mal ejemplo.\n\nHay un hombre en la biblia llamado Samuel. Su historia es sumamente interesante porque él desde muy niño vivió en el templo y su profesor fue un sacerdote llamado Elí. Los hijos de Elí eran terribles, malos ejemplos en todo sentido, eran perversos. Pero lo interesante es ver qué Samuel nunca se dejó llevar por el mal ejemplo de ellos.\n\nSamuel con los años llega a ser un profeta muy importante, y en el contexto de la época era un líder político y social para el pueblo. Ejerció como líder por muchos años y cuando ya era un anciano él se despide de su cargo y al despedirse le dice a la gente algo impresionante: Si a alguien le fallé, si a alguien perjudiqué, si a alguien le hice daño quisiera que me lo dijeran. Sorprendentemente nadie pudo acusarlo de nada. WOW! estamos hablando de alguien que fue íntegro toda su vida, que caminó con Dios toda su vida, pese a que había visto malos ejemplos.\n\nLo que hayan hecho otros no es una excusa para vivir resentido con Dios y con su iglesia.\n\nEn nuestra vida veremos buenos y malos ejemplos, pero cada persona escoge lo que quiere imitar y la forma en qué quiere vivir.\n\nSoy cantante de música cristiana y por mi profesión he tenido la oportunidad de conocer todo tipo de líderes. Buenos y malos, he visto de todo! Cuando comencé el ministerio vi cosas que me impactaron y recuerdo que llegaba a donde mi madre a contarlo lo que había visto y cómo me había afectado. Y la respuesta de mi mamá siempre fue... HIJO... PUESTOS LOS OJOS EN JESÚS... PUESTOS LOS OJOS EN JESÚS... el autor y consumador de nuestra fe.\n\nLo que mi madre me estaba diciendo era: hijo, mira a Jesús. No mirés al ser humano porque te va a defraudar. Y mi mensaje para aquellos que se escudan en las faltas de otros para no buscar a Dios es que pongan sus ojos en Jesús, Él jamás nos defraudará.";
+    }
+    updateCharCount('txt-blog1-content', 'charCountBlog1');
+
+    if(content.blog2_image){
+      document.getElementById('txt-blog2-img').value = content.blog2_image;
+      document.getElementById('prev-blog2-img').src = content.blog2_image;
+    }
+    if(content.blog2_date) document.getElementById('txt-blog2-date').value = content.blog2_date;
+    if(content.blog2_title) document.getElementById('txt-blog2-title').value = content.blog2_title;
+    if(content.blog2_content) document.getElementById('txt-blog2-content').value = content.blog2_content;
+    updateCharCount('txt-blog2-content', 'charCountBlog2');
+
+    if(content.blog3_image){
+      document.getElementById('txt-blog3-img').value = content.blog3_image;
+      document.getElementById('prev-blog3-img').src = content.blog3_image;
+    }
+    if(content.blog3_date) document.getElementById('txt-blog3-date').value = content.blog3_date;
+    if(content.blog3_title) document.getElementById('txt-blog3-title').value = content.blog3_title;
+    if(content.blog3_content) document.getElementById('txt-blog3-content').value = content.blog3_content;
+    updateCharCount('txt-blog3-content', 'charCountBlog3');
+
+    // VISTA 5: VIDEO DESTACADO
+    if(content.featured_video_url){
+      document.getElementById('txt-video-url').value = content.featured_video_url;
+    }
+
+    // VISTA 7: DONAR
+    if(content.donate_bank1_country) document.getElementById('txt-donate-bank1-country').value = content.donate_bank1_country;
+    if(content.donate_bank1_type) document.getElementById('txt-donate-bank1-type').value = content.donate_bank1_type;
+    if(content.donate_bank1_name) document.getElementById('txt-donate-bank1-name').value = content.donate_bank1_name;
+    if(content.donate_bank1_holder) document.getElementById('txt-donate-bank1-holder').value = content.donate_bank1_holder;
+    if(content.donate_bank1_number) document.getElementById('txt-donate-bank1-number').value = content.donate_bank1_number;
+
+    if(content.donate_bank2_country) document.getElementById('txt-donate-bank2-country').value = content.donate_bank2_country;
+    if(content.donate_bank2_type) document.getElementById('txt-donate-bank2-type').value = content.donate_bank2_type;
+    if(content.donate_bank2_name) document.getElementById('txt-donate-bank2-name').value = content.donate_bank2_name;
+    if(content.donate_bank2_holder) document.getElementById('txt-donate-bank2-holder').value = content.donate_bank2_holder;
+    if(content.donate_bank2_number) document.getElementById('txt-donate-bank2-number').value = content.donate_bank2_number;
+
+    if(content.donate_note) document.getElementById('txt-donate-note').value = content.donate_note;
+
+    // VISTA 8: CONTACTO
+    if(content.contact_email) document.getElementById('cnt-email').value = content.contact_email;
+    if(content.booking_email) document.getElementById('cnt-booking').value = content.booking_email;
+    if(content.whatsapp_url) document.getElementById('cnt-wa').value = content.whatsapp_url;
+    if(content.instagram_url) document.getElementById('cnt-ig').value = content.instagram_url;
+    if(content.facebook_url) document.getElementById('cnt-fb').value = content.facebook_url;
+    if(content.twitter_url) document.getElementById('cnt-tw').value = content.twitter_url;
+    if(content.youtube_url) document.getElementById('cnt-yt').value = content.youtube_url;
+  }
+
   function loadDashboardData(){
     loadEvents();
-    loadTexts();
+    loadAllContent();
     loadMusic();
     loadGallery();
-    loadFeaturedVideo();
-    loadSocial();
   }
 
   checkAuth();

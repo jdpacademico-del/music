@@ -285,7 +285,7 @@
           }
           if (content.hero_bg_image) {
             var hs = document.getElementById('heroScene');
-            if (hs) hs.style.backgroundImage = 'url(' + content.hero_bg_image + ')';
+            if (hs) hs.style.backgroundImage = 'url("' + content.hero_bg_image + '")';
           }
           if (content.next_event_title) {
             var el = document.getElementById('nextEventTitle') || document.querySelector('.event-title') || document.querySelector('.banner-title');
@@ -296,7 +296,7 @@
           }
           if (content.next_event_bg_image) {
             var neb = document.getElementById('nextEventBanner');
-            if (neb) neb.style.backgroundImage = 'url(' + content.next_event_bg_image + ')';
+            if (neb) neb.style.backgroundImage = 'url("' + content.next_event_bg_image + '")';
           }
           if (content.next_event_date) {
             var nec = document.getElementById('nextEventCountdown');
