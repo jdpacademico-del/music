@@ -623,7 +623,9 @@
           }
 
           // 3.2 Vista INICIO: Sección ÚLTIMOS LANZAMIENTOS (Primeros 3 lanzamientos sincronizados)
-          var homeMusicGrid = document.getElementById('homeMusicGrid');
+          var homeMusicGrid = document.getElementById('homeMusicGrid') ||
+                              document.querySelector('.home-music-section .grid-3') ||
+                              document.querySelector('#view-inicio .grid-3');
           if (homeMusicGrid) {
             var top3 = musicList.slice(0, 3);
             var hHtml = '';

@@ -1094,30 +1094,30 @@ footer{
       </div>
       <div class="grid-3" id="homeMusicGrid">
         <div class="card">
-          <div class="card-media"><img src="img/musica1.png" alt="Título del sencillo" loading="lazy"></div>
+          <div class="card-media"><img src="img/musica1.png" alt="Desde la Infancia" loading="lazy"></div>
           <div class="card-body">
-            <div class="card-kicker">SENCILLO · 2026</div>
-            <div class="card-title">Título del sencillo</div>
+            <div class="card-kicker">EP</div>
+            <div class="card-title">Desde la Infancia</div>
             <div class="card-meta">Disponible en todas las plataformas</div>
-            <a class="card-cta" href="#musica" data-nav="musica">ESCUCHAR →</a>
+            <a class="card-cta" href="https://open.spotify.com/artist/moisesmusic" target="_blank" rel="noopener">ESCUCHAR →</a>
           </div>
         </div>
         <div class="card">
-          <div class="card-media"><img src="img/musica2.png" alt="Segundo sencillo" loading="lazy"></div>
+          <div class="card-media"><img src="img/musica2.png" alt="Te Espero!" loading="lazy"></div>
           <div class="card-body">
-            <div class="card-kicker">SENCILLO · 2025</div>
-            <div class="card-title">Segundo sencillo</div>
+            <div class="card-kicker">ÁLBUM</div>
+            <div class="card-title">Te Espero!</div>
             <div class="card-meta">Disponible en todas las plataformas</div>
-            <a class="card-cta" href="#musica" data-nav="musica">ESCUCHAR →</a>
+            <a class="card-cta" href="https://open.spotify.com/artist/moisesmusic" target="_blank" rel="noopener">ESCUCHAR →</a>
           </div>
         </div>
         <div class="card">
-          <div class="card-media"><img src="img/musica3.png" alt="Nombre del EP" loading="lazy"></div>
+          <div class="card-media"><img src="img/musica3.png" alt="Título con artista invitado" loading="lazy"></div>
           <div class="card-body">
-            <div class="card-kicker">EP · 2025</div>
-            <div class="card-title">Nombre del EP</div>
+            <div class="card-kicker">COLABORACIÓN</div>
+            <div class="card-title">Título con artista invitado</div>
             <div class="card-meta">Disponible en todas las plataformas</div>
-            <a class="card-cta" href="#musica" data-nav="musica">ESCUCHAR →</a>
+            <a class="card-cta" href="https://open.spotify.com/artist/moisesmusic" target="_blank" rel="noopener">ESCUCHAR →</a>
           </div>
         </div>
       </div>
@@ -1701,6 +1701,9 @@ footer{
         e.preventDefault();
         window.location.hash = target;
         setActive(target);
+        if(window.MM_DB && (target === 'inicio' || target === 'musica')) {
+          window.MM_DB.hydratePublicSite();
+        }
       }
     });
   });
@@ -2016,7 +2019,7 @@ window.closeBlogPost = function(shouldScroll){
 
 <!-- SDK Supabase (CDN Oficial) y Cliente MoisesMusic -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase-client.js"></script>
+<script src="supabase-client.js?v=20260914-2"></script>
 <script>
   // Hidratar el sitio con datos de Supabase si está configurado
   document.addEventListener('DOMContentLoaded', function(){
