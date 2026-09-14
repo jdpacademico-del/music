@@ -410,18 +410,27 @@ header.admin-nav{
 
           <hr style="border:none; border-top:1px solid var(--line); margin:28px 0 22px;">
 
-          <h3 style="font-size:18px; margin-bottom:12px; color:var(--gold);">Banner de Próximo Evento / Concierto</h3>
-
-          <div class="form-grid">
-            <div class="form-group">
-              <label for="txt-next-event-title">Título del Evento Destacado</label>
-              <input type="text" id="txt-next-event-title" placeholder="14 NOVIEMBRE, BOGOTÁ – TEATRO PRINCIPAL">
+          <!-- TARJETA DE SINCRONIZACIÓN AUTOMÁTICA CON LA VISTA TOUR -->
+          <div style="background:rgba(227,178,60,.06); border:1px solid rgba(227,178,60,.3); border-radius:6px; padding:18px; margin-bottom:20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+              <strong style="color:var(--gold); font-size:14px; display:flex; align-items:center; gap:8px;">
+                <span>📅</span> Próximo Evento (Sincronizado Automáticamente con la Vista Tour)
+              </strong>
+              <span class="badge connected" style="font-size:11px;">Sincronización Activa</span>
             </div>
-            <div class="form-group">
-              <label for="txt-next-event-date">Fecha y Hora de la Cuenta Regresiva</label>
-              <input type="text" id="txt-next-event-date" placeholder="2026-11-14T20:00:00 (Formato YYYY-MM-DDTHH:mm:ss)">
+            <p style="font-size:13px; color:var(--muted); margin-bottom:12px;">
+              El título, recinto y el contador regresivo del banner de Inicio se obtienen <strong>directamente del próximo concierto registrado en la pestaña 🎟️ Tour</strong>. Al agregar, editar o cambiar fechas en Tour, el banner se actualiza al instante.
+            </p>
+            <div style="background:var(--bg-alt-2); padding:14px 18px; border-radius:4px; border:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+              <div>
+                <div id="inicioUpcomingTitle" style="font-weight:700; color:var(--ink); font-size:14.5px;">Cargando próximo concierto del Tour...</div>
+                <div id="inicioUpcomingMeta" style="font-size:12.5px; color:var(--gold); margin-top:3px;">Sincronizando fecha con la lista de eventos...</div>
+              </div>
+              <button class="btn btn-sm" type="button" id="btnGoToTourFromInicio">Gestionar Conciertos en Tour ↗</button>
             </div>
           </div>
+
+          <h4 style="font-size:14px; margin-bottom:10px; color:var(--ink);">Imagen de Fondo del Banner de Próximo Evento</h4>
 
           <!-- IMAGEN DE FONDO DEL BANNER DE PRÓXIMO EVENTO -->
           <div class="img-uploader-box">
@@ -1465,8 +1474,6 @@ header.admin-nav{
       hero_title: document.getElementById('txt-hero-title').value.trim(),
       hero_subtitle: document.getElementById('txt-hero-sub').value.trim(),
       hero_bg_image: document.getElementById('txt-hero-img').value.trim(),
-      next_event_title: document.getElementById('txt-next-event-title').value.trim(),
-      next_event_date: document.getElementById('txt-next-event-date').value.trim(),
       next_event_bg_image: document.getElementById('txt-next-event-bg').value.trim()
     };
     try {
@@ -1476,6 +1483,15 @@ header.admin-nav{
       showAlert('Error al guardar Vista Inicio: ' + err.message, false);
     }
   });
+
+  // Botón para saltar desde Inicio a la pestaña Tour
+  var btnGoToTourFromInicio = document.getElementById('btnGoToTourFromInicio');
+  if(btnGoToTourFromInicio){
+    btnGoToTourFromInicio.addEventListener('click', function(){
+      var tourTab = document.querySelector('[data-tab="tab-tour"]');
+      if(tourTab) tourTab.click();
+    });
+  }
 
   // ============================================================
   // CARGA Y GUARDADO DE VISTA 2: BIO
@@ -1525,14 +1541,34 @@ header.admin-nav{
     var events = await window.MM_DB.events.getAll();
     if(!events || events.length === 0){
       eventsList.innerHTML = '<div style="color:var(--muted); text-align:center; padding:20px;">No hay fechas registradas. Haz clic en "+ Agregar Fecha de Concierto".</div>';
+      var upTitle = document.getElementById('inicioUpcomingTitle');
+      var upMeta = document.getElementById('inicioUpcomingMeta');
+      if(upTitle) upTitle.textContent = 'No hay conciertos registrados en Tour';
+      if(upMeta) upMeta.textContent = 'Agrega una fecha en la pestaña Tour para activar el banner';
       return;
     }
+
+    // Calcular el próximo evento del Tour para sincronizar con Inicio
+    var upcomingData = window.MM_DB.getUpcomingEvent ? window.MM_DB.getUpcomingEvent(events) : null;
+    if(upcomingData && upcomingData.event){
+      var upTitle = document.getElementById('inicioUpcomingTitle');
+      var upMeta = document.getElementById('inicioUpcomingMeta');
+      if(upTitle){
+        upTitle.textContent = upcomingData.event.day_str + ' ' + upcomingData.event.month_year_str + ' — ' + upcomingData.event.city + (upcomingData.event.venue ? ' (' + upcomingData.event.venue + ')' : '');
+      }
+      if(upMeta && upcomingData.date){
+        upMeta.textContent = '✓ Contador activo hacia el ' + upcomingData.date.toLocaleDateString('es-CO', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) + ' a las 20:00 (Sincronizado)';
+      }
+    }
+
     var html = '';
     events.forEach(function(ev){
+      var isUpcoming = (upcomingData && upcomingData.event && ev.id === upcomingData.event.id);
+      var upcomingBadge = isUpcoming ? ' <span class="badge" style="background:rgba(227,178,60,.18); color:var(--gold); border-color:var(--gold); font-weight:700;">⭐ PRÓXIMO EN EL BANNER DE INICIO</span>' : '';
       var tagBadge = ev.tag ? ' <span class="badge" style="color:var(--gold); border-color:var(--gold);">' + ev.tag + '</span>' : '';
-      html += '<div class="item-row" data-id="' + ev.id + '">' +
+      html += '<div class="item-row" data-id="' + ev.id + '" style="' + (isUpcoming ? 'border-color:rgba(227,178,60,.4); background:rgba(227,178,60,.03);' : '') + '">' +
         '<div class="item-info">' +
-          '<div class="title">' + ev.day_str + ' ' + ev.month_year_str + ' — ' + ev.city + tagBadge + '</div>' +
+          '<div class="title">' + ev.day_str + ' ' + ev.month_year_str + ' — ' + ev.city + upcomingBadge + tagBadge + '</div>' +
           '<div class="meta">Lugar: ' + ev.venue + ' | Botón: ' + ev.button_text + ' (' + ev.ticket_url + ')</div>' +
         '</div>' +
         '<div class="item-actions">' +
@@ -1907,8 +1943,6 @@ header.admin-nav{
       document.getElementById('txt-hero-img').value = content.hero_bg_image;
       document.getElementById('prev-hero-img').src = content.hero_bg_image;
     }
-    if(content.next_event_title) document.getElementById('txt-next-event-title').value = content.next_event_title;
-    if(content.next_event_date) document.getElementById('txt-next-event-date').value = content.next_event_date;
     if(content.next_event_bg_image){
       document.getElementById('txt-next-event-bg').value = content.next_event_bg_image;
       document.getElementById('prev-next-event-bg').src = content.next_event_bg_image;

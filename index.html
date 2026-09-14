@@ -1055,9 +1055,9 @@ footer{
     <div class="wrap">
       <div class="banner-label">PRÓXIMOS EVENTOS</div>
       <div class="banner-icon">▽</div>
-      <div class="banner-title" id="nextEventTitle">14 NOVIEMBRE, BOGOTÁ – TEATRO PRINCIPAL</div>
+      <div class="banner-title" id="nextEventTitle">19 SEP 2026, MONTERIA, COLOMBIA – TEATRO UNICOR</div>
       
-      <div class="countdown-wrap" id="nextEventCountdown" data-target="2026-11-14T20:00:00">
+      <div class="countdown-wrap" id="nextEventCountdown" data-target="2026-09-19T20:00:00">
         <div class="countdown-box">
           <span class="countdown-num" id="cdDays">00</span>
           <span class="countdown-lbl">DÍAS</span>
@@ -1797,7 +1797,7 @@ footer{
 
   function updateCountdown(){
     var targetAttr = countdownEl.getAttribute('data-target');
-    var targetDate = targetAttr ? new Date(targetAttr).getTime() : new Date('2026-11-14T20:00:00').getTime();
+    var targetDate = targetAttr ? new Date(targetAttr).getTime() : new Date('2026-09-19T20:00:00').getTime();
     var now = new Date().getTime();
     var diff = targetDate - now;
 
@@ -1822,6 +1822,7 @@ footer{
 
   updateCountdown();
   setInterval(updateCountdown, 1000);
+  window.updateNextEventCountdown = updateCountdown;
 })();
 
 /* ---------- Reproductor interactivo de video oficial (Inicio y Música) ---------- */

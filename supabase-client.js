@@ -258,6 +258,68 @@
     },
 
     // ----------------------------------------------------
+    // UTILIDADES PARA FECHAS Y PRÓXIMO EVENTO DEL TOUR
+    // ----------------------------------------------------
+    parseEventDate: function (ev) {
+      if (!ev) return null;
+      if (ev.event_date) {
+        var d = new Date(ev.event_date + (ev.event_date.includes('T') ? '' : 'T20:00:00'));
+        if (!isNaN(d.getTime())) return d;
+      }
+      var day = parseInt(ev.day_str, 10) || 1;
+      var my = (ev.month_year_str || '').trim().toUpperCase();
+      var yearMatch = my.match(/\b(20\d\d)\b/);
+      var year = yearMatch ? parseInt(yearMatch[1], 10) : new Date().getFullYear();
+      
+      var months = {
+        'ENE': 0, 'ENERO': 0, 'JAN': 0,
+        'FEB': 1, 'FEBRERO': 1,
+        'MAR': 2, 'MARZO': 2,
+        'ABR': 3, 'ABRIL': 3, 'APR': 3,
+        'MAY': 4, 'MAYO': 4,
+        'JUN': 5, 'JUNIO': 5,
+        'JUL': 6, 'JULIO': 6,
+        'AGO': 7, 'AGOSTO': 7, 'AUG': 7,
+        'SEP': 8, 'SEPTIEMBRE': 8, 'SET': 8, 'SETIEMBRE': 8, 'SEPT': 8,
+        'OCT': 9, 'OCTUBRE': 9,
+        'NOV': 10, 'NOVIEMBRE': 10,
+        'DIC': 11, 'DICIEMBRE': 11, 'DEC': 11
+      };
+      
+      var month = 0;
+      for (var mKey in months) {
+        if (new RegExp('\\b' + mKey + '\\b', 'i').test(my)) {
+          month = months[mKey];
+          break;
+        }
+      }
+      return new Date(year, month, day, 20, 0, 0);
+    },
+
+    getUpcomingEvent: function (eventsList) {
+      if (!eventsList || eventsList.length === 0) return null;
+      var now = new Date().getTime();
+      var parsed = eventsList.map(function (ev) {
+        return {
+          event: ev,
+          date: MM_DB.parseEventDate(ev)
+        };
+      });
+
+      // Ordenar cronológicamente ascendente
+      parsed.sort(function (a, b) {
+        return (a.date ? a.date.getTime() : 0) - (b.date ? b.date.getTime() : 0);
+      });
+
+      // Primer evento que no haya pasado (con ventana de 24h para el día en curso)
+      var upcoming = parsed.find(function (item) {
+        return item.date && item.date.getTime() >= (now - 24 * 60 * 60 * 1000);
+      });
+
+      return upcoming || parsed[0] || null;
+    },
+
+    // ----------------------------------------------------
     // HIDRATACIÓN AUTOMÁTICA DEL SITIO PÚBLICO (index.html)
     // ----------------------------------------------------
     hydratePublicSite: async function () {
@@ -287,20 +349,19 @@
             var hs = document.getElementById('heroScene');
             if (hs) hs.style.backgroundImage = 'url("' + content.hero_bg_image + '")';
           }
-          if (content.next_event_title) {
-            var el = document.getElementById('nextEventTitle') || document.querySelector('.event-title') || document.querySelector('.banner-title');
-            if (el) {
-              var venue = content.next_event_venue ? ' – ' + content.next_event_venue : '';
-              el.textContent = content.next_event_title + venue;
-            }
-          }
           if (content.next_event_bg_image) {
             var neb = document.getElementById('nextEventBanner');
             if (neb) neb.style.backgroundImage = 'url("' + content.next_event_bg_image + '")';
           }
-          if (content.next_event_date) {
-            var nec = document.getElementById('nextEventCountdown');
-            if (nec) nec.setAttribute('data-target', content.next_event_date);
+          // Fallback inicial para próximo evento si aún no se han cargado los eventos del Tour
+          var nextTitleEl = document.getElementById('nextEventTitle');
+          if (content.next_event_title && nextTitleEl && !nextTitleEl.hasAttribute('data-synced')) {
+            var venue = content.next_event_venue ? ' – ' + content.next_event_venue : '';
+            nextTitleEl.textContent = content.next_event_title + venue;
+          }
+          var nextCountdownEl = document.getElementById('nextEventCountdown');
+          if (content.next_event_date && nextCountdownEl && !nextCountdownEl.hasAttribute('data-synced')) {
+            nextCountdownEl.setAttribute('data-target', content.next_event_date);
           }
           if (content.bio_title) {
             var el = document.querySelector('#view-bio .section-title');
@@ -477,9 +538,10 @@
           }
         }
 
-        // 2. Hidratar Eventos / Tour
+        // 2. Hidratar Eventos / Tour y Sincronizar Próximo Evento en Inicio
         var eventsList = await MM_DB.events.getAll();
         if (eventsList && eventsList.length > 0) {
+          // Renderizar lista en la sección Tour
           var tourContainer = document.querySelector('.tour-list');
           if (tourContainer) {
             var html = '';
@@ -493,6 +555,46 @@
                 '</div>';
             });
             tourContainer.innerHTML = html;
+          }
+
+          // Sincronizar dinámicamente el Próximo Evento en la vista Inicio
+          var upcomingData = MM_DB.getUpcomingEvent(eventsList);
+          if (upcomingData && upcomingData.event) {
+            var uEv = upcomingData.event;
+            var uDate = upcomingData.date;
+
+            // Actualizar Título del Próximo Evento en el Banner de Inicio
+            var bannerTitleEl = document.getElementById('nextEventTitle');
+            if (bannerTitleEl) {
+              var formattedTitle = uEv.day_str + ' ' + uEv.month_year_str.toUpperCase() + ', ' + uEv.city.toUpperCase() + (uEv.venue ? ' – ' + uEv.venue.toUpperCase() : '');
+              bannerTitleEl.textContent = formattedTitle;
+              bannerTitleEl.setAttribute('data-synced', 'true');
+            }
+
+            // Actualizar Contador Regresivo al momento exacto del próximo evento
+            var countdownEl = document.getElementById('nextEventCountdown');
+            if (countdownEl && uDate) {
+              var isoTarget = uDate.toISOString();
+              countdownEl.setAttribute('data-target', isoTarget);
+              countdownEl.setAttribute('data-synced', 'true');
+              if (window.updateNextEventCountdown) {
+                window.updateNextEventCountdown();
+              }
+            }
+
+            // Actualizar Botón del Banner de Próximo Evento
+            var bannerBtn = document.querySelector('.event-banner .btn-banner');
+            if (bannerBtn) {
+              if (uEv.ticket_url && uEv.ticket_url !== '#' && uEv.ticket_url.trim() !== '') {
+                bannerBtn.href = uEv.ticket_url;
+                bannerBtn.textContent = (uEv.button_text || 'BOLETOS') + ' — ' + uEv.city.split(',')[0].trim().toUpperCase();
+                bannerBtn.target = '_blank';
+                bannerBtn.rel = 'noopener';
+              } else {
+                bannerBtn.href = '#tour';
+                bannerBtn.textContent = 'TODAS LAS FECHAS';
+              }
+            }
           }
         }
 
