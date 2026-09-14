@@ -756,7 +756,7 @@ header.admin-nav{
         <div class="card-header">
           <div class="card-title-group">
             <h2>🎵 Vista Música (Discografía y Canciones)</h2>
-            <p class="sub" style="margin-bottom:0;">Administra los sencillos, EPs y álbumes con su carátula y enlace a Spotify u otra plataforma.</p>
+            <p class="sub" style="margin-bottom:0;">Administra los sencillos, EPs y álbumes. <strong>Los primeros 3 lanzamientos de esta lista se sincronizan automáticamente en la portada (vista Inicio)</strong> con sus carátulas y enlaces actualizados.</p>
           </div>
           <button class="btn btn-solid btn-sm" id="btnNewMusic">+ Agregar Canción / Álbum</button>
         </div>
@@ -1715,14 +1715,18 @@ header.admin-nav{
       return;
     }
     var html = '';
-    list.forEach(function(m){
+    list.forEach(function(m, idx){
+      var isInInicio = idx < 3;
+      var inicioBadge = isInInicio
+        ? ' <span class="badge" style="background:rgba(227,178,60,.18); color:var(--gold); border-color:var(--gold); font-weight:700;">⭐ EN INICIO</span>'
+        : '';
       var coverThumb = m.cover_url
         ? '<img src="' + m.cover_url + '" alt="' + m.title + '" style="width:48px; height:48px; object-fit:cover; border-radius:4px; margin-right:14px; border:1px solid var(--line);">'
         : '<div style="width:48px; height:48px; background:#14161a; border-radius:4px; margin-right:14px; display:flex; align-items:center; justify-content:center; color:var(--muted);">🎵</div>';
-      html += '<div class="item-row" data-id="' + m.id + '" style="display:flex; align-items:center;">' +
+      html += '<div class="item-row" data-id="' + m.id + '" style="display:flex; align-items:center;' + (isInInicio ? 'border-color:rgba(227,178,60,.35); background:rgba(227,178,60,.02);' : '') + '">' +
         coverThumb +
         '<div class="item-info" style="flex:1;">' +
-          '<div class="title">' + m.title + ' <span class="badge" style="color:var(--gold); border-color:var(--gold);">' + m.category + '</span></div>' +
+          '<div class="title">' + m.title + inicioBadge + ' <span class="badge" style="color:var(--gold); border-color:var(--gold);">' + m.category + '</span></div>' +
           '<div class="meta">Enlace: ' + m.stream_url + '</div>' +
         '</div>' +
         '<div class="item-actions">' +

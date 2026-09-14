@@ -598,24 +598,51 @@
           }
         }
 
-        // 3. Hidratar Discografía
+        // 3. Hidratar Discografía en Vista MÚSICA y en Vista INICIO
         var musicList = await MM_DB.music.getAll();
         if (musicList && musicList.length > 0) {
+          // 3.1 Vista MÚSICA completa (#musicGrid)
           var musicGrid = document.getElementById('musicGrid');
           if (musicGrid) {
             var mHtml = '';
             musicList.forEach(function (m, index) {
               var fallbackImg = 'img/musica' + ((index % 6) + 1) + '.png';
               var coverSrc = m.cover_url || fallbackImg;
+              var isExt = m.stream_url && m.stream_url !== '#' && m.stream_url.trim() !== '';
+              var ctaHref = isExt ? m.stream_url : '#musica';
+              var ctaTarget = isExt ? 'target="_blank" rel="noopener"' : 'data-nav="musica"';
               mHtml += '<div class="card">' +
                 '<div class="card-media"><img src="' + coverSrc + '" alt="' + m.title + '" loading="lazy"></div>' +
                 '<div class="card-body">' +
                 '<div class="card-kicker">' + m.category + '</div>' +
                 '<div class="card-title">' + m.title + '</div>' +
-                '<a class="card-cta" href="' + (m.stream_url || '#') + '" target="_blank" rel="noopener">ESCUCHAR EN SPOTIFY →</a>' +
+                '<a class="card-cta" href="' + ctaHref + '" ' + ctaTarget + '>ESCUCHAR EN SPOTIFY →</a>' +
                 '</div></div>';
             });
             musicGrid.innerHTML = mHtml;
+          }
+
+          // 3.2 Vista INICIO: Sección ÚLTIMOS LANZAMIENTOS (Primeros 3 lanzamientos sincronizados)
+          var homeMusicGrid = document.getElementById('homeMusicGrid');
+          if (homeMusicGrid) {
+            var top3 = musicList.slice(0, 3);
+            var hHtml = '';
+            top3.forEach(function (m, index) {
+              var fallbackImg = 'img/musica' + ((index % 6) + 1) + '.png';
+              var coverSrc = m.cover_url || fallbackImg;
+              var isExt = m.stream_url && m.stream_url !== '#' && m.stream_url.trim() !== '';
+              var ctaHref = isExt ? m.stream_url : '#musica';
+              var ctaTarget = isExt ? 'target="_blank" rel="noopener"' : 'data-nav="musica"';
+              hHtml += '<div class="card">' +
+                '<div class="card-media"><img src="' + coverSrc + '" alt="' + m.title + '" loading="lazy"></div>' +
+                '<div class="card-body">' +
+                '<div class="card-kicker">' + m.category + '</div>' +
+                '<div class="card-title">' + m.title + '</div>' +
+                '<div class="card-meta">Disponible en todas las plataformas</div>' +
+                '<a class="card-cta" href="' + ctaHref + '" ' + ctaTarget + '>ESCUCHAR →</a>' +
+                '</div></div>';
+            });
+            homeMusicGrid.innerHTML = hHtml;
           }
         }
       } catch (e) {
