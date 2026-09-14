@@ -457,6 +457,19 @@ header.admin-nav{
             <button class="btn btn-solid" type="submit">💾 Guardar Cambios de Vista Inicio</button>
           </div>
         </form>
+
+        <!-- PREVIEW EN VIVO: ÚLTIMOS LANZAMIENTOS EN PORTADA -->
+        <hr style="border:none; border-top:1px solid var(--line); margin:32px 0 22px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:8px;">
+          <div>
+            <strong style="color:var(--gold); font-size:15px;">🎵 Preview — Últimos Lanzamientos en Portada</strong>
+            <p style="font-size:12.5px; color:var(--muted); margin:4px 0 0;">Estos son los <strong>3 primeros lanzamientos</strong> que aparecen en la sección DISCOGRAFÍA de la vista Inicio del sitio web.</p>
+          </div>
+          <button class="btn btn-sm" type="button" id="btnRefreshMusicPreview">🔄 Actualizar Preview</button>
+        </div>
+        <div id="inicioMusicPreviewGrid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:14px;">
+          <div style="color:var(--muted); text-align:center; padding:24px; grid-column:1/-1; font-size:13px;">Cargando preview de música...</div>
+        </div>
       </div>
     </section>
 
@@ -1494,6 +1507,55 @@ header.admin-nav{
   }
 
   // ============================================================
+  // PREVIEW EN VIVO DE ÚLTIMOS LANZAMIENTOS (TAB INICIO)
+  // Se llama: al cargar el panel, al guardar/eliminar música
+  // ============================================================
+  async function refreshMusicPreview(){
+    var previewGrid = document.getElementById('inicioMusicPreviewGrid');
+    if(!previewGrid) return;
+    previewGrid.innerHTML = '<div style="color:var(--muted); text-align:center; padding:24px; grid-column:1/-1; font-size:13px;">Cargando...</div>';
+    try {
+      var list = await window.MM_DB.music.getAll();
+      if(!list || list.length === 0){
+        previewGrid.innerHTML = '<div style="color:var(--muted); text-align:center; padding:24px; grid-column:1/-1; font-size:13px;">No hay lanzamientos en la tabla de Música. Agrégalos en la pestaña 🎵 Música.</div>';
+        return;
+      }
+      var top3 = list.slice(0, 3);
+      var html = '';
+      top3.forEach(function(m, idx){
+        var fallback = 'img/musica' + ((idx % 6) + 1) + '.png';
+        var cover = m.cover_url || fallback;
+        html += '<div style="background:var(--bg-alt-2); border:1px solid rgba(227,178,60,.25); border-radius:6px; overflow:hidden;">' +
+          '<div style="width:100%; aspect-ratio:1/1; overflow:hidden;">' +
+          '<img src="' + cover + '" alt="' + (m.title || '') + '" style="width:100%; height:100%; object-fit:cover; display:block;">' +
+          '</div>' +
+          '<div style="padding:10px 12px;">' +
+            '<div style="font-size:10.5px; color:var(--gold); font-weight:700; letter-spacing:.05em;">' + m.category + '</div>' +
+            '<div style="font-size:13px; font-weight:600; margin-top:3px; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">' + m.title + '</div>' +
+            '<div style="font-size:11px; color:var(--muted); margin-top:2px;">Posición #' + (idx + 1) + ' en Inicio</div>' +
+          '</div>' +
+        '</div>';
+      });
+      // Mostrar nota si hay menos de 3
+      if(top3.length < 3){
+        var missing = 3 - top3.length;
+        html += '<div style="background:rgba(227,178,60,.05); border:1px dashed rgba(227,178,60,.3); border-radius:6px; display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:12px; padding:20px; grid-column:' + (top3.length + 1) + '/' + (top3.length + missing + 1) + ';">' +
+          (missing === 1 ? '1 lanzamiento más para completar la portada' : missing + ' lanzamientos más para completar la portada') +
+        '</div>';
+      }
+      previewGrid.innerHTML = html;
+    } catch(e){
+      previewGrid.innerHTML = '<div style="color:#fca5a5; text-align:center; padding:16px; grid-column:1/-1; font-size:13px;">Error al cargar la preview: ' + e.message + '</div>';
+    }
+  }
+
+  // Botón manual de actualizar preview
+  var btnRefreshMusicPreview = document.getElementById('btnRefreshMusicPreview');
+  if(btnRefreshMusicPreview){
+    btnRefreshMusicPreview.addEventListener('click', refreshMusicPreview);
+  }
+
+  // ============================================================
   // CARGA Y GUARDADO DE VISTA 2: BIO
   // ============================================================
   var bioForm = document.getElementById('bioForm');
@@ -1763,6 +1825,7 @@ header.admin-nav{
             await window.MM_DB.music.delete(id);
             showAlert('Lanzamiento eliminado.', true);
             loadMusic();
+            refreshMusicPreview(); // Actualizar preview en pestaña Inicio
           } catch(err){
             showAlert('Error al eliminar música: ' + err.message, false);
           }
@@ -1784,9 +1847,10 @@ header.admin-nav{
 
     try {
       await window.MM_DB.music.save(payload);
-      showAlert('¡Lanzamiento guardado con éxito!', true);
+      showAlert('¡Lanzamiento guardado con éxito! La vista Inicio del sitio web refleja el cambio.', true);
       musicFormContainer.style.display = 'none';
       loadMusic();
+      refreshMusicPreview(); // Actualizar preview en pestaña Inicio
     } catch(err){
       showAlert('Error al guardar lanzamiento: ' + err.message, false);
     }
@@ -2030,6 +2094,7 @@ header.admin-nav{
     loadAllContent();
     loadMusic();
     loadGallery();
+    refreshMusicPreview(); // Cargar preview de música en pestaña Inicio
   }
 
   checkAuth();
