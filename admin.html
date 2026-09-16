@@ -533,6 +533,82 @@ header.admin-nav{
             </div>
           </div>
 
+          
+          <!-- TRAYECTORIA / MOMENTOS CLAVE -->
+          <hr style="border:none; border-top:1px solid var(--line); margin:28px 0 20px;">
+          <h3 style="font-size:16px; margin-bottom:6px; color:var(--gold);">📅 Trayectoria (Momentos Clave de la Carrera)</h3>
+          <p class="sub" style="margin-bottom:16px;">Personaliza los 4 hitos de la línea de tiempo de la sección Biografía.</p>
+
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:14px; margin-bottom:12px;">
+            <!-- Hito 1 -->
+            <div style="background:var(--bg-alt-2); padding:14px; border-radius:6px; border:1px solid var(--line);">
+              <strong style="color:var(--gold); font-size:12px;">HITO #1</strong>
+              <div class="form-group" style="margin-top:8px;">
+                <label for="txt-tl1-year">Año</label>
+                <input type="text" id="txt-tl1-year" placeholder="2016" value="2016">
+              </div>
+              <div class="form-group">
+                <label for="txt-tl1-title">Título del Hito</label>
+                <input type="text" id="txt-tl1-title" placeholder="LOS INICIOS" value="LOS INICIOS">
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label for="txt-tl1-desc">Descripción</label>
+                <textarea id="txt-tl1-desc" rows="2" placeholder="Descripción del hito...">Espacio para describir el comienzo del proyecto musical, primeras presentaciones o grabaciones.</textarea>
+              </div>
+            </div>
+
+            <!-- Hito 2 -->
+            <div style="background:var(--bg-alt-2); padding:14px; border-radius:6px; border:1px solid var(--line);">
+              <strong style="color:var(--gold); font-size:12px;">HITO #2</strong>
+              <div class="form-group" style="margin-top:8px;">
+                <label for="txt-tl2-year">Año</label>
+                <input type="text" id="txt-tl2-year" placeholder="2020" value="2020">
+              </div>
+              <div class="form-group">
+                <label for="txt-tl2-title">Título del Hito</label>
+                <input type="text" id="txt-tl2-title" placeholder="PRIMER LANZAMIENTO OFICIAL" value="PRIMER LANZAMIENTO OFICIAL">
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label for="txt-tl2-desc">Descripción</label>
+                <textarea id="txt-tl2-desc" rows="2" placeholder="Descripción del hito...">Describe aquí el primer sencillo o álbum publicado y cómo fue recibido.</textarea>
+              </div>
+            </div>
+
+            <!-- Hito 3 -->
+            <div style="background:var(--bg-alt-2); padding:14px; border-radius:6px; border:1px solid var(--line);">
+              <strong style="color:var(--gold); font-size:12px;">HITO #3</strong>
+              <div class="form-group" style="margin-top:8px;">
+                <label for="txt-tl3-year">Año</label>
+                <input type="text" id="txt-tl3-year" placeholder="2023" value="2023">
+              </div>
+              <div class="form-group">
+                <label for="txt-tl3-title">Título del Hito</label>
+                <input type="text" id="txt-tl3-title" placeholder="PRIMERA GIRA" value="PRIMERA GIRA">
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label for="txt-tl3-desc">Descripción</label>
+                <textarea id="txt-tl3-desc" rows="2" placeholder="Descripción del hito...">Cuenta la primera gira o tanda de conciertos importante en la carrera de AGRIDULCE MUSIC.</textarea>
+              </div>
+            </div>
+
+            <!-- Hito 4 -->
+            <div style="background:var(--bg-alt-2); padding:14px; border-radius:6px; border:1px solid var(--line);">
+              <strong style="color:var(--gold); font-size:12px;">HITO #4</strong>
+              <div class="form-group" style="margin-top:8px;">
+                <label for="txt-tl4-year">Año</label>
+                <input type="text" id="txt-tl4-year" placeholder="2026" value="2026">
+              </div>
+              <div class="form-group">
+                <label for="txt-tl4-title">Título del Hito</label>
+                <input type="text" id="txt-tl4-title" placeholder="NUEVO PROYECTO EN CAMINO" value="NUEVO PROYECTO EN CAMINO">
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label for="txt-tl4-desc">Descripción</label>
+                <textarea id="txt-tl4-desc" rows="2" placeholder="Descripción del hito...">Adelanta aquí lo que viene: nueva música, colaboraciones o proyectos especiales.</textarea>
+              </div>
+            </div>
+          </div>
+
           <div style="margin-top:20px;">
             <button class="btn btn-solid" type="submit">💾 Guardar Cambios de Biografía</button>
           </div>
@@ -837,11 +913,21 @@ header.admin-nav{
         <p class="sub" style="margin-bottom:16px;">Ingresa el enlace de YouTube del video que se mostrará en el reproductor de la pestaña Música.</p>
         
         <form id="featuredVideoForm">
-          <div class="form-group">
-            <label for="txt-video-url">Enlace de YouTube (Ej: https://youtu.be/1Ty7oSPE-K8 o https://www.youtube.com/watch?v=...)</label>
-            <input type="text" id="txt-video-url" placeholder="https://youtu.be/1Ty7oSPE-K8">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="txt-video-title">Título del Video de YouTube</label>
+              <input type="text" id="txt-video-title" placeholder="Título que se muestra sobre el reproductor">
+            </div>
+            <div class="form-group">
+              <label for="txt-video-channel">Canal / Subtítulo</label>
+              <input type="text" id="txt-video-channel" placeholder="Monky Drum · AGRIDULCE MUSIC">
+            </div>
           </div>
-          <button class="btn btn-solid btn-sm" type="submit">Guardar Video Destacado</button>
+          <div class="form-group">
+            <label for="txt-video-url">Enlace de YouTube (Ej: https://youtu.be/GcRQiZe1HhM o https://www.youtube.com/watch?v=...)</label>
+            <input type="text" id="txt-video-url" placeholder="https://youtu.be/GcRQiZe1HhM">
+          </div>
+          <button class="btn btn-solid btn-sm" type="submit">💾 Guardar Video Destacado</button>
         </form>
       </div>
     </section>
@@ -1567,7 +1653,19 @@ header.admin-nav{
       bio_image: document.getElementById('txt-bio-image').value.trim(),
       stat_years: document.getElementById('txt-stat-years').value.trim(),
       stat_concerts: document.getElementById('txt-stat-concerts').value.trim(),
-      stat_projects: document.getElementById('txt-stat-projects').value.trim()
+      stat_projects: document.getElementById('txt-stat-projects').value.trim(),
+      tl1_year: document.getElementById('txt-tl1-year').value.trim(),
+      tl1_title: document.getElementById('txt-tl1-title').value.trim(),
+      tl1_desc: document.getElementById('txt-tl1-desc').value.trim(),
+      tl2_year: document.getElementById('txt-tl2-year').value.trim(),
+      tl2_title: document.getElementById('txt-tl2-title').value.trim(),
+      tl2_desc: document.getElementById('txt-tl2-desc').value.trim(),
+      tl3_year: document.getElementById('txt-tl3-year').value.trim(),
+      tl3_title: document.getElementById('txt-tl3-title').value.trim(),
+      tl3_desc: document.getElementById('txt-tl3-desc').value.trim(),
+      tl4_year: document.getElementById('txt-tl4-year').value.trim(),
+      tl4_title: document.getElementById('txt-tl4-title').value.trim(),
+      tl4_desc: document.getElementById('txt-tl4-desc').value.trim()
     };
     try {
       await window.MM_DB.content.bulkSave(payload);
@@ -1862,8 +1960,14 @@ header.admin-nav{
     featuredVideoForm.addEventListener('submit', async function(e){
       e.preventDefault();
       var vUrl = document.getElementById('txt-video-url').value.trim();
+      var vTitle = document.getElementById('txt-video-title').value.trim();
+      var vChannel = document.getElementById('txt-video-channel').value.trim();
       try {
-        await window.MM_DB.content.save('featured_video_url', vUrl);
+        await window.MM_DB.content.bulkSave({
+          featured_video_url: vUrl,
+          featured_video_title: vTitle,
+          featured_video_channel: vChannel
+        });
         showAlert('¡Video destacado de YouTube actualizado!', true);
       } catch(err){
         showAlert('Error al guardar video: ' + err.message, false);
@@ -2027,6 +2131,16 @@ header.admin-nav{
     if(content.stat_concerts) document.getElementById('txt-stat-concerts').value = content.stat_concerts;
     if(content.stat_projects) document.getElementById('txt-stat-projects').value = content.stat_projects;
 
+    // Trayectoria (Timeline)
+    for(var ti=1; ti<=4; ti++){
+      var y = document.getElementById('txt-tl'+ti+'-year');
+      var t = document.getElementById('txt-tl'+ti+'-title');
+      var d = document.getElementById('txt-tl'+ti+'-desc');
+      if(y && content['tl'+ti+'_year']) y.value = content['tl'+ti+'_year'];
+      if(t && content['tl'+ti+'_title']) t.value = content['tl'+ti+'_title'];
+      if(d && content['tl'+ti+'_desc']) d.value = content['tl'+ti+'_desc'];
+    }
+
     // VISTA 4: BLOG
     if(content.blog1_image){
       document.getElementById('txt-blog1-img').value = content.blog1_image;
@@ -2062,6 +2176,12 @@ header.admin-nav{
     // VISTA 5: VIDEO DESTACADO
     if(content.featured_video_url){
       document.getElementById('txt-video-url').value = content.featured_video_url;
+    }
+    if(content.featured_video_title){
+      document.getElementById('txt-video-title').value = content.featured_video_title;
+    }
+    if(content.featured_video_channel){
+      document.getElementById('txt-video-channel').value = content.featured_video_channel;
     }
 
     // VISTA 7: DONAR
