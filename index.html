@@ -76,7 +76,7 @@
   --ease:cubic-bezier(.4,0,.2,1);
 }
 *{box-sizing:border-box;}
-html{scroll-behavior:smooth;}
+html{scroll-behavior:smooth; overflow-x:hidden; width:100%;}
 body{
   margin:0;
   background:var(--bg);
@@ -85,6 +85,9 @@ body{
   font-size:16px;
   line-height:1.6;
   -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  width:100%;
+  position:relative;
 }
 h1,h2,h3,h4,.display{
   font-family:'Fraunces',serif;
@@ -111,18 +114,30 @@ button{font-family:inherit;cursor:pointer;}
   letter-spacing:.02em;
   text-align:center;
   padding:7px 12px;
+  position:relative;
+  z-index:101;
 }
 
 /* ---------- Navegación ---------- */
 header.site-nav{
   position:sticky; top:0; z-index:100;
-  background:rgba(13,14,17,.92);
-  backdrop-filter:blur(10px);
+  background:rgba(13,14,17,.96);
   border-bottom:1px solid var(--line);
+  width:100%;
 }
 .nav-inner{
   max-width:var(--maxw); margin:0 auto; padding:16px 28px;
   display:flex; align-items:center; justify-content:space-between;
+  width:100%; box-sizing:border-box; position:relative;
+}
+.menu-backdrop{
+  position:fixed; inset:0; background:rgba(0,0,0,0.72);
+  backdrop-filter:blur(3px); -webkit-backdrop-filter:blur(3px);
+  z-index:98; opacity:0; pointer-events:none;
+  transition:opacity .25s var(--ease);
+}
+.menu-backdrop.active{
+  opacity:1; pointer-events:auto;
 }
 .brand{
   font-family:'Fraunces',serif; font-weight:700; font-size:22px;
@@ -957,43 +972,104 @@ footer{
   box-shadow:0 6px 22px rgba(227,178,60,.4);
 }
 
+.mobile-nav-cta{display:none;}
+
 /* ---------- Responsive ---------- */
 @media (max-width:900px){
-  nav.links{display:none;}
-  .menu-toggle{display:inline-flex;}
+  .wrap{padding:0 20px;}
+  .nav-inner{padding:12px 18px;}
+  .brand{font-size:20px;}
+  nav.links{
+    display:none;
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    width:100%;
+    background:#0E1013 !important; /* 100% Sólido sin transparencia */
+    border-bottom:2px solid var(--gold);
+    box-shadow:0 30px 60px rgba(0,0,0,0.95);
+    flex-direction:column;
+    padding:8px 0 16px;
+    gap:0;
+    z-index:999;
+  }
+  nav.links.mobile-open{
+    display:flex;
+    animation:navSlideDown .24s var(--ease);
+  }
+  nav.links button{
+    width:100%;
+    text-align:center;
+    font-family:'Syne','Outfit',sans-serif;
+    font-size:14px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.14em;
+    padding:15px 20px;
+    border-radius:0;
+    border:none;
+    border-bottom:1px solid rgba(255,255,255,0.06);
+    color:var(--ink);
+    background:transparent;
+    transition:all .15s ease;
+  }
+  nav.links button:hover,
+  nav.links button:active{
+    background:rgba(227,178,60,0.10);
+    color:var(--gold);
+  }
+  nav.links button.active{
+    color:var(--gold);
+    background:rgba(227,178,60,0.14);
+  }
+  nav.links button.active::after{display:none;}
+  .mobile-nav-cta{
+    display:block;
+    padding:14px 20px 4px;
+    text-align:center;
+  }
+  .mobile-nav-cta .btn{
+    width:100%;
+    justify-content:center;
+    padding:13px 20px;
+    font-size:12.5px;
+  }
+  .menu-toggle{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:42px; height:42px; border-radius:4px;
+    background:rgba(255,255,255,0.06); border:1px solid var(--line);
+    color:var(--ink); padding:0; cursor:pointer;
+    transition:all .2s var(--ease);
+  }
+  .menu-toggle:hover, .menu-toggle.is-active{
+    border-color:var(--gold); color:var(--gold);
+    background:rgba(227,178,60,0.14);
+  }
   .grid-3{grid-template-columns:repeat(2,1fr);}
   .gal-grid{grid-template-columns:repeat(2,1fr);}
   .bio-hero{grid-template-columns:1fr;}
   .donate-panel{grid-template-columns:1fr; padding:32px;}
   .contact-grid{grid-template-columns:1fr;}
 }
-@media (max-width:900px) and (max-width:900px){
-  nav.links.mobile-open{
-    display:flex; flex-direction:column; position:fixed; inset:0 0 0 auto; width:80%; max-width:320px;
-    background:var(--bg-alt); border-left:1px solid var(--line); padding:90px 24px 24px; gap:4px; z-index:99;
-  }
-  nav.links.mobile-open button{
-    text-align:left;
-    font-family:'Syne','Outfit',sans-serif;
-    font-size:13.5px;
-    font-weight:700;
-    text-transform:uppercase;
-    letter-spacing:.12em;
-    padding:16px 8px;
-    border-bottom:1px solid var(--line);
-    color:var(--muted);
-  }
-  nav.links.mobile-open button:hover,
-  nav.links.mobile-open button.active{color:var(--gold);}
-  nav.links.mobile-open button.active::after{display:none;}
+@keyframes navSlideDown{
+  from{opacity:0; transform:translateY(-8px);}
+  to{opacity:1; transform:translateY(0);}
 }
 @media (max-width:640px){
+  .wrap{padding:0 16px;}
+  .nav-inner{padding:10px 14px;}
+  .brand{font-size:18px;}
+  .nav-cta .btn{display:none;} /* Oculta el botón Escuchar de la barra para que el menú NUNCA se desborde a la derecha */
   .grid-3, .grid-2{grid-template-columns:1fr;}
   .gal-grid{grid-template-columns:repeat(2,1fr);}
   .form-row{grid-template-columns:1fr;}
   .amount-grid{grid-template-columns:repeat(2,1fr);}
-  section{padding:60px 0;}
+  section{padding:50px 0;}
   .hero{min-height:78vh;}
+  .event-banner .countdown-wrap{gap:8px;}
+  .event-banner .countdown-box{min-width:48px;}
+  .event-banner .countdown-num{font-size:28px;}
 }
 </style>
 </head>
@@ -1001,7 +1077,7 @@ footer{
 
 <div class="topbar" id="top">#NuevaMúsica — escucha el último sencillo de AGRIDULCE MUSIC</div>
 
-<header class="site-nav">
+<header class="site-nav" id="siteHeader">
   <div class="nav-inner">
     <a href="#inicio" class="brand" data-nav="inicio">AGRIDULCE<span>MUSIC</span></a>
     <nav class="links" id="navLinks">
@@ -1013,15 +1089,20 @@ footer{
       <button data-nav="galeria">GALERÍA</button>
       <button data-nav="donar">DONAR</button>
       <button data-nav="contacto">CONTACTO</button>
+      <div class="mobile-nav-cta">
+        <a class="btn btn-solid" href="#musica" data-nav="musica">ESCUCHAR MÚSICA</a>
+      </div>
     </nav>
     <div class="nav-cta">
       <a class="btn btn-solid" href="#musica" data-nav="musica">ESCUCHAR</a>
-      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false">
+        <svg class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
+        <svg class="icon-close" style="display:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
   </div>
 </header>
+<div class="menu-backdrop" id="menuBackdrop"></div>
 
 <main>
 
@@ -1670,6 +1751,34 @@ footer{
   var navButtons = document.querySelectorAll('[data-nav]');
   var navLinks = document.getElementById('navLinks');
   var menuToggle = document.getElementById('menuToggle');
+  var menuBackdrop = document.getElementById('menuBackdrop');
+  var siteHeader = document.getElementById('siteHeader');
+
+  function closeMobileNav(){
+    if(navLinks) navLinks.classList.remove('mobile-open');
+    if(menuToggle){
+      menuToggle.classList.remove('is-active');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      var icMenu = menuToggle.querySelector('.icon-menu');
+      var icClose = menuToggle.querySelector('.icon-close');
+      if(icMenu) icMenu.style.display = 'block';
+      if(icClose) icClose.style.display = 'none';
+    }
+    if(menuBackdrop) menuBackdrop.classList.remove('active');
+  }
+
+  function toggleMobileNav(){
+    var isOpen = navLinks.classList.toggle('mobile-open');
+    if(menuToggle){
+      menuToggle.classList.toggle('is-active', isOpen);
+      menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      var icMenu = menuToggle.querySelector('.icon-menu');
+      var icClose = menuToggle.querySelector('.icon-close');
+      if(icMenu) icMenu.style.display = isOpen ? 'none' : 'block';
+      if(icClose) icClose.style.display = isOpen ? 'block' : 'none';
+    }
+    if(menuBackdrop) menuBackdrop.classList.toggle('active', isOpen);
+  }
 
   function setActive(name){
     if(!document.getElementById('view-' + name)) name = 'inicio';
@@ -1687,7 +1796,7 @@ footer{
     }
 
     window.scrollTo({top:0, behavior:'smooth'});
-    navLinks.classList.remove('mobile-open');
+    closeMobileNav();
   }
 
   function nameFromHash(){
@@ -1713,8 +1822,25 @@ footer{
     setActive(nameFromHash());
   });
 
-  menuToggle.addEventListener('click', function(){
-    navLinks.classList.toggle('mobile-open');
+  if(menuToggle){
+    menuToggle.addEventListener('click', function(e){
+      e.stopPropagation();
+      toggleMobileNav();
+    });
+  }
+
+  if(menuBackdrop){
+    menuBackdrop.addEventListener('click', function(){
+      closeMobileNav();
+    });
+  }
+
+  document.addEventListener('click', function(e){
+    if(navLinks && navLinks.classList.contains('mobile-open')){
+      if(siteHeader && !siteHeader.contains(e.target)){
+        closeMobileNav();
+      }
+    }
   });
 
   setActive(nameFromHash());
